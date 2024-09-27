@@ -1,0 +1,9 @@
+{
+  "name": "automator",
+  "version": "1.0.0",
+  "description": "My automation scripts",
+  "main": "index.js",
+  "repository": "git@github.com:eduardoportilho/automator.git",
+  "author": "Eduardo Portilho <eduardo.portilho@gmail.com>",
+  "license": "MIT"
+}
