@@ -1,4 +1,3 @@
-import "dotenv/config";
 import axios from "axios";
 import { YnabTx } from "../../types";
 

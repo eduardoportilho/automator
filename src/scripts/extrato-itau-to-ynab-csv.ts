@@ -1,8 +1,8 @@
 #!/usr/bin/env ts-node
 
 // Usage:
-// chmod +x ./src/scripts/extrato-itau-to-ynab-csv.ts
-// ./src/scripts/extrato-itau-to-ynab-csv.ts '/Users/eduardoportilho/Downloads/Extrato Conta Corrente-250920242201.txt'
+// $ chmod +x ./src/scripts/extrato-itau-to-ynab-csv.ts
+// $ ./src/scripts/extrato-itau-to-ynab-csv.ts '/Users/eduardoportilho/Downloads/Extrato Conta Corrente-250920242201.txt'
 
 import { convertItauExtratoToYnabTxs } from "../services/convert-itau-extrato-to-ynab-tx/convert-itau-extrato-to-ynab-tx";
 import { createYnabCsvContent } from "../services/create-ynab-csv/create-ynab-csv";
