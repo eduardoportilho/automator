@@ -4,4 +4,7 @@
 //  or
 // $ chmod +x ./src/scripts/*.*
 // $ ./src/scripts/hello-world.ts
+import "dotenv/config";
+
 console.log(`Hello world`);
+console.log(process.env.YNAB_ACCESS_TOKEN);
