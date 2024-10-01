@@ -16,7 +16,7 @@ export const getArgs = ({
   return args;
 };
 
-export const checkEnvVars = (varNames: string[]) => {
+export const getEnvVars = (varNames: string[]) => {
   const missing = varNames.filter((varName) => !process.env[varName]);
 
   if (missing.length > 0) {

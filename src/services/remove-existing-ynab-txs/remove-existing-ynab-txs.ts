@@ -19,7 +19,10 @@ export const removeExistingYnabTxs = async ({
   accountId: string;
   accessToken: string;
   originalTxs: YnabTx[];
-}) => {
+}): Promise<{
+  uniqueTxs: YnabTx[];
+  duplicateTxs: YnabTx[];
+}> => {
   const { from, to } = getTxsDateRange(originalTxs);
   const remoteTxs = await fetchYnabTxs({
     budgetId,
@@ -29,14 +32,21 @@ export const removeExistingYnabTxs = async ({
     to,
   });
 
-  const uniqueTxs = originalTxs.filter(
-    (newTx) => !includesYnabTx(remoteTxs, newTx)
+  const { uniqueTxs, duplicateTxs } = originalTxs.reduce(
+    (acc, newTx) => {
+      if (includesYnabTx(remoteTxs, newTx)) {
+        acc.duplicateTxs.push(newTx);
+      } else {
+        acc.uniqueTxs.push(newTx);
+      }
+
+      return acc;
+    },
+    { uniqueTxs: [], duplicateTxs: [] }
   );
 
   return {
     uniqueTxs,
-    originalCount: originalTxs.length,
-    uniqueCount: uniqueTxs.length,
-    duplicateCount: originalTxs.length - uniqueTxs.length,
+    duplicateTxs,
   };
 };

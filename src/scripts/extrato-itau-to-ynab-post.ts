@@ -8,7 +8,7 @@
 import { uploadYnabTxs } from "../services/upload-ynab-txs/upload-ynab-txs";
 import { convertItauExtratoToYnabTxs } from "../services/convert-itau-extrato-to-ynab-tx/convert-itau-extrato-to-ynab-tx";
 import { readFile } from "../utils/file";
-import { getArgs, checkEnvVars } from "../utils/scripts";
+import { getArgs, getEnvVars } from "../utils/scripts";
 import { removeExistingYnabTxs } from "../services/remove-existing-ynab-txs/remove-existing-ynab-txs";
 
 (async () => {
@@ -16,11 +16,12 @@ import { removeExistingYnabTxs } from "../services/remove-existing-ynab-txs/remo
     const [pathExtrato, budgetId, accountId, accessTokenFromArgs] = getArgs({
       requiredCount: 3,
       errorMessage:
-        "Missing arguments. Usage: extrato-itau-to-ynab-post.ts <path/to/extrato.txt> <budget-id> <account-id>",
+        "Missing arguments. Usage: extrato-itau-to-ynab-post.ts <path/to/extrato.txt> <budget-id> <account-id> <?accessToken?>",
     });
+
     let accessToken = accessTokenFromArgs;
     if (!accessToken) {
-      const [accessTokenFromEnv] = checkEnvVars(["YNAB_ACCESS_TOKEN"]);
+      const [accessTokenFromEnv] = getEnvVars(["YNAB_ACCESS_TOKEN"]);
       accessToken = accessTokenFromEnv;
     }
 
@@ -29,17 +30,26 @@ import { removeExistingYnabTxs } from "../services/remove-existing-ynab-txs/remo
       content: contentExtrato,
       accountId,
     });
+
     console.log("Fetching transactions from YNAB to remove duplicates...");
-    const { uniqueTxs, originalCount, duplicateCount, uniqueCount } =
-      await removeExistingYnabTxs({
-        budgetId,
-        accountId,
-        accessToken,
-        originalTxs: importedTxs,
-      });
+    const { uniqueTxs, duplicateTxs } = await removeExistingYnabTxs({
+      budgetId,
+      accountId,
+      accessToken,
+      originalTxs: importedTxs,
+    });
     console.log(
-      `Found ${uniqueCount} new in ${originalCount} imported transactions (${duplicateCount} duplicates)`
+      `Found ${uniqueTxs.length} new in ${importedTxs.length} imported transactions`
     );
+    if (duplicateTxs.length > 0) {
+      console.log(
+        "Duplicates:",
+        duplicateTxs.map(
+          ({ date, payee_name, amount }) => `${date}  ${payee_name}  ${amount}`
+        ),
+        "\n"
+      );
+    }
 
     console.log(`Uploading ${uniqueTxs.length} new transactions...`);
     await uploadYnabTxs({
