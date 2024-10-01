@@ -1,0 +1,34 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  //
+  // Instructions: 
+  // 1. Set the following env vars in ./envrc:
+  // 
+  // export YNAB_ACCESS_TOKEN="..."
+  // export BUDGET_DEBUG="..."
+  // export ACCOUNT_DEBUG="..."
+  // 
+  // 2. In this project dir, run `direnv allow` and restart vscode `code .`
+
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "extrato-itau-to-ynab-post",
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${workspaceFolder}/src/scripts/extrato-itau-to-ynab-post.ts",
+        "/Users/eduardoportilho/Downloads/extrato-itau.txt",
+        "${env:BUDGET_DEBUG}",
+        "${env:ACCOUNT_DEBUG}",
+        "${env:YNAB_ACCESS_TOKEN}"
+      ],
+    }
+  ]
+}

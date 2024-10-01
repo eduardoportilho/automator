@@ -11,15 +11,19 @@ import { readFile } from "../utils/file";
 import { getArgs, checkEnvVars } from "../utils/scripts";
 import { removeExistingYnabTxs } from "../services/remove-existing-ynab-txs/remove-existing-ynab-txs";
 
-checkEnvVars(["YNAB_ACCESS_TOKEN"]);
-const [pathExtrato, budgetId, accountId] = getArgs({
-  count: 3,
-  errorMessage:
-    "Missing arguments. Usage: extrato-itau-to-ynab-post.ts <path/to/extrato.txt> <budget-id> <account-id>",
-});
-
 (async () => {
   try {
+    const [pathExtrato, budgetId, accountId, accessTokenFromArgs] = getArgs({
+      requiredCount: 3,
+      errorMessage:
+        "Missing arguments. Usage: extrato-itau-to-ynab-post.ts <path/to/extrato.txt> <budget-id> <account-id>",
+    });
+    let accessToken = accessTokenFromArgs;
+    if (!accessToken) {
+      const [accessTokenFromEnv] = checkEnvVars(["YNAB_ACCESS_TOKEN"]);
+      accessToken = accessTokenFromEnv;
+    }
+
     const contentExtrato = readFile(pathExtrato);
     const importedTxs = convertItauExtratoToYnabTxs({
       content: contentExtrato,
@@ -30,21 +34,22 @@ const [pathExtrato, budgetId, accountId] = getArgs({
       await removeExistingYnabTxs({
         budgetId,
         accountId,
-        accessToken: process.env.YNAB_ACCESS_TOKEN,
+        accessToken,
         originalTxs: importedTxs,
       });
     console.log(
-      `Found ${uniqueCount} new transactions in ${originalCount} imported (${duplicateCount} duplicates)`
+      `Found ${uniqueCount} new in ${originalCount} imported transactions (${duplicateCount} duplicates)`
     );
 
     console.log(`Uploading ${uniqueTxs.length} new transactions...`);
     await uploadYnabTxs({
       budgetId: budgetId,
+      accessToken,
       txs: uniqueTxs,
-      accessToken: process.env.YNAB_ACCESS_TOKEN,
     });
     console.log("Done!");
   } catch (error) {
-    console.error("Error encountered, aborting.", error);
+    console.error("Error encountered, aborting.");
+    console.error(error);
   }
 })();

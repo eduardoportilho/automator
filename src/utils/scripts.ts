@@ -1,14 +1,14 @@
 export const getArgs = ({
-  count,
+  requiredCount,
   errorMessage,
 }: {
-  count: number;
+  requiredCount: number;
   errorMessage: string;
 }) => {
   // Remove first 2: command, file
   const args = process.argv.slice(2);
 
-  if (args.length !== count) {
+  if (args.length < requiredCount) {
     console.error(errorMessage);
     process.exit();
   }
@@ -30,4 +30,6 @@ export const checkEnvVars = (varNames: string[]) => {
     console.info(`$ direnv allow .`);
     process.exit();
   }
+
+  return varNames.map((varName) => process.env[varName]);
 };
