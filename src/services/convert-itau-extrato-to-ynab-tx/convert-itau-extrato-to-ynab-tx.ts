@@ -16,10 +16,15 @@ const convertItauRowToYnabTx = ({
 }: {
   row: string;
   accountId?: string;
-}): YnabTx => {
+}): YnabTx | null => {
+  // Ignore empty rows
+  if (row.trim().length === 0) {
+    return null;
+  }
+
   const cols = row.split(";");
   if (cols.length < 3) {
-    throw new Error(`Not enough columns (expected 3): ${row}`);
+    throw new Error(`Not enough columns (expected 3). Row content: "${row}"`);
   }
   const [dateDMY, description, amountBR] = cols;
   const dateYnab = convertDateFormat({
@@ -57,10 +62,12 @@ export const convertItauExtratoToYnabTxs = ({
     const row = rows[index];
     try {
       const ynabTx = convertItauRowToYnabTx({ row, accountId });
-      ynabTxs.push(ynabTx);
+      if (ynabTx) {
+        ynabTxs.push(ynabTx);
+      }
     } catch (error) {
       // What to do? abort? skip? log?
-      console.log(error);
+      console.error(error);
     }
   }
   return ynabTxs;
