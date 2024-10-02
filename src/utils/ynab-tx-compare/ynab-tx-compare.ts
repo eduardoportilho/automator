@@ -14,5 +14,7 @@ export const compareYnabTxs = (a: YnabTx, b: YnabTx) => {
     return false;
   }
 
-  return a.payee_name === b.payee_name;
+  return (
+    a.payee_name.toLowerCase().trim() === b.payee_name.toLowerCase().trim()
+  );
 };

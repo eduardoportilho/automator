@@ -17,11 +17,12 @@ export const convertAmountBRtoUS = (amountBR: string): string => {
 
 /**
  * Parse number from BR formatted amount
- * @param amountBR ex. "1.234,56"
+ * @param amountBR ex. "1.234,56", "1.234,56"
  * @returns number ex. 1234.56
  */
 export const parseAmountBR = (amountBR: string): number => {
   const amountUS = amountBR
+    .replace(/[a-zA-Z\$\s]/g, "") // remove currency symbol and spacs
     .replace(/\./g, "") // remove thousand separator
     .replace(/,/g, "."); // remplace decimal separator
 

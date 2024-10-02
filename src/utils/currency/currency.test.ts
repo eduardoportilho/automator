@@ -21,6 +21,8 @@ describe("currency", () => {
 
   describe("parseAmountBR", () => {
     it("parses number from BR formatted amount", () => {
+      expect(parseAmountBR("R$ 1.234,567")).toBe(1234.567);
+      expect(parseAmountBR("R$ -1.234,567")).toBe(-1234.567);
       expect(parseAmountBR("1.234,567")).toBe(1234.567);
       expect(parseAmountBR("-1234,567")).toBe(-1234.567);
       expect(parseAmountBR("0")).toBe(0);

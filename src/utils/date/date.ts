@@ -1,6 +1,7 @@
 import { parse, format } from "date-fns";
 
 export const DMY_FORMAT = "dd/MM/yyyy";
+export const DMY_REGEX = /[0-3]\d\/[0-1]\d\/\d{4}/;
 export const MDY_FORMAT = "MM/dd/yyyy";
 export const YNAB_DATE_FORMAT = "yyyy-MM-dd";
 

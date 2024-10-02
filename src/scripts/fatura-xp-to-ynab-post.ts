@@ -1,22 +1,22 @@
 #!/usr/bin/env ts-node
 
 // Usage:
-// $ chmod +x ./src/scripts/extrato-itau-to-ynab-post.ts
-// $ ./src/scripts/extrato-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/Extrato Conta Corrente-250920242201.txt' $BUDGET_EDU $ITAU_EDU
-// $ ./src/scripts/extrato-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/casal-240930.txt' $BUDGET_CASAL $ITAU_CASAL
+// $ chmod +x ./src/scripts/fatura-xp-to-ynab-post.ts
+// $ ./src/scripts/fatura-xp-to-ynab-post.ts '/Users/eduardoportilho/Downloads/fatura.csv' $BUDGET_EDU $ACCOUNT_XP_CREDITO_EDU
 
 import { uploadYnabTxs } from "../services/upload-ynab-txs/upload-ynab-txs";
-import { convertItauExtratoToYnabTxs } from "../services/convert-itau-extrato-to-ynab-txs/convert-itau-extrato-to-ynab-txs";
+import { convertFaturaXpToYnabTxs } from "../services/convert-fatura-xp-to-ynab-txs/convert-fatura-xp-to-ynab-txs";
 import { readFile } from "../utils/file";
 import { getArgs, getEnvVars } from "../utils/scripts";
 import { removeExistingYnabTxs } from "../services/remove-existing-ynab-txs/remove-existing-ynab-txs";
+import { createYnabCsvContent } from "../services/create-ynab-csv/create-ynab-csv";
 
 (async () => {
   try {
     const [pathExtrato, budgetId, accountId, accessTokenFromArgs] = getArgs({
       requiredCount: 3,
       errorMessage:
-        "Missing arguments. Usage: extrato-itau-to-ynab-post.ts <path/to/extrato.txt> <budget-id> <account-id> <?accessToken?>",
+        "Missing arguments. Usage: fatura-xp-to-ynab-post.ts <path/to/extrato.txt> <budget-id> <account-id> <?accessToken?>",
     });
 
     let accessToken = accessTokenFromArgs;
@@ -26,7 +26,7 @@ import { removeExistingYnabTxs } from "../services/remove-existing-ynab-txs/remo
     }
 
     const contentExtrato = readFile(pathExtrato);
-    const importedTxs = convertItauExtratoToYnabTxs({
+    const importedTxs = convertFaturaXpToYnabTxs({
       content: contentExtrato,
       accountId,
     });
