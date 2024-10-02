@@ -45,11 +45,25 @@ describe("currency", () => {
 
   describe("convertAmountToYnab", () => {
     it("converts numeric amount to numeric ynab amount", () => {
-      expect(convertAmountToYnab(1234.56)).toBe(1234560);
-      expect(convertAmountToYnab(-1234.56)).toBe(-1234560);
-      expect(convertAmountToYnab(1234)).toBe(1234000);
-      expect(convertAmountToYnab(1)).toBe(1000);
-      expect(convertAmountToYnab(0)).toBe(0);
+      expect(convertAmountToYnab({ amount: 1234.56 })).toBe(1234560);
+      expect(convertAmountToYnab({ amount: -1234.56 })).toBe(-1234560);
+      expect(convertAmountToYnab({ amount: 1234 })).toBe(1234000);
+      expect(convertAmountToYnab({ amount: 1 })).toBe(1000);
+      expect(convertAmountToYnab({ amount: 0 })).toBe(0);
+    });
+
+    it("invert numeric amount", () => {
+      expect(convertAmountToYnab({ amount: 1234.56, invert: true })).toBe(
+        -1234560
+      );
+      expect(convertAmountToYnab({ amount: -1234.56, invert: true })).toBe(
+        1234560
+      );
+      expect(convertAmountToYnab({ amount: 1234, invert: true })).toBe(
+        -1234000
+      );
+      expect(convertAmountToYnab({ amount: 1, invert: true })).toBe(-1000);
+      expect(convertAmountToYnab({ amount: 0, invert: true })).toBe(-0);
     });
   });
 });

@@ -48,5 +48,10 @@ export const formatYnabAmountUS = (ynabAmount: number) => {
  * @param amount ex. 1234.56
  * @returns ex. 1234560
  */
-export const convertAmountToYnab = (amount: number): number =>
-  Math.round(amount * 1000.0);
+export const convertAmountToYnab = ({
+  amount,
+  invert = false,
+}: {
+  amount: number;
+  invert?: boolean;
+}): number => Math.round(amount * 1000.0) * (invert ? -1 : 1);

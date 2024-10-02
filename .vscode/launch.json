@@ -24,8 +24,8 @@
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/extrato-itau-to-ynab-post.ts",
-        "/Users/eduardoportilho/Downloads/extrato-itau.txt",
+        "${workspaceFolder}/src/scripts/fatura-itau-to-ynab-post.ts",
+        "/Users/eduardoportilho/Downloads/itau-visa.xls",
         "${env:BUDGET_EDU}",
         "${env:ACCOUNT_ITAU_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"

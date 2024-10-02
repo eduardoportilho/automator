@@ -28,3 +28,29 @@ export const convertDateFormat = ({
   const parsedDate = parse(date, inputFormat, new Date());
   return format(parsedDate, outputFormat);
 };
+
+export const parseDateStringIfValid = ({
+  value,
+  dateFormat,
+}: {
+  value: any;
+  dateFormat: string;
+}) => {
+  try {
+    if (typeof value !== "string") {
+      return null;
+    }
+    const date = parse(value, dateFormat, new Date());
+
+    if (Object.prototype.toString.call(date) !== "[object Date]") {
+      return null;
+    }
+
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+    return date;
+  } catch (e) {
+    return null;
+  }
+};

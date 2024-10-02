@@ -7,10 +7,9 @@ import { fetchYnabTxsAndFilterUnique } from "../services/fetch-ynab-txs-and-filt
 /**
  * 1. Read input path, budgetId, accountId, and accessToken from CLI args (print error and abort if not present)
  * 2. If accessToken is not on CLI args, read it from env
- * 3. Read input file and return content
  * @returns
  */
-export const readContentUsingCLIArgs = () => {
+export const getCLIArgs = () => {
   const scriptFileName = process.argv[1];
   const [path, budgetId, accountId, accessTokenFromArgs] = getArgs({
     requiredCount: 3,
@@ -22,10 +21,21 @@ export const readContentUsingCLIArgs = () => {
     const [accessTokenFromEnv] = getEnvVars(["YNAB_ACCESS_TOKEN"]);
     accessToken = accessTokenFromEnv;
   }
+  return { path, budgetId, accountId, accessToken };
+};
+
+/**
+ * 1. Read input path, budgetId, accountId, and accessToken from CLI args (print error and abort if not present)
+ * 2. If accessToken is not on CLI args, read it from env
+ * 3. Read input file and return content
+ * @returns
+ */
+export const readContentUsingCLIArgs = () => {
+  const { path, ...rest } = getCLIArgs();
 
   const content = readFile(path);
 
-  return { path, budgetId, accountId, accessToken, content };
+  return { path, content, ...rest };
 };
 
 /**

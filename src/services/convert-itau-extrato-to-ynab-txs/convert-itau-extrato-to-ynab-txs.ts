@@ -38,7 +38,7 @@ const convertItauRowToYnabTx = ({
     account_id: accountId,
     date: dateYnab,
     payee_name: description,
-    amount: convertAmountToYnab(amount),
+    amount: convertAmountToYnab({ amount }),
     flag_color: "purple",
   };
 };

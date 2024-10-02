@@ -35,13 +35,13 @@ const convertFaturaXpRowToYnabTx = ({
     inputFormat: DMY_FORMAT,
     outputFormat: YNAB_DATE_FORMAT,
   });
-  const amount = parseAmountBR(amountBR) * -1;
+  const amount = parseAmountBR(amountBR);
 
   return {
     account_id: accountId,
     date: dateYnab,
     payee_name: description,
-    amount: convertAmountToYnab(amount),
+    amount: convertAmountToYnab({ amount, invert: true }),
     flag_color: "purple",
   };
 };
