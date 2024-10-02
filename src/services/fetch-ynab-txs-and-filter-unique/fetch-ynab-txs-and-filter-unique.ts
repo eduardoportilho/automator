@@ -9,7 +9,7 @@ const getTxsDateRange = (txs: YnabTx[]) => {
   return { from: min(dates), to: max(dates) };
 };
 
-export const removeExistingYnabTxs = async ({
+export const fetchYnabTxsAndFilterUnique = async ({
   budgetId,
   accountId,
   accessToken,
