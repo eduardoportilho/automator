@@ -29,31 +29,31 @@ export const readContentUsingCLIArgs = () => {
 };
 
 /**
- * 1. Fetch remote txs from the same date range of importedTxs
- * 2. Remove txs from importedTxs that already exists on remote
- * 3. Return unique txs from importedTxs
+ * 1. Fetch remote txs from the same date range of txs
+ * 2. Remove txs from txs that already exists on remote
+ * 3. Return unique txs from txs
  * @returns
  */
 export const removeDuplicates = async ({
   budgetId,
   accountId,
   accessToken,
-  importedTxs,
+  txs,
 }: {
   budgetId: string;
   accountId: string;
   accessToken: string;
-  importedTxs: YnabTx[];
+  txs: YnabTx[];
 }) => {
   console.log("Fetching transactions from YNAB to remove duplicates...");
   const { uniqueTxs, duplicateTxs } = await fetchYnabTxsAndFilterUnique({
     budgetId,
     accountId,
     accessToken,
-    originalTxs: importedTxs,
+    originalTxs: txs,
   });
   console.log(
-    `Found ${uniqueTxs.length} new in ${importedTxs.length} imported transactions`
+    `Found ${uniqueTxs.length} new in ${txs.length} imported transactions`
   );
   if (duplicateTxs.length > 0) {
     console.log(

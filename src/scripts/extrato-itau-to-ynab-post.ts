@@ -27,7 +27,7 @@ import {
       budgetId,
       accountId,
       accessToken,
-      importedTxs,
+      txs: importedTxs,
     });
 
     await uploadTxsToYnab({

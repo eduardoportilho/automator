@@ -10,6 +10,8 @@ import {
   removeDuplicates,
   uploadTxsToYnab,
 } from "./common";
+import { processTxs } from "../services/process-txs/process-txs";
+import { FATURA_XP_PROCESSORS } from "../services/fatura-xp-processors/fatura-xp-processors";
 
 (async () => {
   try {
@@ -21,11 +23,16 @@ import {
       accountId,
     });
 
+    const processedTxs = processTxs({
+      txs: importedTxs,
+      processors: FATURA_XP_PROCESSORS,
+    });
+
     const uniqueTxs = await removeDuplicates({
       budgetId,
       accountId,
       accessToken,
-      importedTxs,
+      txs: processedTxs,
     });
 
     await uploadTxsToYnab({
