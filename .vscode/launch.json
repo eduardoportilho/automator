@@ -18,16 +18,16 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "extrato-itau-to-ynab-post",
+      "name": "extrato-safra-csv-to-ynab-post",
       "runtimeArgs": [
         "-r",
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/extrato-xp-to-ynab-post.ts",
-        "/Users/eduardoportilho/Downloads/extrato-xp.xlsx",
+        "${workspaceFolder}/src/scripts/extrato-safra-csv-to-ynab-post.ts",
+        "/Users/eduardoportilho/Downloads/extrato-safra.csv",
         "${env:BUDGET_EDU}",
-        "${env:ACCOUNT_XP_EDU}",
+        "${env:ACCOUNT_SAFRA_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"
       ],
     }

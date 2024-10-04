@@ -9,12 +9,14 @@ export const processTxs = ({
   txs: YnabTx[];
   processors: TxProcessor[];
 }) => {
-  return txs.map((tx) => {
-    const processedTx = processors.reduce(
-      (partialTx, processTx) => processTx(partialTx),
-      tx
-    );
+  return txs
+    .map((tx) => {
+      const processedTx = processors.reduce(
+        (partialTx, processTx) => processTx(partialTx),
+        tx
+      );
 
-    return processedTx;
-  });
+      return processedTx;
+    })
+    .filter(Boolean);
 };
