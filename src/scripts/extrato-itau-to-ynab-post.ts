@@ -5,7 +5,7 @@
 // $ ./src/scripts/extrato-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/Extrato Conta Corrente-250920242201.txt' $BUDGET_EDU $ACCOUNT_ITAU_EDU
 // $ ./src/scripts/extrato-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/casal-240930.txt' $BUDGET_CASAL $ACCOUNT_ITAU_CASAL
 
-import { EXTRATO_ITAU_PROCESSORS } from "../services/extrato-itau-processors/extrato-itau-processors";
+import { EXTRATO_ITAU_PROCESSORS } from "../services/process-extrato-itau/process-extrato-itau";
 import { convertItauExtratoToYnabTxs } from "../services/convert-itau-extrato-to-ynab-txs/convert-itau-extrato-to-ynab-txs";
 import { processTxs } from "../services/process-txs/process-txs";
 import {

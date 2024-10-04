@@ -1,4 +1,8 @@
-import { convertDateDMYtoMDY, parseDateStringIfValid } from "./date";
+import {
+  convertDateDMYtoMDY,
+  parseDateStringIfValid,
+  isValidDateObject,
+} from "./date";
 
 describe("date", () => {
   describe("convertDateDMYtoMDY", () => {
@@ -58,6 +62,21 @@ describe("date", () => {
           dateFormat: "MM/dd/yyyy",
         })
       ).toBeNull();
+    });
+  });
+  describe("isValidDateObject", () => {
+    it("return true for valid Date object", () => {
+      expect(isValidDateObject(new Date())).toBe(true);
+      expect(isValidDateObject(new Date("2024-10-03T18:56:12.207Z"))).toBe(
+        true
+      );
+    });
+
+    it("return false for not valid Date objects", () => {
+      expect(isValidDateObject(new Date("foo"))).toBe(false);
+      expect(isValidDateObject("2024-10-03T18:56:12.207Z")).toBe(false);
+      expect(isValidDateObject(null)).toBe(false);
+      expect(isValidDateObject(undefined)).toBe(false);
     });
   });
 });

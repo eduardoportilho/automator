@@ -11,7 +11,7 @@ import {
   uploadTxsToYnab,
 } from "./common";
 import { processTxs } from "../services/process-txs/process-txs";
-import { FATURA_XP_PROCESSORS } from "../services/fatura-xp-processors/fatura-xp-processors";
+import { FATURA_XP_PROCESSORS } from "../services/process-fatura-xp/process-fatura-xp";
 
 (async () => {
   try {

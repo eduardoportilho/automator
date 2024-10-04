@@ -42,15 +42,24 @@ export const parseDateStringIfValid = ({
     }
     const date = parse(value, dateFormat, new Date());
 
-    if (Object.prototype.toString.call(date) !== "[object Date]") {
+    if (!isValidDateObject(date)) {
       return null;
     }
 
-    if (isNaN(date.getTime())) {
-      return null;
-    }
     return date;
   } catch (e) {
     return null;
   }
+};
+
+export const isValidDateObject = (object: any) => {
+  if (Object.prototype.toString.call(object) !== "[object Date]") {
+    return false;
+  }
+
+  if (isNaN(object.getTime())) {
+    return false;
+  }
+
+  return true;
 };
