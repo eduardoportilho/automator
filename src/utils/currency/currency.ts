@@ -17,7 +17,7 @@ export const convertAmountBRtoUS = (amountBR: string): string => {
 
 /**
  * Parse number from BR formatted amount
- * @param amountBR ex. "1.234,56", "1.234,56"
+ * @param amountBR ex. "1.234,56", "R$ 1.234,56"
  * @returns number ex. 1234.56
  */
 export const parseAmountBR = (amountBR: string): number => {

@@ -4,10 +4,7 @@ import {
   findRowByColumnValue,
 } from "../../utils/excel/excel";
 import { YnabTx } from "../../types";
-import {
-  parseAmountBR,
-  convertAmountToYnab,
-} from "../../utils/currency/currency";
+import { convertAmountToYnab } from "../../utils/currency/currency";
 import {
   convertDateFormat,
   DMY_FORMAT,
