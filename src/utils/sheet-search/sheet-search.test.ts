@@ -2,11 +2,10 @@ import {
   findRowByColumnValue,
   findFirstNonEmptyRow,
   findFirstEmptyRow,
-  rowIncludes,
-} from "./excel";
+} from "./sheet-search";
 
-describe("excel", () => {
-  const excelContent = [
+describe("sheet-search", () => {
+  const sheetContent = [
     ["Apple", 1, "red"],
     ["Banana", 2, "yellow"],
     ["Banana", 3, "yellow"],
@@ -19,7 +18,7 @@ describe("excel", () => {
     it("finds first empty row", () => {
       expect(
         findFirstEmptyRow({
-          excelContent,
+          sheetContent,
         })
       ).toEqual({
         index: 3,
@@ -32,7 +31,7 @@ describe("excel", () => {
     it("finds first non empty row", () => {
       expect(
         findFirstNonEmptyRow({
-          excelContent,
+          sheetContent,
         })
       ).toEqual({
         index: 0,
@@ -43,7 +42,7 @@ describe("excel", () => {
     it("finds first non empty row starting at index", () => {
       expect(
         findFirstNonEmptyRow({
-          excelContent,
+          sheetContent,
           startingAt: 3,
         })
       ).toEqual({
@@ -55,7 +54,7 @@ describe("excel", () => {
     it("finds first non empty column starting at index", () => {
       expect(
         findFirstNonEmptyRow({
-          excelContent,
+          sheetContent,
           column: 2,
           startingAt: 3,
         })
@@ -72,7 +71,7 @@ describe("excel", () => {
         findRowByColumnValue({
           value: "yellow",
           column: 2,
-          excelContent,
+          sheetContent,
         })
       ).toEqual({
         index: 1,
@@ -86,45 +85,12 @@ describe("excel", () => {
           value: "yellow",
           column: 2,
           startingAt: 2,
-          excelContent,
+          sheetContent,
         })
       ).toEqual({
         index: 2,
         row: ["Banana", 3, "yellow"],
       });
-    });
-  });
-
-  describe("rowIncludes", () => {
-    it("returns true if row contains all values", () => {
-      const row = [
-        "15,5% | Pós-Fixado",
-        "Posição",
-        "% Alocação",
-        "Rentabilidade Líquida",
-        "Rentabilidade Bruta",
-        "Valor aplicado",
-        "Valor líquido",
-      ];
-
-      const headerCells = ["Posição", "Valor Líquido"];
-
-      expect(rowIncludes(row, headerCells)).toBe(true);
-    });
-
-    it("returns false if row does not contains all values", () => {
-      const row = [
-        "15,5% | Pós-Fixado",
-        "% Alocação",
-        "Rentabilidade Líquida",
-        "Rentabilidade Bruta",
-        "Valor aplicado",
-        "Valor líquido",
-      ];
-
-      const headerCells = ["Posição", "Valor Líquido"];
-
-      expect(rowIncludes(row, headerCells)).toBe(false);
     });
   });
 });

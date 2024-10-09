@@ -9,7 +9,7 @@ import { EXTRATO_ITAU_PROCESSORS } from "../services/process-extrato-itau/proces
 import { convertItauExtratoToYnabTxs } from "../services/convert-itau-extrato-to-ynab-txs/convert-itau-extrato-to-ynab-txs";
 import { processTxs } from "../services/process-txs/process-txs";
 import {
-  readContentUsingCLIArgs,
+  getYnabCliArgsAndReadFile,
   removeDuplicates,
   uploadTxsToYnab,
 } from "./common";
@@ -17,7 +17,7 @@ import {
 (async () => {
   try {
     const { budgetId, accountId, accessToken, content } =
-      readContentUsingCLIArgs();
+      getYnabCliArgsAndReadFile();
 
     const importedTxs = convertItauExtratoToYnabTxs({
       content: content,

@@ -4,7 +4,7 @@
 // $ chmod +x ./src/scripts/extrato-xp-to-ynab-post.ts
 // $ ./src/scripts/extrato-xp-to-ynab-post.ts '/Users/eduardoportilho/Downloads/extrato-xp.xlsx' $BUDGET_EDU $ACCOUNT_XP_EDU
 
-import { getCLIArgs, removeDuplicates, uploadTxsToYnab } from "./common";
+import { getYnabCliArgs, removeDuplicates, uploadTxsToYnab } from "./common";
 import { readContentFromXls } from "../utils/excel/excel";
 import { convertExtratoXpXlsxToYnabTxs } from "../services/convert-extrato-xp-xlsx-to-ynab-txs/convert-extrato-xp-xlsx-to-ynab-txs";
 import { processTxs } from "../services/process-txs/process-txs";
@@ -12,7 +12,7 @@ import { EXTRATO_XP_PROCESSORS } from "../services/process-extrato-xp/process-ex
 
 (async () => {
   try {
-    const { budgetId, accountId, accessToken, path } = getCLIArgs();
+    const { budgetId, accountId, accessToken, path } = getYnabCliArgs();
 
     const excelContent = readContentFromXls(path);
 

@@ -1,9 +1,9 @@
+import { SheetContent } from "../../types";
 import {
-  ExcelContent,
   findFirstEmptyRow,
   findFirstNonEmptyRow,
   findRowByColumnValue,
-} from "../excel/excel";
+} from "../sheet-search/sheet-search";
 
 /**
  * Find a section with one content block:
@@ -23,17 +23,17 @@ export const findExcelSectionByTitle = ({
   startingAt = 0,
 }: {
   title: string;
-  excelContent: ExcelContent;
+  excelContent: SheetContent;
   startingAt?: number;
 }): {
   titleIndex: number;
   endIndex: number;
-  section: ExcelContent;
+  section: SheetContent;
 } => {
   const { index: titleIndex } = findRowByColumnValue({
     value: title,
     column: 0,
-    excelContent,
+    sheetContent: excelContent,
     startingAt,
   });
 
@@ -48,12 +48,12 @@ export const findExcelSectionByTitle = ({
   const { index: firstRowIndex } = findFirstNonEmptyRow({
     startingAt: titleIndex + 1,
     column: 0,
-    excelContent,
+    sheetContent: excelContent,
   });
   const { index: lastRowIndex } = findFirstEmptyRow({
     startingAt: firstRowIndex,
     column: 0,
-    excelContent,
+    sheetContent: excelContent,
   });
 
   const endIndex = lastRowIndex >= 0 ? lastRowIndex : undefined;

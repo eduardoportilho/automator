@@ -1,11 +1,6 @@
-import {
-  ExcelContent,
-  ExcelRowValue,
-  isEmptyCellRow,
-  findRowBy,
-  findRowByColumnValue,
-  rowIncludes,
-} from "../excel/excel";
+import { RowValue, SheetContent } from "../../types";
+import { isEmptyCellRow, rowIncludes } from "../cell-value/cell-value";
+import { findRowBy, findRowByColumnValue } from "../sheet-search/sheet-search";
 
 /**
  * Check if row is a section title:
@@ -14,7 +9,7 @@ import {
  * @param row
  * @returns
  */
-const isTitleRow = (row: ExcelRowValue) => {
+const isTitleRow = (row: RowValue) => {
   if (row.length < 1 || row.length > 2) {
     return false;
   }
@@ -46,18 +41,18 @@ export const findExcelSectionByTitleAndHeader = ({
   startingAt = 0,
 }: {
   title: string;
-  excelContent: ExcelContent;
+  excelContent: SheetContent;
   startingAt?: number;
   headerCells: string[];
 }): {
   titleIndex: number;
   endIndex: number;
-  section: ExcelContent;
+  section: SheetContent;
 } => {
   const { index: titleIndex } = findRowByColumnValue({
     value: title,
     column: 0,
-    excelContent,
+    sheetContent: excelContent,
     startingAt,
   });
 
@@ -70,7 +65,7 @@ export const findExcelSectionByTitleAndHeader = ({
   }
   const { index: nextTitleRowIndex } = findRowBy({
     startingAt: titleIndex + 1,
-    excelContent,
+    sheetContent: excelContent,
     predicate: (row) => isTitleRow(row),
   });
 

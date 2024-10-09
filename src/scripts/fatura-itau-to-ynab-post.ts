@@ -4,13 +4,13 @@
 // $ chmod +x ./src/scripts/fatura-itau-to-ynab-post.ts
 // $ ./src/scripts/fatura-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/itau-visa.xls' $BUDGET_EDU $ACCOUNT_ITAU_CREDITO_EDU
 
-import { getCLIArgs, removeDuplicates, uploadTxsToYnab } from "./common";
+import { getYnabCliArgs, removeDuplicates, uploadTxsToYnab } from "./common";
 import { readContentFromXls } from "../utils/excel/excel";
 import { convertFaturaItauXlsToYnabTxs } from "../services/convert-fatura-itau-xls-to-ynab-txs/convert-fatura-itau-xls-to-ynab-txs";
 
 (async () => {
   try {
-    const { budgetId, accountId, accessToken, path } = getCLIArgs();
+    const { budgetId, accountId, accessToken, path } = getYnabCliArgs();
 
     const excelContent = readContentFromXls(path);
 

@@ -18,6 +18,7 @@ export interface Acao {
   ativo: string;
   cotacao: number;
   quantidade: number;
+  posicao?: number;
 }
 
 export interface Fundo {
@@ -27,3 +28,9 @@ export interface Fundo {
   posicaoMercado: number;
   valorLiquido: number;
 }
+
+export type CellValue = string | number;
+
+export type RowValue = CellValue[];
+
+export type SheetContent = RowValue[];

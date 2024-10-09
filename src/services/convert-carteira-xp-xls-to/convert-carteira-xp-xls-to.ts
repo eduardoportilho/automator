@@ -1,12 +1,11 @@
-import {
-  ExcelContent,
-  ExcelRowValue,
-  rowIncludes,
-  parseExcelNumber,
-} from "../../utils/excel/excel";
+import { RowValue, SheetContent } from "../../types";
 import { Acao, Carteira, Fundo } from "../../types";
 import { findExcelSectionByTitle } from "../../utils/find-excel-section-by-title/find-excel-section-by-title";
 import { findExcelSectionByTitleAndHeader } from "../../utils/find-excel-section-by-title-header/find-excel-section-by-title-header";
+import {
+  rowIncludes,
+  parseCellNumber,
+} from "../../utils/cell-value/cell-value";
 
 /**
  * Look for the section with:
@@ -16,7 +15,7 @@ import { findExcelSectionByTitleAndHeader } from "../../utils/find-excel-section
  * @param excelContent
  * @returns
  */
-const convertFundosImobiliarios = (excelContent: ExcelContent): Acao[] => {
+const convertFundosImobiliarios = (excelContent: SheetContent): Acao[] => {
   const columns = {
     cotacao: { header: "Última cotação", index: 6 },
     quantidade: { header: "Quantidade de Cotas", index: 7 },
@@ -26,14 +25,14 @@ const convertFundosImobiliarios = (excelContent: ExcelContent): Acao[] => {
     excelContent,
     title: "Fundos Imobiliários",
     requiredHeaders: Object.values(columns).map((col) => col.header),
-    buildAcao: (row: ExcelRowValue): Acao => {
+    buildAcao: (row: RowValue): Acao => {
       if (row.length <= 7) {
         return null;
       }
       return {
         ativo: row[0].toString(),
-        cotacao: parseExcelNumber(row[columns.cotacao.index]),
-        quantidade: parseExcelNumber(row[columns.quantidade.index]),
+        cotacao: parseCellNumber(row[columns.cotacao.index]),
+        quantidade: parseCellNumber(row[columns.quantidade.index]),
       };
     },
   });
@@ -47,7 +46,7 @@ const convertFundosImobiliarios = (excelContent: ExcelContent): Acao[] => {
  * @param excelContent
  * @returns
  */
-const convertAcoes = (excelContent: ExcelContent): Acao[] => {
+const convertAcoes = (excelContent: SheetContent): Acao[] => {
   const columns = {
     cotacao: { header: "Último preço (R$)", index: 5 },
     quantidade: { header: "Qtd. total", index: 6 },
@@ -57,14 +56,14 @@ const convertAcoes = (excelContent: ExcelContent): Acao[] => {
     excelContent,
     title: "Ações",
     requiredHeaders: Object.values(columns).map((col) => col.header),
-    buildAcao: (row: ExcelRowValue): Acao => {
+    buildAcao: (row: RowValue): Acao => {
       if (row.length <= 6) {
         return null;
       }
       return {
         ativo: row[0].toString(),
-        cotacao: parseExcelNumber(row[columns.cotacao.index]),
-        quantidade: parseExcelNumber(row[columns.quantidade.index]),
+        cotacao: parseCellNumber(row[columns.cotacao.index]),
+        quantidade: parseCellNumber(row[columns.quantidade.index]),
       };
     },
   });
@@ -86,12 +85,12 @@ const convertSectionIntoAcao = ({
   requiredHeaders,
   buildAcao,
 }: {
-  excelContent: ExcelContent;
+  excelContent: SheetContent;
   title: string;
   requiredHeaders: string[];
-  buildAcao: (row: ExcelRowValue) => Acao | null;
+  buildAcao: (row: RowValue) => Acao | null;
 }): Acao[] => {
-  let sectionBody: ExcelContent;
+  let sectionBody: SheetContent;
   let lastSectionEndIndex: number;
 
   while (!sectionBody) {
@@ -123,7 +122,7 @@ const convertSectionIntoAcao = ({
  * @param excelContent
  * @returns
  */
-const convertRendaFixa = (excelContent: ExcelContent): Fundo[] => {
+const convertRendaFixa = (excelContent: SheetContent): Fundo[] => {
   const columns = {
     posicaoMercado: { header: "Posição a mercado", index: 1 },
     quantidade: { header: "Quantidade", index: 7 },
@@ -139,10 +138,10 @@ const convertRendaFixa = (excelContent: ExcelContent): Fundo[] => {
 
   return section.map((row) => ({
     nome: row[0].toString(),
-    quantidade: parseExcelNumber(row[columns.quantidade.index]),
-    precoUnitario: parseExcelNumber(row[columns.precoUnitario.index]),
-    posicaoMercado: parseExcelNumber(row[columns.posicaoMercado.index]),
-    valorLiquido: parseExcelNumber(row[columns.valorLiquido.index]),
+    quantidade: parseCellNumber(row[columns.quantidade.index]),
+    precoUnitario: parseCellNumber(row[columns.precoUnitario.index]),
+    posicaoMercado: parseCellNumber(row[columns.posicaoMercado.index]),
+    valorLiquido: parseCellNumber(row[columns.valorLiquido.index]),
   }));
 };
 
@@ -155,7 +154,7 @@ const convertRendaFixa = (excelContent: ExcelContent): Fundo[] => {
  * @returns
  */
 export const convertFundosInvestimentos = (
-  excelContent: ExcelContent
+  excelContent: SheetContent
 ): Fundo[] => {
   const columns = {
     posicaoMercado: { header: "Posição", index: 1 },
@@ -170,8 +169,8 @@ export const convertFundosInvestimentos = (
 
   return section.map((row) => ({
     nome: row[0].toString(),
-    posicaoMercado: parseExcelNumber(row[columns.posicaoMercado.index]),
-    valorLiquido: parseExcelNumber(row[columns.valorLiquido.index]),
+    posicaoMercado: parseCellNumber(row[columns.posicaoMercado.index]),
+    valorLiquido: parseCellNumber(row[columns.valorLiquido.index]),
   }));
 };
 
@@ -181,7 +180,7 @@ export const convertFundosInvestimentos = (
 export const convertCarteiraXpXlsTo = ({
   excelContent,
 }: {
-  excelContent: ExcelContent;
+  excelContent: SheetContent;
 }): Carteira => {
   return {
     fiis: convertFundosImobiliarios(excelContent),

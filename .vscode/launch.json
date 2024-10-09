@@ -18,7 +18,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "carteira-xp-to-sheets.ts",
+      "name": "src/scripts/carteira-xp-to-sheets.ts",
       "runtimeArgs": [
         "-r",
         "ts-node/register"

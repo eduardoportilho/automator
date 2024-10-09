@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { ExcelContent, ExcelRowValue } from "../../utils/excel/excel";
+import { RowValue, SheetContent } from "../../types";
 import { YnabTx } from "../../types";
 import { convertAmountToYnab } from "../../utils/currency/currency";
 import { isValidDateObject, YNAB_DATE_FORMAT } from "../../utils/date/date";
@@ -14,7 +14,7 @@ const convertExtratoXpRowToYnabTx = ({
   row,
   accountId,
 }: {
-  row: ExcelRowValue;
+  row: RowValue;
   accountId?: string;
 }): YnabTx | null => {
   // [date, date liq., desc, value, saldo]
@@ -63,7 +63,7 @@ export const convertExtratoXpXlsxToYnabTxs = ({
   excelContent,
   accountId,
 }: {
-  excelContent: ExcelContent;
+  excelContent: SheetContent;
   accountId?: string;
 }): YnabTx[] => {
   const ynabTxs: YnabTx[] = [];

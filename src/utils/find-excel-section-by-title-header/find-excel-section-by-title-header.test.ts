@@ -1,22 +1,25 @@
-import { findExcelSectionByTitle } from "./find-excel-section-by-title";
+import { findExcelSectionByTitleAndHeader } from "./find-excel-section-by-title-header";
 
-describe("findExcelSectionByTitle", () => {
+describe("findExcelSectionByTitleAndHeader", () => {
   it("finds section", () => {
     const excelContent = [
       [],
       ["Title of the section 1"],
       [],
+      ["Fruit", "Qtd", "color"],
       ["Apple", 1, "red"],
       ["Banana", 2, "yellow"],
       [],
       ["Title of the section 2"],
       [],
+      ["Fruit", "Qtd", "color"],
       ["Coconut", 4, ""],
       ["Pear", 5, "green"],
     ];
 
-    const section1 = findExcelSectionByTitle({
+    const section1 = findExcelSectionByTitleAndHeader({
       title: "Title of the section 1",
+      headerCells: ["Fruit", "Qtd", "color"],
       excelContent,
     });
 
@@ -29,8 +32,9 @@ describe("findExcelSectionByTitle", () => {
       })
     );
 
-    const section2 = findExcelSectionByTitle({
+    const section2 = findExcelSectionByTitleAndHeader({
       title: "Title of the section 2",
+      headerCells: ["Fruit", "Qtd", "color"],
       excelContent,
     });
 

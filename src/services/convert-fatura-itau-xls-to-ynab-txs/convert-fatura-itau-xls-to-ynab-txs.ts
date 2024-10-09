@@ -1,9 +1,5 @@
-import {
-  ExcelContent,
-  ExcelRowValue,
-  findRowByColumnValue,
-} from "../../utils/excel/excel";
-import { YnabTx } from "../../types";
+import { findRowByColumnValue } from "../../utils/sheet-search/sheet-search";
+import { RowValue, SheetContent, YnabTx } from "../../types";
 import { convertAmountToYnab } from "../../utils/currency/currency";
 import {
   convertDateFormat,
@@ -22,7 +18,7 @@ const convertFaturaItauRowToYnabTx = ({
   row,
   accountId,
 }: {
-  row: ExcelRowValue;
+  row: RowValue;
   accountId?: string;
 }): YnabTx | null => {
   // [date, desc, empty, value]
@@ -78,11 +74,11 @@ export const convertFaturaItauXlsToYnabTxs = ({
   excelContent,
   accountId,
 }: {
-  excelContent: ExcelContent;
+  excelContent: SheetContent;
   accountId?: string;
 }): YnabTx[] => {
   const { index: intlIndex } = findRowByColumnValue({
-    excelContent,
+    sheetContent: excelContent,
     column: 0,
     value: "lançamentos internacionais",
   });

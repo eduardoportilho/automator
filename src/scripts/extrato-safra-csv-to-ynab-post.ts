@@ -6,7 +6,7 @@
 
 import { processTxs } from "../services/process-txs/process-txs";
 import {
-  readContentUsingCLIArgs,
+  getYnabCliArgsAndReadFile,
   removeDuplicates,
   uploadTxsToYnab,
 } from "./common";
@@ -16,7 +16,7 @@ import { EXTRATO_SAFRA_PROCESSORS } from "../services/process-extrato-safra/proc
 (async () => {
   try {
     const { budgetId, accountId, accessToken, content } =
-      readContentUsingCLIArgs();
+      getYnabCliArgsAndReadFile();
 
     const importedTxs = convertSafraExtratoToYnabTxs({
       content: content,

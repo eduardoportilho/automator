@@ -6,7 +6,7 @@
 
 import { convertFaturaXpToYnabTxs } from "../services/convert-fatura-xp-to-ynab-txs/convert-fatura-xp-to-ynab-txs";
 import {
-  readContentUsingCLIArgs,
+  getYnabCliArgsAndReadFile,
   removeDuplicates,
   uploadTxsToYnab,
 } from "./common";
@@ -16,7 +16,7 @@ import { FATURA_XP_PROCESSORS } from "../services/process-fatura-xp/process-fatu
 (async () => {
   try {
     const { budgetId, accountId, accessToken, content } =
-      readContentUsingCLIArgs();
+      getYnabCliArgsAndReadFile();
 
     const importedTxs = convertFaturaXpToYnabTxs({
       content,
