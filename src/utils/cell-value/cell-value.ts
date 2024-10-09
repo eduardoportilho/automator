@@ -43,9 +43,12 @@ export const isEmptyCellRow = (row: RowValue) =>
  * @param cellValue
  * @returns
  */
-export const isEmptyCellValue = (cellValue: CellValue) =>
-  typeof cellValue === "string" && cellValue.trim().length === 0;
-
+export const isEmptyCellValue = (cellValue: CellValue) => {
+  if (cellValue == null) {
+    return true;
+  }
+  return typeof cellValue === "string" && cellValue.trim().length === 0;
+};
 export const cellValueEqualsTo = (cellValue: CellValue, value: any) => {
   if (typeof cellValue === "string" && typeof value === "string") {
     return cellValue.toLowerCase().trim() === value.toLowerCase().trim();

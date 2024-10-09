@@ -2,6 +2,25 @@ export const splitRows = (content: string): string[] => {
   return content.split(/\r?\n/);
 };
 
+export const splitCsv = ({
+  content,
+  separator,
+  removeEmptyRows = false,
+}: {
+  content: string;
+  separator: string;
+  removeEmptyRows?: boolean;
+}): string[][] => {
+  return splitRows(content)
+    .map((row) => {
+      if (row.trim().length === 0) {
+        return removeEmptyRows ? null : [];
+      }
+      return row.split(separator);
+    })
+    .filter(Boolean);
+};
+
 export const joinRows = ({
   rows,
   header,

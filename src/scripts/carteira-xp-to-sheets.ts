@@ -6,11 +6,9 @@
 
 import { readContentFromXls } from "../utils/excel/excel";
 import { convertCarteiraXpXlsTo } from "../services/convert-carteira-xp-xls-to/convert-carteira-xp-xls-to";
-import { writeInvestimentoSheetEntry } from "../services/write-investimento-sheet-entry/write-investimento-sheet-entry";
-import { fetchPatrimonioSheet } from "../services/fetch-patrimonio-sheet/fetch-patrimonio-sheet";
-import { findCellPosition } from "../utils/sheet-search/sheet-search";
-import { INVESTIMENTOS_SPREADSHEET_URL, NEXT_DATE_ANCHOR } from "../constants";
+import { INVESTIMENTOS_SPREADSHEET_URL } from "../constants";
 import { getArgs } from "../utils/scripts";
+import { uploadCarteiraToPatrimonioSheet } from "../services/upload-carteira-to-patrimonio-sheet/upload-carteira-to-patrimonio-sheet";
 
 (async () => {
   try {
@@ -20,36 +18,12 @@ import { getArgs } from "../utils/scripts";
     });
 
     const excelContent = readContentFromXls(path);
-
     const carteiraXp = convertCarteiraXpXlsTo({
       excelContent,
     });
 
-    // fetch range where data will be writen
-    // - Is there an entry for today? fetch it
-    // - If not, create it
-    console.log("Fetching patrimônio sheet content...");
-    const patrimonioSheetContent = await fetchPatrimonioSheet();
-
-    const nextDateCellPosition = findCellPosition({
-      value: NEXT_DATE_ANCHOR,
-      sheetContent: patrimonioSheetContent,
-    });
-
-    if (!nextDateCellPosition) {
-      console.error(
-        `Couldn't fin the '${NEXT_DATE_ANCHOR}' anchor in the spreadsheet, aborting... 😢`
-      );
-      process.exit();
-    }
-
-    // fill the range with XLS data
-    console.log("Writing carteira XP to patrimônio sheet...");
-    writeInvestimentoSheetEntry({
-      startCellA1: nextDateCellPosition.a1,
-      carteira: carteiraXp,
-      sheetContent: patrimonioSheetContent,
-    });
+    // Send to sheets...
+    uploadCarteiraToPatrimonioSheet(carteiraXp);
 
     console.log(
       `Done! Please check the results on ${INVESTIMENTOS_SPREADSHEET_URL}`

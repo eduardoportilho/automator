@@ -5,7 +5,7 @@
 // $ chmod +x ./src/scripts/*.*
 // $ ./src/scripts/hello-world.ts
 
-import { fetchPatrimonioSheet } from "../services/fetch-patrimonio-sheet/fetch-patrimonio-sheet";
+import { fetchPatrimonioSheet } from "../services/patrimonio-sheet/patrimonio-sheet";
 
 (async () => {
   try {

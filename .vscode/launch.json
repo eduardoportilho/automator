@@ -18,14 +18,14 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "src/scripts/carteira-xp-to-sheets.ts",
+      "name": "src/scripts/carteira-safra-to-sheets.ts",
       "runtimeArgs": [
         "-r",
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/carteira-xp-to-sheets.ts",
-        "/Users/eduardoportilho/Downloads/carteira-xp.xlsx",
+        "${workspaceFolder}/src/scripts/carteira-safra-to-sheets.ts",
+        "/Users/eduardoportilho/Downloads/carteira-safra.csv",
         "${env:BUDGET_EDU}",
         "${env:ACCOUNT_SAFRA_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"

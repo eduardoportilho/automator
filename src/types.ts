@@ -29,6 +29,12 @@ export interface Fundo {
   valorLiquido: number;
 }
 
+export interface CellPosition {
+  indexes: { row: number; col: number }; // 0-based
+  rowCol: { row: number; col: number }; // 0-based
+  a1: string; // e.g. A1
+}
+
 export type CellValue = string | number;
 
 export type RowValue = CellValue[];

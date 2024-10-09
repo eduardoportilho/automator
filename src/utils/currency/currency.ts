@@ -22,7 +22,7 @@ export const convertAmountBRtoUS = (amountBR: string): string => {
  */
 export const parseAmountBR = (amountBR: string): number => {
   const amountUS = amountBR
-    .replace(/[a-zA-Z\$\s]/g, "") // remove currency symbol and spacs
+    .replace(/[a-zA-Z\$\s]/g, "") // remove currency symbol and spaces
     .replace(/\./g, "") // remove thousand separator
     .replace(/,/g, "."); // remplace decimal separator
 
@@ -31,6 +31,11 @@ export const parseAmountBR = (amountBR: string): number => {
     throw new Error(`Invalid BR amount: ${amountBR}`);
   }
   return numeric;
+};
+
+export const cleanAndParseAmountBR = (amountBR: string): number => {
+  const clean = amountBR.replace(/[^\d.,-]/g, "");
+  return parseAmountBR(clean);
 };
 
 /**

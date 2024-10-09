@@ -1,4 +1,4 @@
-import { CellValue, RowValue, SheetContent } from "../../types";
+import { CellPosition, CellValue, RowValue, SheetContent } from "../../types";
 import { cellValueEqualsTo, isEmptyCellValue } from "../cell-value/cell-value";
 import { rowColToA1 } from "../sheets/cellref";
 
@@ -56,6 +56,21 @@ export const findRowByColumnValue = ({
     startingAt,
   });
 
+export const findRowContainingValue = ({
+  value,
+  sheetContent,
+  startingAt = 0,
+}: {
+  value: string;
+  sheetContent: SheetContent;
+  startingAt?: number;
+}) =>
+  findRowBy({
+    predicate: (row) => row.join("|").includes(value),
+    sheetContent,
+    startingAt,
+  });
+
 export const findFirstNonEmptyRow = ({
   startingAt = 0,
   column = 0,
@@ -92,7 +107,7 @@ export const findCellPosition = ({
 }: {
   value: CellValue;
   sheetContent: SheetContent;
-}) => {
+}): CellPosition | null => {
   for (let rowIndex = 0; rowIndex < sheetContent.length; rowIndex++) {
     const row = sheetContent[rowIndex];
     const colIndex = row.findIndex((cellValue) =>

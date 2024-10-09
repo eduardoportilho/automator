@@ -47,7 +47,7 @@ export const getSheetRanges = async (
   }
 };
 
-export const writeRange = async ({
+export const writeSheetRange = async ({
   spreadsheetId,
   sheetTitle,
   startCellA1,
