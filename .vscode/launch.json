@@ -18,14 +18,14 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "src/scripts/carteira-safra-to-sheets.ts",
+      "name": "Script debug",
       "runtimeArgs": [
         "-r",
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/carteira-safra-to-sheets.ts",
-        "/Users/eduardoportilho/Downloads/carteira-safra.csv",
+        "${workspaceFolder}/src/scripts/carteira-xp-to-sheets.ts",
+        "/Users/eduardoportilho/Downloads/carteira-xp.xlsx",
         "${env:BUDGET_EDU}",
         "${env:ACCOUNT_SAFRA_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"
@@ -33,3 +33,11 @@
     }
   ]
 }
+
+
+// "${workspaceFolder}/src/scripts/carteira-safra-to-sheets.ts",
+// "/Users/eduardoportilho/Downloads/carteira-safra.tsv",
+
+
+// "${workspaceFolder}/src/scripts/carteira-xp-to-sheets.ts",
+// "/Users/eduardoportilho/Downloads/carteira-xp.xlsx",

@@ -2,26 +2,26 @@
 
 // Usage:
 // $ chmod +x ./src/scripts/carteira-safra-to-sheets.ts
-// $ ./src/scripts/carteira-safra-to-sheets.ts '/Users/eduardoportilho/Downloads/carteira-safra.csv'
+// $ ./src/scripts/carteira-safra-to-sheets.ts '/Users/eduardoportilho/Downloads/carteira-safra.tsv'
 
 import { readFile } from "../utils/file";
 import { INVESTIMENTOS_SPREADSHEET_URL } from "../constants";
 import { getArgs } from "../utils/scripts";
 import { uploadCarteiraToPatrimonioSheet } from "../services/upload-carteira-to-patrimonio-sheet/upload-carteira-to-patrimonio-sheet";
-import { convertCarteiraSafraCsvTo } from "../services/convert-carteira-safra-csv-to/convert-carteira-safra-csv-to";
+import { convertCarteiraSafraTsvTo } from "../services/convert-carteira-safra-csv-to/convert-carteira-safra-csv-to";
 
 (async () => {
   try {
     const [path] = getArgs({
       requiredCount: 1,
-      errorMessage: `Missing arguments. Usage: carteira-safra-to-sheets.ts <path/to/carteira-safra.csv>`,
+      errorMessage: `Missing arguments. Usage: carteira-safra-to-sheets.ts <path/to/carteira-safra.tsv>`,
     });
 
-    const csvContent = readFile(path);
-    const carteiraSafra = convertCarteiraSafraCsvTo(csvContent);
+    const tsvContent = readFile(path);
+    const carteiraSafra = convertCarteiraSafraTsvTo(tsvContent);
 
     // Send to sheets...
-    uploadCarteiraToPatrimonioSheet(carteiraSafra);
+    await uploadCarteiraToPatrimonioSheet(carteiraSafra);
 
     console.log(
       `Done! Please check the results on ${INVESTIMENTOS_SPREADSHEET_URL}`

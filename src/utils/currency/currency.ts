@@ -60,3 +60,5 @@ export const convertAmountToYnab = ({
   amount: number;
   invert?: boolean;
 }): number => Math.round(amount * 1000.0) * (invert ? -1 : 1);
+
+export const roundCurrency = (amount: number) => Math.round(amount * 100) / 100;

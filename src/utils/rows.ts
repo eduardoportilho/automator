@@ -8,7 +8,7 @@ export const splitCsv = ({
   removeEmptyRows = false,
 }: {
   content: string;
-  separator: string;
+  separator: string | RegExp;
   removeEmptyRows?: boolean;
 }): string[][] => {
   return splitRows(content)

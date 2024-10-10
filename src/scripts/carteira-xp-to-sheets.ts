@@ -2,7 +2,7 @@
 
 // Usage:
 // $ chmod +x ./src/scripts/carteira-xp-to-sheets.ts
-// $ ./src/scripts/carteira-xp-to-sheets.ts '/Users/eduardoportilho/Downloads/carteira-xp.xlsx' $SHEETS
+// $ ./src/scripts/carteira-xp-to-sheets.ts '/Users/eduardoportilho/Downloads/carteira-xp.xlsx'
 
 import { readContentFromXls } from "../utils/excel/excel";
 import { convertCarteiraXpXlsTo } from "../services/convert-carteira-xp-xls-to/convert-carteira-xp-xls-to";
@@ -23,7 +23,7 @@ import { uploadCarteiraToPatrimonioSheet } from "../services/upload-carteira-to-
     });
 
     // Send to sheets...
-    uploadCarteiraToPatrimonioSheet(carteiraXp);
+    await uploadCarteiraToPatrimonioSheet(carteiraXp);
 
     console.log(
       `Done! Please check the results on ${INVESTIMENTOS_SPREADSHEET_URL}`

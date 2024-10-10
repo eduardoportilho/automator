@@ -4,7 +4,10 @@ import {
 } from "../../utils/sheet-search/sheet-search";
 import { Acao, Carteira, Fundo } from "../../types";
 import { splitCsv } from "../../utils/rows";
-import { cleanAndParseAmountBR } from "../../utils/currency/currency";
+import {
+  createAcao,
+  createFundo,
+} from "../../utils/carteira-factory/carteira-factory";
 
 const rowToAcao = (row: string[]): Acao => {
   if (row.length < 5) {
@@ -13,12 +16,7 @@ const rowToAcao = (row: string[]): Acao => {
 
   const [ativo, quantidade, cotacao, posicao] = row;
 
-  return {
-    ativo,
-    quantidade: cleanAndParseAmountBR(quantidade),
-    cotacao: cleanAndParseAmountBR(cotacao),
-    posicao: cleanAndParseAmountBR(posicao),
-  };
+  return createAcao({ ativo, quantidade, cotacao, posicao });
 };
 
 const rowToFundo = (row: string[]): Fundo => {
@@ -44,17 +42,13 @@ const rowToFundo = (row: string[]): Fundo => {
     localNegociacao,
   ] = row;
 
-  const quantidadeNumber = cleanAndParseAmountBR(quantidade);
-  const saldoLiquidoNumber = cleanAndParseAmountBR(saldoLiquido);
-  const precoUnitario = saldoLiquidoNumber / quantidadeNumber;
+  const nome = `${ativo} - ${emissor}`;
 
-  return {
-    nome: `${ativo} - ${emissor}`,
-    quantidade: quantidadeNumber,
-    precoUnitario: precoUnitario,
-    posicaoMercado: saldoLiquidoNumber,
-    valorLiquido: saldoLiquidoNumber,
-  };
+  return createFundo({
+    nome,
+    quantidade,
+    valorLiquido: saldoLiquido,
+  });
 };
 
 const findSectionByHeader = ({
@@ -78,11 +72,11 @@ const findSectionByHeader = ({
 };
 
 /**
- * Convert safra carteira CSV content into carteira object
+ * Convert safra carteira TSV content into carteira object
  * @param csvContent
  */
-export const convertCarteiraSafraCsvTo = (csvContent: string): Carteira => {
-  const rows = splitCsv({ content: csvContent, separator: "," });
+export const convertCarteiraSafraTsvTo = (csvContent: string): Carteira => {
+  const rows = splitCsv({ content: csvContent, separator: "\t" });
 
   const rendaFixaData = findSectionByHeader({
     headerValue: "Indexador",

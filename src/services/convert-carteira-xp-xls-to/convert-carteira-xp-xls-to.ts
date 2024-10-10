@@ -2,10 +2,11 @@ import { RowValue, SheetContent } from "../../types";
 import { Acao, Carteira, Fundo } from "../../types";
 import { findExcelSectionByTitle } from "../../utils/find-excel-section-by-title/find-excel-section-by-title";
 import { findExcelSectionByTitleAndHeader } from "../../utils/find-excel-section-by-title-header/find-excel-section-by-title-header";
+import { rowIncludes } from "../../utils/cell-value/cell-value";
 import {
-  rowIncludes,
-  parseCellNumber,
-} from "../../utils/cell-value/cell-value";
+  createAcao,
+  createFundo,
+} from "../../utils/carteira-factory/carteira-factory";
 
 /**
  * Look for the section with:
@@ -29,11 +30,12 @@ const convertFundosImobiliarios = (excelContent: SheetContent): Acao[] => {
       if (row.length <= 7) {
         return null;
       }
-      return {
+
+      return createAcao({
         ativo: row[0].toString(),
-        cotacao: parseCellNumber(row[columns.cotacao.index]),
-        quantidade: parseCellNumber(row[columns.quantidade.index]),
-      };
+        cotacao: row[columns.cotacao.index],
+        quantidade: row[columns.quantidade.index],
+      });
     },
   });
 };
@@ -60,11 +62,12 @@ const convertAcoes = (excelContent: SheetContent): Acao[] => {
       if (row.length <= 6) {
         return null;
       }
-      return {
+
+      return createAcao({
         ativo: row[0].toString(),
-        cotacao: parseCellNumber(row[columns.cotacao.index]),
-        quantidade: parseCellNumber(row[columns.quantidade.index]),
-      };
+        cotacao: row[columns.cotacao.index],
+        quantidade: row[columns.quantidade.index],
+      });
     },
   });
 };
@@ -136,13 +139,15 @@ const convertRendaFixa = (excelContent: SheetContent): Fundo[] => {
     headerCells: Object.values(columns).map((col) => col.header),
   });
 
-  return section.map((row) => ({
-    nome: row[0].toString(),
-    quantidade: parseCellNumber(row[columns.quantidade.index]),
-    precoUnitario: parseCellNumber(row[columns.precoUnitario.index]),
-    posicaoMercado: parseCellNumber(row[columns.posicaoMercado.index]),
-    valorLiquido: parseCellNumber(row[columns.valorLiquido.index]),
-  }));
+  return section.map((row) =>
+    createFundo({
+      nome: row[0].toString(),
+      quantidade: row[columns.quantidade.index],
+      precoUnitario: row[columns.precoUnitario.index],
+      posicaoMercado: row[columns.posicaoMercado.index],
+      valorLiquido: row[columns.valorLiquido.index],
+    })
+  );
 };
 
 /**
@@ -167,11 +172,13 @@ export const convertFundosInvestimentos = (
     headerCells: Object.values(columns).map((col) => col.header),
   });
 
-  return section.map((row) => ({
-    nome: row[0].toString(),
-    posicaoMercado: parseCellNumber(row[columns.posicaoMercado.index]),
-    valorLiquido: parseCellNumber(row[columns.valorLiquido.index]),
-  }));
+  return section.map((row) =>
+    createFundo({
+      nome: row[0].toString(),
+      posicaoMercado: row[columns.posicaoMercado.index],
+      valorLiquido: row[columns.valorLiquido.index],
+    })
+  );
 };
 
 /**
