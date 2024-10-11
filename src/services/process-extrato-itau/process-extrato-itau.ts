@@ -6,13 +6,13 @@ import { TxProcessor } from "../process-txs/process-txs";
  */
 const renameCommon: TxProcessor = (tx: YnabTx) => {
   if (tx.payee_name.trim().toUpperCase().startsWith("TED 102.0001.EDUARDO")) {
-    return { ...tx, payee_name: "Transfer : XP: C. Corrente" };
+    return { ...tx, payee_name: "Transfer from XP: C. Corrente" };
   }
   if (tx.payee_name.trim().toUpperCase().startsWith("INT PERSON INFI")) {
-    return { ...tx, payee_name: "Transfer : Itaú: V. Infinite" };
+    return { ...tx, payee_name: "Transfer from Itaú: V. Infinite" };
   }
   if (tx.payee_name.trim().toUpperCase().startsWith("RESGATE CDB")) {
-    return { ...tx, payee_name: "Transfer : Itaú: CDB-DI" };
+    return { ...tx, payee_name: "Transfer from Itaú: CDB-DI" };
   }
   if (tx.payee_name.trim().toUpperCase().startsWith("PIX QRS TELEFONICA")) {
     return { ...tx, memo: "Internet GTC" };

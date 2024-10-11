@@ -4,13 +4,32 @@ import { YnabTx } from "../../types";
 import { YNAB_DATE_FORMAT } from "../../utils/date/date";
 
 export const getYnabData = (path: string, accessToken: string) => {
-  const url = "https://api.youneedabudget.com/v1/" + path;
+  const url = "https://api.youneedabudget.com/v1" + path;
   const options = {
     headers: {
       Authorization: "Bearer " + accessToken,
     },
   };
-  return axios.get(url, options);
+  // axios.interceptors.request.use((request) => {
+  //   console.log("Starting Request", JSON.stringify(request, null, 2));
+  //   return request;
+  // });
+
+  // axios.interceptors.response.use((response) => {
+  //   console.log("Response:", JSON.stringify(response, null, 2));
+  //   return response;
+  // });
+  try {
+    return axios.get(url, options);
+  } catch (error) {
+    if (error.response?.data?.error) {
+      console.error(
+        "Response error:",
+        JSON.stringify(error.response.data.error, null, 2)
+      );
+    }
+    throw error;
+  }
 };
 
 export const fetchYnabTxs = async ({
