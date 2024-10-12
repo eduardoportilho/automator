@@ -2,7 +2,7 @@
 
 // Usage:
 // $ chmod +x ./src/scripts/fatura-itau-to-ynab-post.ts
-// $ ./src/scripts/fatura-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/itau-visa.xls' $BUDGET_EDU $ACCOUNT_ITAU_CREDITO_EDU
+// $ ./src/scripts/fatura-itau-to-ynab-post.ts '/Users/eduardoportilho/Downloads/itau-visa.xls' $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_ITAU_CREDITO_EDU
 
 import { getYnabCliArgs, removeDuplicates, uploadTxsToYnab } from "./common";
 import { readContentFromXls } from "../utils/excel/excel";

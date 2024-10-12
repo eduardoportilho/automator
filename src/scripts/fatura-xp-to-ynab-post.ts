@@ -2,7 +2,7 @@
 
 // Usage:
 // $ chmod +x ./src/scripts/fatura-xp-to-ynab-post.ts
-// $ ./src/scripts/fatura-xp-to-ynab-post.ts '/Users/eduardoportilho/Downloads/fatura.csv' $BUDGET_EDU $ACCOUNT_XP_CREDITO_EDU
+// $ ./src/scripts/fatura-xp-to-ynab-post.ts '/Users/eduardoportilho/Downloads/fatura.csv' $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_XP_CREDITO_EDU
 
 import { convertFaturaXpToYnabTxs } from "../services/convert-fatura-xp-to-ynab-txs/convert-fatura-xp-to-ynab-txs";
 import {

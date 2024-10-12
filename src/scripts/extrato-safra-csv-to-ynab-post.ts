@@ -2,7 +2,7 @@
 
 // Usage:
 // $ chmod +x ./src/scripts/extrato-safra-csv-to-ynab-post.ts
-// $ ./src/scripts/extrato-safra-csv-to-ynab-post.ts '/Users/eduardoportilho/Downloads/extrato-safra.csv' $BUDGET_EDU $ACCOUNT_SAFRA_EDU
+// $ ./src/scripts/extrato-safra-csv-to-ynab-post.ts '/Users/eduardoportilho/Downloads/extrato-safra.csv' $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_SAFRA_CONTA_EDU
 
 import { processTxs } from "../services/process-txs/process-txs";
 import {

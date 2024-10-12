@@ -2,7 +2,7 @@
 
 // Usage:
 // $ chmod +x ./src/scripts/extrato-xp-to-ynab-post.ts
-// $ ./src/scripts/extrato-xp-to-ynab-post.ts '/Users/eduardoportilho/Downloads/extrato-xp.xlsx' $BUDGET_EDU $ACCOUNT_XP_EDU
+// $ ./src/scripts/extrato-xp-to-ynab-post.ts '/Users/eduardoportilho/Downloads/extrato-xp.xlsx' $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_XP_CONTA_EDU
 
 import { getYnabCliArgs, removeDuplicates, uploadTxsToYnab } from "./common";
 import { readContentFromXls } from "../utils/excel/excel";

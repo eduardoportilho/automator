@@ -8,8 +8,8 @@
   // 1. Set the following env vars in ./envrc:
   // 
   // export YNAB_ACCESS_TOKEN="..."
-  // export BUDGET_DEBUG="..."
-  // export ACCOUNT_DEBUG="..."
+  // export BUDGET_XXX="..."
+  // export ACCOUNT_XXX="..."
   // 
   // 2. In this project dir, run `direnv allow` and restart vscode `code .`
 
@@ -26,8 +26,8 @@
       "args": [
         "${workspaceFolder}/src/scripts/extrato-itau-to-ynab-post",
         "/Users/eduardoportilho/Downloads/extrato-itau.txt",
-        "${env:BUDGET_EDU}",
-        "${env:ACCOUNT_SAFRA_EDU}",
+        "${env:BUDGET_EDU_2023}",
+        "${env:ACCOUNT_EDU_2023_SAFRA_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"
       ],
     }
