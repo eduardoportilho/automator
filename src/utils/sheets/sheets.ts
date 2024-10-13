@@ -15,7 +15,9 @@ const getAuth = async () => {
   try {
     const auth = new google.auth.GoogleAuth({
       scopes: SCOPES,
-      keyFile: "private/google-credentials.json",
+      // Read from GOOGLE_APPLICATION_CREDENTIALS instead
+      // (https://github.com/googleapis/google-api-nodejs-client?tab=readme-ov-file#using-the-google_application_credentials-env-var)
+      // keyFile: "private/google-credentials.json",
     });
     const authClient = await auth.getClient();
     const project = await auth.getProjectId();
