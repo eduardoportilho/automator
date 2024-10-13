@@ -7,17 +7,24 @@ export type TxProcessor = (tx: YnabTx) => YnabTx;
 
 export interface ProcessorRule {
   payeeNamePattern: string | RegExp;
-  to: Partial<YnabTx>;
+  to: Partial<YnabTx> | null;
 }
 
 export const processTx = ({
   tx,
   rule,
 }: {
-  tx: YnabTx;
+  tx: YnabTx | null;
   rule: ProcessorRule;
 }): YnabTx => {
+  if (!tx) {
+    return null;
+  }
+
   if (testPayeeName(tx.payee_name, rule.payeeNamePattern)) {
+    if (rule.to === null) {
+      return null;
+    }
     return {
       ...tx,
       ...rule.to,

@@ -47,3 +47,5 @@ import { EXTRATO_SAFRA_PROCESSORS } from "../services/process-extrato-safra/proc
     console.error(error);
   }
 })();
+
+// /Users/eduardoportilho/dev/personal/automator/src/scripts/extrato-safra-csv-to-ynab-post.ts /Users/eduardoportilho/hazel/extrato-safra-csv-to-ynab/extrato-safra.csv 0ef9ba7f-ca2d-473c-b874-5b979feb663a 62235cea-db9a-438c-94ff-fdde7142d142 BoRmZFCzY8n1f5KyFWoMSgJ8XyIAagFpLFoTB7T-464
