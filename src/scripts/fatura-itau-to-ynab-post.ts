@@ -7,6 +7,8 @@
 import { getYnabCliArgs, removeDuplicates, uploadTxsToYnab } from "./common";
 import { readContentFromXls } from "../utils/excel/excel";
 import { convertFaturaItauXlsToYnabTxs } from "../services/convert-fatura-itau-xls-to-ynab-txs/convert-fatura-itau-xls-to-ynab-txs";
+import { FATURA_ITAU_PROCESSORS } from "../services/process-fatura-itau/process-fatura-itau";
+import { processTxs } from "../services/process-txs/process-txs";
 
 (async () => {
   try {
@@ -19,11 +21,10 @@ import { convertFaturaItauXlsToYnabTxs } from "../services/convert-fatura-itau-x
       accountId,
     });
 
-    const processedTxs = importedTxs;
-    // const processedTxs = processTxs({
-    //   txs: importedTxs,
-    //   processors: FATURA_XP_PROCESSORS,
-    // });
+    const processedTxs = processTxs({
+      txs: importedTxs,
+      processors: FATURA_ITAU_PROCESSORS,
+    });
 
     const uniqueTxs = await removeDuplicates({
       budgetId,

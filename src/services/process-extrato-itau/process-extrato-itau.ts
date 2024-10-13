@@ -1,65 +1,72 @@
 import { YnabTx } from "../../types";
-import { TxProcessor } from "../process-txs/process-txs";
+import {
+  TxProcessor,
+  ProcessorRule,
+  processTx,
+} from "../process-txs/process-txs";
 
 // TODO: Add unit tests
-// TODO: Move utils
-// TODO: Log update transactions
-interface Rule {
-  from: string | RegExp;
-  to: Partial<YnabTx>;
-}
 
-const PAYEE_RULES: Rule[] = [
+const PAYEE_RULES: ProcessorRule[] = [
   {
-    from: "PIX TRANSF ERICA B",
+    payeeNamePattern: "PIX TRANSF ERICA B",
     to: { payee_name: "Erica Brotherhood", memo: "Biodança" },
   },
   {
-    from: "PIX QRS TELEFONICA",
+    payeeNamePattern: "PIX QRS TELEFONICA",
     to: { payee_name: "Vivo internet", memo: "Internet GTC" },
   },
   {
-    from: "PIX QRS Claro",
+    payeeNamePattern: "PIX QRS Claro",
     to: { payee_name: "Claro internet", memo: "Internet Leblon" },
   },
   {
-    from: "PIX TRANSF LUIZ ED",
+    payeeNamePattern: "PIX TRANSF LUIZ ED",
     to: { payee_name: "Abodha", memo: "Eneagrupo" },
   },
   {
-    from: "SISPAG ARPOADOR ADM DE",
+    payeeNamePattern: "SISPAG ARPOADOR ADM DE",
     to: {
       payee_name: "Arpoador Imob.",
       memo: "$ Maria Quiteria | Open Mall | Copa | Granja",
     },
   },
-  { from: "PIX TRANSF IMOBILI", to: { payee_name: "Estadia Carioca" } },
-  { from: "PIX TRANSF 5096011", to: { payee_name: "Jeff Training" } },
   {
-    from: /^SISPAG BLUE/,
+    payeeNamePattern: "PIX TRANSF IMOBILI",
+    to: { payee_name: "Estadia Carioca" },
+  },
+  {
+    payeeNamePattern: "PIX TRANSF 5096011",
+    to: { payee_name: "Jeff Training" },
+  },
+  {
+    payeeNamePattern: /^SISPAG BLUE/,
     to: { payee_name: "Blue Chip Imob.", memo: "$ Millennium" },
   },
-  { from: "PIX QRS M4 PRODUTOS", to: { payee_name: "Recarga TIM" } },
-  { from: "SISPAG PIX TIM S A", to: { payee_name: "Recarga TIM" } },
-  { from: "PIX TRANSF CLUBE D", to: { payee_name: "CTP" } },
   {
-    from: "PIX TRANSF MARIA E",
+    payeeNamePattern: "PIX QRS M4 PRODUTOS",
+    to: { payee_name: "Recarga TIM" },
+  },
+  { payeeNamePattern: "SISPAG PIX TIM S A", to: { payee_name: "Recarga TIM" } },
+  { payeeNamePattern: "PIX TRANSF CLUBE D", to: { payee_name: "CTP" } },
+  {
+    payeeNamePattern: "PIX TRANSF MARIA E",
     to: { payee_name: "Maria Elidia", memo: "Cozinheira" },
   },
   {
-    from: "REND PAGO APLIC AUT MAIS",
+    payeeNamePattern: "REND PAGO APLIC AUT MAIS",
     to: { payee_name: "Rendimento conta corrente" },
   },
   {
-    from: "TED 102.0001.EDUARDO",
+    payeeNamePattern: "TED 102.0001.EDUARDO",
     to: { payee_name: "Transfer - XP: C. Corrente" },
   },
   {
-    from: "INT PERSON INFI",
+    payeeNamePattern: "INT PERSON INFI",
     to: { payee_name: "Transfer - Itaú: V. Infinite" },
   },
   {
-    from: "RESGATE CDB",
+    payeeNamePattern: "RESGATE CDB",
     to: { payee_name: "Transfer - Itaú: CDB-DI" },
   },
 ];
@@ -69,24 +76,6 @@ const sanitizePayee = (payee: string) => {
     .replace(/^(PIX.+)(\d\d\/\d\d)$/, "$1")
     .replace(/\s+/, " ")
     .trim();
-};
-
-const testPayee = (payee: string, pattern: string | RegExp) => {
-  if (typeof pattern === "string") {
-    return payee.toUpperCase().startsWith(pattern.toUpperCase());
-  }
-
-  return pattern.test(payee);
-};
-
-const processTx = ({ tx, rule }: { tx: YnabTx; rule: Rule }): YnabTx => {
-  if (testPayee(tx.payee_name, rule.from)) {
-    return {
-      ...tx,
-      ...rule.to,
-    };
-  }
-  return tx;
 };
 
 const processTxs: TxProcessor = (tx: YnabTx) => {

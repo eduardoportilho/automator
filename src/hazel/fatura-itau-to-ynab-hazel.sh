@@ -4,19 +4,19 @@
 # - HAZEL_LOG_FILE
 # - YNAB_ACCESS_TOKEN
 # - BUDGET_EDU_2025
-# - ACCOUNT_EDU_2025_ITAU_CONTA_EDU
+# - ACCOUNT_EDU_2025_ITAU_CREDITO_EDU
 
 source /Users/eduardoportilho/dev/personal/automator/.envrc
 echo "----------------------------------------------" > $HAZEL_LOG_FILE
-echo "Rule [extrato-itau-to-ynab] executed at: $(date)" >> $HAZEL_LOG_FILE
+echo "Rule [fatura-itau-to-ynab] executed at: $(date)" >> $HAZEL_LOG_FILE
 echo "Input file: $1" >> $HAZEL_LOG_FILE
 
 # Echo command for debbuging
 echo "" >> $HAZEL_LOG_FILE
-echo "$AUTOMATOR_SCRIPTS_PATH/extrato-itau-to-ynab-post.ts $1 $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_ITAU_CONTA_EDU $YNAB_ACCESS_TOKEN" >> $HAZEL_LOG_FILE
+echo "$AUTOMATOR_SCRIPTS_PATH/fatura-itau-to-ynab-post.ts $1 $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_ITAU_CREDITO_EDU $YNAB_ACCESS_TOKEN" >> $HAZEL_LOG_FILE
 echo "" >> $HAZEL_LOG_FILE
 
 # Execute command
-$AUTOMATOR_SCRIPTS_PATH/extrato-itau-to-ynab-post.ts $1 $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_ITAU_CONTA_EDU $YNAB_ACCESS_TOKEN >> $HAZEL_LOG_FILE 2>&1
+$AUTOMATOR_SCRIPTS_PATH/fatura-itau-to-ynab-post.ts $1 $BUDGET_EDU_2025 $ACCOUNT_EDU_2025_ITAU_CREDITO_EDU $YNAB_ACCESS_TOKEN >> $HAZEL_LOG_FILE 2>&1
 
 echo "Rule finished" >> $HAZEL_LOG_FILE
