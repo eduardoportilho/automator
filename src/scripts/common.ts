@@ -13,7 +13,7 @@ export const getYnabCliArgs = () => {
   const scriptFileName = process.argv[1];
   const [path, budgetId, accountId, accessTokenFromArgs] = getArgs({
     requiredCount: 3,
-    errorMessage: `Missing arguments. Usage: ${scriptFileName} <path/to/input.txt> <budget-id> <account-id> <?accessToken?>`,
+    errorMessage: `Missing arguments. Usage: ${scriptFileName} <path/to/input> <budget-id> <account-id> <?access-token?>`,
   });
 
   let accessToken = accessTokenFromArgs;

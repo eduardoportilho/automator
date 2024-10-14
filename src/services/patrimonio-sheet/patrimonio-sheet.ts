@@ -99,7 +99,8 @@ export const findPatrimonioEntryByDate = ({
 };
 
 /**
- * Find a section of the sheet by its title
+ * Find a section of the sheet by its title.
+ * Section rows are: title, empty, header, data..., empty
  * @returns sheet content with section data (ater header and before empty row)
  */
 export const findSheetSection = ({

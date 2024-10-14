@@ -24,6 +24,12 @@ export interface YnabTx {
   flag_color?: "red" | "orange" | "yellow" | "green" | "blue" | "purple";
 }
 
+export interface YnabAccount {
+  id: string;
+  name: string;
+  balance: number;
+}
+
 export interface Carteira {
   fiis: Acao[];
   acoes: Acao[];

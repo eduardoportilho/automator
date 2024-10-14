@@ -1,5 +1,8 @@
-import { YnabBudget, SheetContent } from "../../types";
+import { format } from "date-fns";
+import { YnabBudget, SheetContent, YnabAccount } from "../../types";
 import { NEXT_DATE_ANCHOR } from "../../constants";
+import { findSectionByHeader } from "../../utils/sheet-search/sheet-search";
+import { YNAB_DATE_FORMAT } from "../../utils/date/date";
 
 const getBudgetCategoryActivity = ({
   budget,
@@ -24,19 +27,30 @@ const getBudgetCategoryActivity = ({
 export const createBudgetEntry = ({
   sheetContent,
   budget,
+  accounts,
 }: {
   sheetContent: SheetContent;
   budget: YnabBudget;
+  accounts: YnabAccount[];
 }) => {
-  const categories = sheetContent
-    .slice(1) // Remove month header
-    .map((cell) => {
-      const [categoryGroupName, categoryName] = cell.toString().split(": ");
-      return { categoryGroupName, categoryName };
-    });
+  const processingDate = format(new Date(), YNAB_DATE_FORMAT);
+  const categories = findSectionByHeader({
+    rows: sheetContent,
+    headerValue: "Budget Category",
+  }).map((row) => {
+    const [categoryGroupName, categoryName] = row[0].toString().split(": ");
+    return { categoryGroupName, categoryName };
+  });
+
+  const accountNames = findSectionByHeader({
+    rows: sheetContent,
+    headerValue: "Account",
+  }).map((row) => row[0]);
 
   return [
-    [budget.month, NEXT_DATE_ANCHOR],
+    [processingDate, NEXT_DATE_ANCHOR],
+    [],
+    [budget.month],
     ...categories.map(({ categoryGroupName, categoryName }) => [
       getBudgetCategoryActivity({
         budget,
@@ -44,6 +58,16 @@ export const createBudgetEntry = ({
         categoryName,
       }),
     ]),
+    [],
+    [processingDate],
+    ...accountNames.map((accountName) => {
+      const account = accounts.find(({ name }) => name === accountName);
+
+      if (account) {
+        return [account.balance];
+      }
+      return [];
+    }),
   ];
 };
 

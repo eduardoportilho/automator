@@ -126,7 +126,8 @@ export const findCellPosition = ({
 };
 
 /**
- * Find section between header and next empty row
+ * Find section between header and next empty row.
+ * Section rows are: header, data..., empty
  * @param
  * - headerValue: value that is present on header row
  * - rows

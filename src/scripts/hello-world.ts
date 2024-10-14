@@ -5,15 +5,25 @@
 // $ chmod +x ./src/scripts/*.*
 // $ ./src/scripts/hello-world.ts
 
-import { fetchPatrimonioSheet } from "../services/patrimonio-sheet/patrimonio-sheet";
+import { getEnvVars } from "../utils/scripts";
+import { fetchYnabAccounts } from "../services/fetch-ynab-txs/fetch-ynab-txs";
 
 (async () => {
   try {
     console.log(`Hello world`);
     // console.log(process.env.YNAB_ACCESS_TOKEN);
 
-    await fetchPatrimonioSheet();
+    const [accessToken, budgetId] = getEnvVars([
+      "YNAB_ACCESS_TOKEN",
+      "BUDGET_EDU_2025",
+    ]);
 
+    const accounts = await fetchYnabAccounts({
+      budgetId,
+      accessToken,
+    });
+
+    console.log(accounts);
     console.log("Done!");
   } catch (error) {
     console.error("Error encountered, aborting.");
