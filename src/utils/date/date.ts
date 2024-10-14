@@ -4,6 +4,8 @@ export const DMY_FORMAT = "dd/MM/yyyy";
 export const DMY_REGEX = /[0-3]\d\/[0-1]\d\/\d{4}/;
 export const MDY_FORMAT = "MM/dd/yyyy";
 export const YNAB_DATE_FORMAT = "yyyy-MM-dd";
+export const YNAB_MONTH_FORMAT = "MMM yyyy"; //Sep 2024
+export const ISO_MONTH_FORMAT = "yyyy-MM";
 
 export const convertDateDMYtoMDY = (dateDMY: string) => {
   if (!dateDMY) {

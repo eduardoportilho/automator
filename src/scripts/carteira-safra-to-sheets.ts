@@ -8,7 +8,7 @@ import { readFile } from "../utils/file";
 import { INVESTIMENTOS_SPREADSHEET_URL } from "../constants";
 import { getArgs } from "../utils/scripts";
 import { uploadCarteiraToPatrimonioSheet } from "../services/upload-carteira-to-patrimonio-sheet/upload-carteira-to-patrimonio-sheet";
-import { convertCarteiraSafraTsvTo } from "../services/convert-carteira-safra-csv-to/convert-carteira-safra-csv-to";
+import { convertCarteiraSafraTsvTo } from "../services/convert-carteira-safra-tsv-to/convert-carteira-safra-tsv-to";
 
 (async () => {
   try {

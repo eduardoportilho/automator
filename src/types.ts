@@ -1,3 +1,20 @@
+export interface YnabBudgetCategory {
+  name: string;
+  budgeted: number;
+  activity: number;
+  available: number;
+}
+
+export interface YnabBudgetCategoryGroup {
+  name: string;
+  categories: YnabBudgetCategory[];
+}
+
+export interface YnabBudget {
+  month: string; // "yyyy-MM"
+  categoryGroups: YnabBudgetCategoryGroup[];
+}
+
 export interface YnabTx {
   account_id: string;
   date: string; // "yyyy-MM-dd"

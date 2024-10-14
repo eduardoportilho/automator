@@ -7,6 +7,7 @@ import {
   INVESTIMENTOS_SHEET_TITLE,
   INVESTIMENTOS_SPREADSHEET_ID,
   NEXT_DATE_ANCHOR,
+  YNAB_SHEET_TITLE,
 } from "../../constants";
 import { getSheetRanges } from "../../utils/sheets/sheets";
 import { cellValueEqualsTo } from "../../utils/cell-value/cell-value";
@@ -15,6 +16,15 @@ export const fetchPatrimonioSheet = async () => {
   //Read all columns from A to Z
   const [sheetContent] = await getSheetRanges(INVESTIMENTOS_SPREADSHEET_ID, [
     `${INVESTIMENTOS_SHEET_TITLE}!A:Z`,
+  ]);
+
+  return sheetContent;
+};
+
+export const fetchYnabSheet = async () => {
+  //Read all columns from A to Z
+  const [sheetContent] = await getSheetRanges(INVESTIMENTOS_SPREADSHEET_ID, [
+    `${YNAB_SHEET_TITLE}!A:Z`,
   ]);
 
   return sheetContent;

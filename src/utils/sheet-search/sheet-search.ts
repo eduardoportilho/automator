@@ -124,3 +124,30 @@ export const findCellPosition = ({
   }
   return null;
 };
+
+/**
+ * Find section between header and next empty row
+ * @param
+ * - headerValue: value that is present on header row
+ * - rows
+ */
+// TODO: add unit test
+export const findSectionByHeader = ({
+  rows,
+  headerValue,
+}: {
+  rows: SheetContent;
+  headerValue: string;
+}) => {
+  const { index: headerIndex } = findRowContainingValue({
+    value: headerValue,
+    sheetContent: rows,
+  });
+  const { index: nextEmptyRowIndex } = findFirstEmptyRow({
+    startingAt: headerIndex,
+    sheetContent: rows,
+  });
+  const endIndex = nextEmptyRowIndex >= 0 ? nextEmptyRowIndex : undefined;
+
+  return rows.slice(headerIndex + 1, endIndex);
+};

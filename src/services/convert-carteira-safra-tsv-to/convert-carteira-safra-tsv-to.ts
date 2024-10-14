@@ -1,7 +1,4 @@
-import {
-  findRowContainingValue,
-  findFirstEmptyRow,
-} from "../../utils/sheet-search/sheet-search";
+import { findSectionByHeader } from "../../utils/sheet-search/sheet-search";
 import { Acao, Carteira, Fundo } from "../../types";
 import { splitCsv } from "../../utils/rows";
 import {
@@ -49,26 +46,6 @@ const rowToFundo = (row: string[]): Fundo => {
     quantidade,
     valorLiquido: saldoLiquido,
   });
-};
-
-const findSectionByHeader = ({
-  rows,
-  headerValue,
-}: {
-  rows: string[][];
-  headerValue: string;
-}) => {
-  const { index: headerIndex } = findRowContainingValue({
-    value: headerValue,
-    sheetContent: rows,
-  });
-  const { index: nextEmptyRowIndex } = findFirstEmptyRow({
-    startingAt: headerIndex,
-    sheetContent: rows,
-  });
-  const endIndex = nextEmptyRowIndex >= 0 ? nextEmptyRowIndex : undefined;
-
-  return rows.slice(headerIndex + 1, endIndex);
 };
 
 /**

@@ -24,8 +24,9 @@
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/extrato-safra-csv-to-ynab-post.ts",
-        "/Users/eduardoportilho/hazel/extrato-safra.csv",
+        "${workspaceFolder}/src/scripts/ynab-budget-tsv-to-sheets.ts",
+        "/Users/eduardoportilho/hazel/YNAB Export - Edu 2025 as of 2024-10-13 17-31/Edu 2025 as of 2024-10-13 17-31 - Budget.tsv",
+        "2024-09",
         "${env:BUDGET_EDU_2025}",
         "${env:ACCOUNT_EDU_2025_SAFRA_CONTA_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"
