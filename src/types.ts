@@ -2,10 +2,11 @@ export interface YnabBudgetCategory {
   name: string;
   budgeted: number;
   activity: number;
-  available: number;
+  balance: number;
 }
 
 export interface YnabBudgetCategoryGroup {
+  id: string;
   name: string;
   categories: YnabBudgetCategory[];
 }
@@ -13,6 +14,7 @@ export interface YnabBudgetCategoryGroup {
 export interface YnabBudget {
   month: string; // "yyyy-MM"
   categoryGroups: YnabBudgetCategoryGroup[];
+  accounts?: YnabAccount[];
 }
 
 export interface YnabTx {
@@ -63,3 +65,30 @@ export type CellValue = string | number;
 export type RowValue = CellValue[];
 
 export type SheetContent = RowValue[];
+
+export interface YnabBudgetResponse {
+  first_month: string; //"2024-09-01",
+  last_month: string; //"2024-10-01",
+  category_groups: {
+    id: string;
+    name: string;
+    hidden: boolean;
+    deleted: boolean;
+  }[];
+  categories: {
+    category_group_id: string;
+    name: string;
+    budgeted: number;
+    activity: number;
+    balance: number;
+    hidden: boolean;
+    deleted: boolean;
+  }[];
+  accounts: {
+    id: string;
+    name: string;
+    balance: number;
+    closed: boolean;
+    deleted: boolean;
+  }[];
+}

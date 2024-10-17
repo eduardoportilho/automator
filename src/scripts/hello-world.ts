@@ -6,7 +6,10 @@
 // $ ./src/scripts/hello-world.ts
 
 import { getEnvVars } from "../utils/scripts";
-import { fetchYnabAccounts } from "../services/fetch-ynab-txs/fetch-ynab-txs";
+import {
+  fetchYnabAccounts,
+  fetchYnabBudget,
+} from "../services/fetch-ynab-txs/fetch-ynab-txs";
 
 (async () => {
   try {
@@ -18,7 +21,7 @@ import { fetchYnabAccounts } from "../services/fetch-ynab-txs/fetch-ynab-txs";
       "BUDGET_EDU_2025",
     ]);
 
-    const accounts = await fetchYnabAccounts({
+    const accounts = await fetchYnabBudget({
       budgetId,
       accessToken,
     });

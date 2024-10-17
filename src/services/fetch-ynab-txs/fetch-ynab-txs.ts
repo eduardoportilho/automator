@@ -1,7 +1,8 @@
 import axios from "axios";
 import { parse, isWithinInterval } from "date-fns";
-import { YnabTx, YnabAccount } from "../../types";
+import { YnabTx, YnabAccount, YnabBudget } from "../../types";
 import { YNAB_DATE_FORMAT } from "../../utils/date/date";
+import { createYnabBudgetFromResponse } from "../create-ynab-budget-from-response/create-ynab-budget-from-response";
 
 export const getYnabData = (path: string, accessToken: string) => {
   const url = "https://api.youneedabudget.com/v1" + path;
@@ -78,23 +79,18 @@ export const fetchYnabAccounts = async ({
   );
 };
 
-const ACCOUNT_EXAMPLE = {
-  id: "4bfbe406-924a-443a-a2ac-205a0232abbf",
-  name: "Itaú: C. Corrente",
-  type: "checking",
-  on_budget: true,
-  closed: false,
-  note: null as string | null,
-  balance: 25187670,
-  cleared_balance: 25187670,
-  uncleared_balance: 0,
-  transfer_payee_id: "dd5226d9-74af-4bd5-8411-d390dd14a652",
-  direct_import_linked: false,
-  direct_import_in_error: false,
-  last_reconciled_at: "2024-10-13T13:49:44Z",
-  debt_original_balance: null as number | null,
-  debt_interest_rates: {},
-  debt_minimum_payments: {},
-  debt_escrow_amounts: {},
-  deleted: false,
+// https://api.ynab.com/v1#/Budgets/getBudgetById
+export const fetchYnabBudget = async ({
+  budgetId,
+  accessToken,
+}: {
+  budgetId: string;
+  accessToken: string;
+}): Promise<any> => {
+  // }): Promise<YnabBudget> => {
+  const accountTxsUrl = `/budgets/${budgetId}`;
+
+  const response = await getYnabData(accountTxsUrl, accessToken);
+
+  return createYnabBudgetFromResponse(response.data.data.budget);
 };

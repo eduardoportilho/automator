@@ -29,7 +29,7 @@ const getCategory = (
       name: categoryName,
       budgeted: 0,
       activity: 0,
-      available: 0,
+      balance: 0,
     };
     categoryGroup.categories = [...categoryGroup.categories, category];
   }
@@ -45,6 +45,7 @@ const getCategoryGroup = (
   );
   if (!categoryGroup) {
     categoryGroup = {
+      id: categoryGroupName,
       name: categoryGroupName,
       categories: [],
     };
@@ -102,7 +103,7 @@ export const convertYnabBudgetTsvTo = (
 
       category.budgeted = parseAmountBR(budgetedCell.toString());
       category.activity = parseAmountBR(activityCell.toString());
-      category.available = parseAmountBR(availableCell.toString());
+      category.balance = parseAmountBR(availableCell.toString());
 
       return budget;
     },
