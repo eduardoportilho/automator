@@ -1,5 +1,5 @@
 import { RowValue, SheetContent } from "../../types";
-import { isEmptyCellRow, rowIncludes } from "../cell-value/cell-value";
+import { isEmptyRow, rowIncludes } from "../cell-value/cell-value";
 import { findRowBy, findRowByColumnValue } from "../sheet-search/sheet-search";
 
 /**
@@ -72,7 +72,7 @@ export const findExcelSectionByTitleAndHeader = ({
   const endIndex = nextTitleRowIndex >= 0 ? nextTitleRowIndex : undefined;
 
   const section = excelContent.slice(titleIndex + 1, endIndex).filter((row) => {
-    const isEmpty = isEmptyCellRow(row);
+    const isEmpty = isEmptyRow(row);
     const isHeader = rowIncludes(row, headerCells);
 
     return !isEmpty && !isHeader;

@@ -7,13 +7,10 @@ import {
   INVESTIMENTOS_SPREADSHEET_ID,
 } from "../../constants";
 import { writeSheetRange } from "../../utils/sheets/sheets";
-import { YnabAccount, YnabBudget } from "../../types";
+import { YnabBudget } from "../../types";
 import { createBudgetEntry } from "../create-budget-entry/create-budget-entry";
 
-export const uploadYnabBudgetToPatrimonioSheet = async (
-  budget: YnabBudget,
-  accounts: YnabAccount[]
-) => {
+export const uploadYnabBudgetToPatrimonioSheet = async (budget: YnabBudget) => {
   // fetch range where data will be writen
   console.log("Fetching YNAB sheet content...");
   const ynabSheetContent = await fetchYnabSheet();
@@ -23,7 +20,6 @@ export const uploadYnabBudgetToPatrimonioSheet = async (
   const budgetEntry = createBudgetEntry({
     sheetContent: ynabSheetContent,
     budget,
-    accounts,
   });
 
   console.log("Writing carteira XP to YNAB sheet...");

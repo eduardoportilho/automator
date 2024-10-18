@@ -24,9 +24,9 @@
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/hello-world.ts",
-        "/Users/eduardoportilho/hazel/ynab-budget.tsv",
-        "2024-10",
+        "${workspaceFolder}/src/scripts/ynab-budget-api-to-sheets.ts",
+        // "/Users/eduardoportilho/hazel/ynab-budget.tsv",
+        // "2024-10",
         "${env:BUDGET_EDU_2025}",
         // "${env:ACCOUNT_EDU_2025_SAFRA_CONTA_EDU}",
         "${env:YNAB_ACCESS_TOKEN}"

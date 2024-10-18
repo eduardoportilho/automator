@@ -25,6 +25,24 @@ describe("sheet-search", () => {
         row: [],
       });
     });
+
+    it("ignore empty cell on first column when column prop is not provided", () => {
+      const content = [
+        ["not", "empty"],
+        ["", "not", "empty"],
+        ["", ""],
+        ["not", "empty"],
+      ];
+
+      expect(
+        findFirstEmptyRow({
+          sheetContent: content,
+        })
+      ).toEqual({
+        index: 2,
+        row: ["", ""],
+      });
+    });
   });
 
   describe("findFirstNonEmptyRow", () => {
@@ -61,6 +79,23 @@ describe("sheet-search", () => {
       ).toEqual({
         index: 5,
         row: ["Pear", 5, "green"],
+      });
+    });
+
+    it("ignore empty cell on first column when column prop is not provided", () => {
+      const content = [
+        ["", ""],
+        ["", "not", "empty"],
+        ["not", "empty"],
+      ];
+
+      expect(
+        findFirstNonEmptyRow({
+          sheetContent: content,
+        })
+      ).toEqual({
+        index: 1,
+        row: ["", "not", "empty"],
       });
     });
   });

@@ -3,6 +3,7 @@ import { parse, isWithinInterval } from "date-fns";
 import { YnabTx, YnabAccount, YnabBudget } from "../../types";
 import { YNAB_DATE_FORMAT } from "../../utils/date/date";
 import { createYnabBudgetFromResponse } from "../create-ynab-budget-from-response/create-ynab-budget-from-response";
+import { convertYnabToAmount } from "../../utils/currency/currency";
 
 export const getYnabData = (path: string, accessToken: string) => {
   const url = "https://api.youneedabudget.com/v1" + path;
@@ -74,7 +75,7 @@ export const fetchYnabAccounts = async ({
     (account: { id: string; name: string; balance: number }) => ({
       id: account.id,
       name: account.name,
-      balance: account.balance / 1000,
+      balance: convertYnabToAmount(account.balance),
     })
   );
 };

@@ -35,7 +35,7 @@ export const rowIncludes = (row: RowValue, requiredValues: string[]) =>
  * @param row
  * @returns
  */
-export const isEmptyCellRow = (row: RowValue) =>
+export const isEmptyRow = (row: RowValue) =>
   row.length === 0 || row.every((cell) => isEmptyCellValue(cell));
 
 /**

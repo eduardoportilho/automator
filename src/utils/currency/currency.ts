@@ -48,6 +48,10 @@ export const formatYnabAmountUS = (ynabAmount: number) => {
   return amount.toFixed(2);
 };
 
+export const convertYnabToAmount = (ynabAmount: number) => {
+  return ynabAmount / 1000.0;
+};
+
 /**
  * Convert a numeric amount to numeric ynab amount
  * @param amount ex. 1234.56

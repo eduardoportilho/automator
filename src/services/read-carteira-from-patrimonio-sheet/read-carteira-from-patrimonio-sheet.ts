@@ -10,7 +10,7 @@ import { findCellPosition } from "../../utils/sheet-search/sheet-search";
 import {
   parseCellNumber,
   isEmptyCellValue,
-  isEmptyCellRow,
+  isEmptyRow,
 } from "../../utils/cell-value/cell-value";
 
 const getRowEntry = ({
@@ -29,7 +29,7 @@ const getRowEntry = ({
   const ativo = row[0].toString();
   const values = row.slice(startCol, startCol + size);
 
-  if (isEmptyCellRow(values)) {
+  if (isEmptyRow(values)) {
     return null;
   }
 

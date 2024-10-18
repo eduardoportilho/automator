@@ -20,13 +20,13 @@ import { fetchYnabAccounts } from "../services/fetch-ynab-txs/fetch-ynab-txs";
 
     const tsvContent = readFile(path);
     const ynabBudget = convertYnabBudgetTsvTo(tsvContent, month);
-    const accounts = await fetchYnabAccounts({
+    ynabBudget.accounts = await fetchYnabAccounts({
       budgetId,
       accessToken,
     });
 
     // Send to sheets...
-    await uploadYnabBudgetToPatrimonioSheet(ynabBudget, accounts);
+    await uploadYnabBudgetToPatrimonioSheet(ynabBudget);
 
     console.log(
       `Done! Please check the results on ${INVESTIMENTOS_SPREADSHEET_URL}`
