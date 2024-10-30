@@ -16,7 +16,7 @@ const renamePagamentos: TxProcessor = (tx: YnabTx) => {
       .toUpperCase()
       .startsWith("TED BCO 341 AGE 6220 CTA 90101")
   ) {
-    return { ...tx, payee_name: "Transfer : Itaú: C. Corrente" };
+    return { ...tx, payee_name: "Transfer - Itaú: C. Corrente" };
   }
   return tx;
 };

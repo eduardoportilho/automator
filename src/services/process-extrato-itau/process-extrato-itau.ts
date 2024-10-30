@@ -58,6 +58,10 @@ const PAYEE_RULES: ProcessorRule[] = [
     to: { payee_name: "Rendimento conta corrente" },
   },
   {
+    payeeNamePattern: "REND PAGO APLIC AUT APR",
+    to: { payee_name: "Rendimento conta corrente" },
+  },
+  {
     payeeNamePattern: "TED 102.0001.EDUARDO",
     to: { payee_name: "Transfer - XP: C. Corrente" },
   },

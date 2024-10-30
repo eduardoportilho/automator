@@ -14,6 +14,23 @@ const FUNDO_HEADER = ["Qtd", "Preço Unitário", "Posição", "Valor líquido"];
 const EMPTY_ACAO_ROW = ["", "", ""];
 const EMPTY_FUNDO_ROW = ["", "", ""];
 
+const logAssetNotFound = (
+  verificacoesAtivos: {
+    ativosPlanilha: string[];
+    ativosCarteira: string[];
+    mensagem: string;
+  }[]
+) => {
+  verificacoesAtivos.forEach(({ ativosPlanilha, ativosCarteira, mensagem }) => {
+    const notFound = ativosCarteira.filter(
+      (ativo) => !ativosPlanilha.includes(ativo)
+    );
+    if (notFound.length > 0) {
+      console.log(`\n\n!!! ${mensagem}: [${notFound.join(", ")}]\n\n`);
+    }
+  });
+};
+
 const createAcaoRow = ({ ativo, acoes }: { ativo: string; acoes: Acao[] }) => {
   const acaoCarteira = acoes.find((acao) => acao.ativo === ativo);
 
@@ -91,6 +108,33 @@ export const createPatrimonioEntry = ({
     sectionTitle: FUNDOS_INVESTIMENTOS_TITLE,
     sheetContent,
   });
+
+  logAssetNotFound([
+    {
+      ativosPlanilha: ativosFiisInSheet,
+      ativosCarteira: carteira.fiis.map((fii) => fii.ativo),
+      mensagem:
+        "Existem FIIs na carteira que não foram encontrados na planilha",
+    },
+    {
+      ativosPlanilha: ativosAcoesInSheet,
+      ativosCarteira: carteira.acoes.map((acao) => acao.ativo),
+      mensagem:
+        "Existem Ações na carteira que não foram encontrados na planilha",
+    },
+    {
+      ativosPlanilha: ativosRendaFixaInSheet,
+      ativosCarteira: carteira.rendaFixa.map((rf) => rf.nome),
+      mensagem:
+        "Existem Fundos de Renda fixa na carteira que não foram encontrados na planilha",
+    },
+    {
+      ativosPlanilha: ativosFundosInvestimentosInSheet,
+      ativosCarteira: carteira.fundos.map((rf) => rf.nome),
+      mensagem:
+        "Existem Fundos de Investimento na carteira que não foram encontrados na planilha",
+    },
+  ]);
 
   return [
     [date, "", "", "", NEXT_DATE_ANCHOR], // The range has 4 cols and we move NEXT_DATE_ANCHOR to the next col

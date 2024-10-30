@@ -19,6 +19,10 @@ const PAYEE_RULES: ProcessorRule[] = [
     to: { payee_name: "Dividendos FIIs" },
   },
   {
+    payeeNamePattern: "RENDIMENTOS",
+    to: { payee_name: "Dividendos FIIs" },
+  },
+  {
     payeeNamePattern: "PGTO JUR/AMORT",
     to: { payee_name: "Rendimento renda fixa" },
   },
