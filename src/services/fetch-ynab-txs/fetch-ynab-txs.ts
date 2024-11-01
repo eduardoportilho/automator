@@ -84,14 +84,15 @@ export const fetchYnabAccounts = async ({
 export const fetchYnabBudget = async ({
   budgetId,
   accessToken,
+  month,
 }: {
   budgetId: string;
   accessToken: string;
-}): Promise<any> => {
-  // }): Promise<YnabBudget> => {
+  month?: string;
+}): Promise<YnabBudget> => {
   const accountTxsUrl = `/budgets/${budgetId}`;
 
   const response = await getYnabData(accountTxsUrl, accessToken);
 
-  return createYnabBudgetFromResponse(response.data.data.budget);
+  return createYnabBudgetFromResponse(response.data.data.budget, month);
 };

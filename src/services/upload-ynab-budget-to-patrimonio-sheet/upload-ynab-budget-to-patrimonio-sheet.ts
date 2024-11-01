@@ -23,10 +23,14 @@ export const uploadYnabBudgetToPatrimonioSheet = async (budget: YnabBudget) => {
   });
 
   console.log("Writing carteira XP to YNAB sheet...");
-  writeSheetRange({
+  await writeSheetRange({
     spreadsheetId: INVESTIMENTOS_SPREADSHEET_ID,
     sheetTitle: YNAB_SHEET_TITLE,
     startCellA1: datePosition.a1,
     data: budgetEntry,
   });
+
+  console.log(
+    `Carteira entry added to "${YNAB_SHEET_TITLE}!${datePosition.a1}"`
+  );
 };

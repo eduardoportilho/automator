@@ -49,10 +49,14 @@ export const uploadCarteiraToPatrimonioSheet = async (
   });
 
   console.log("Writing carteira XP to patrimônio sheet...");
-  writeSheetRange({
+  await writeSheetRange({
     spreadsheetId: INVESTIMENTOS_SPREADSHEET_ID,
     sheetTitle: INVESTIMENTOS_SHEET_TITLE,
     startCellA1: datePosition.a1,
     data: patrimonioEntry,
   });
+
+  console.log(
+    `Carteira entry added to "${INVESTIMENTOS_SHEET_TITLE}!${datePosition.a1}"`
+  );
 };

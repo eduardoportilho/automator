@@ -4,9 +4,18 @@ import {
   YnabBudgetResponse,
 } from "../../types";
 
+/**
+ * Convert YnabBudgetResponse from API into YnabBudget type
+ * @param response YnabBudgetResponse - like src/sample-data/budget.ts
+ * @param month string | undefined - The month from which the budget category amounts (budgeted,activity,balance) will be read.
+ *  - last_month will be used if this arg is undefined
+ * @returns YnabBudget
+ */
 export const createYnabBudgetFromResponse = (
-  response: YnabBudgetResponse // like src/sample-data/budget.ts
+  response: YnabBudgetResponse, // like src/sample-data/budget.ts
+  month?: string // "yyyy-MM-01" (last_month will be used if this arg is not present)
 ): YnabBudget => {
+  const budgetMonth = month ?? response.last_month;
   const categoryGroupMap = response.category_groups
     .filter(({ hidden, deleted }) => !hidden && !deleted)
     .reduce((map, { id, name }) => {
@@ -18,7 +27,12 @@ export const createYnabBudgetFromResponse = (
       return map;
     }, {} as Record<string, YnabBudgetCategoryGroup>);
 
-  response.categories
+  // Attention: if the day in month arg is different than in response (eg. 2024-10-01 and 2024-10-05) no data budget will be returned
+  // We could return last month instead (`budgetCategoriesInMonth = response.categories`) but it might be misleading
+  const budgetCategoriesInMonth =
+    response.months.find(({ month }) => month === budgetMonth)?.categories ??
+    [];
+  budgetCategoriesInMonth
     .filter(({ hidden, deleted }) => !hidden && !deleted)
     .forEach((cat) => {
       categoryGroupMap[cat.category_group_id].categories.push({
@@ -38,7 +52,7 @@ export const createYnabBudgetFromResponse = (
     }));
 
   return {
-    month: response.last_month.slice(0, 7), // "yyyy-MM-dd" → "yyyy-MM"
+    month: budgetMonth.slice(0, 7), // "yyyy-MM-dd" → "yyyy-MM"
     categoryGroups: Object.values(categoryGroupMap),
     accounts: accounts,
   };

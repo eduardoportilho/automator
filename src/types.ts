@@ -66,6 +66,16 @@ export type RowValue = CellValue[];
 
 export type SheetContent = RowValue[];
 
+interface YnabBudgetResponseCategory {
+  category_group_id: string;
+  name: string;
+  budgeted: number;
+  activity: number;
+  balance: number;
+  hidden: boolean;
+  deleted: boolean;
+}
+
 export interface YnabBudgetResponse {
   first_month: string; //"2024-09-01",
   last_month: string; //"2024-10-01",
@@ -75,20 +85,25 @@ export interface YnabBudgetResponse {
     hidden: boolean;
     deleted: boolean;
   }[];
-  categories: {
-    category_group_id: string;
-    name: string;
-    budgeted: number;
-    activity: number;
-    balance: number;
-    hidden: boolean;
-    deleted: boolean;
-  }[];
+  // Budget categories with amounts from last month. ex:
+  // - if `last_month === "2024-10-01"`
+  // - then `categories[x].budgeted === months["2024-10-01"].categories[x].budgeted`
+  categories: YnabBudgetResponseCategory[];
   accounts: {
     id: string;
     name: string;
     balance: number;
     closed: boolean;
     deleted: boolean;
+  }[];
+  months: {
+    month: string; //"2024-11-01",
+    income: number;
+    budgeted: number;
+    activity: number;
+    to_be_budgeted: number;
+    age_of_money: number;
+    deleted: boolean;
+    categories: YnabBudgetResponseCategory[];
   }[];
 }

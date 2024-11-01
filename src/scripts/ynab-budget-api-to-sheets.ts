@@ -3,6 +3,7 @@
 // Usage:
 // $ chmod +x ./src/scripts/ynab-budget-api-to-sheets.ts
 // $ ./src/scripts/ynab-budget-api-to-sheets.ts $BUDGET_EDU_2025 $YNAB_ACCESS_TOKEN
+// $ ./src/scripts/ynab-budget-api-to-sheets.ts $BUDGET_EDU_2025 $YNAB_ACCESS_TOKEN 2024-10-01
 
 import { INVESTIMENTOS_SPREADSHEET_URL } from "../constants";
 import { getArgs } from "../utils/scripts";
@@ -11,14 +12,15 @@ import { fetchYnabBudget } from "../services/fetch-ynab-txs/fetch-ynab-txs";
 
 (async () => {
   try {
-    const [budgetId, accessToken] = getArgs({
+    const [budgetId, accessToken, month] = getArgs({
       requiredCount: 2,
-      errorMessage: `Missing arguments. Usage: ynab-budget-api-to-sheets.ts <budget-id> <access-token>`,
+      errorMessage: `Missing arguments. Usage: ynab-budget-api-to-sheets.ts <budget-id> <access-token> <?yyyy-MM-01?>`,
     });
 
     const ynabBudget = await fetchYnabBudget({
       budgetId,
       accessToken,
+      month,
     });
 
     // Send to sheets...
