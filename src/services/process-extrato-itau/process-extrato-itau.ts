@@ -78,6 +78,7 @@ const PAYEE_RULES: ProcessorRule[] = [
 const sanitizePayee = (payee: string) => {
   return (payee ?? "")
     .replace(/^(PIX.+)(\d\d\/\d\d)$/, "$1")
+    .replace("COMPRA DÃBITO", "COMPRA DÉBITO")
     .replace(/\s+/, " ")
     .trim();
 };
