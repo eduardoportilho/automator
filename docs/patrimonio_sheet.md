@@ -19,6 +19,23 @@ Reads values from DB sheets and present them on an easy to read way
 
 #### Buscar valor em named range
 
+`=CELL("col";'db. YNAB'!D1)`
+`=OFFSET(YnabRendaTotal;0;D$2-1;1;1)`
+
+- `'db. YNAB'!D1` é o ponteiro "vivo" para a célula com a data na planilha com os dados.
+- `=CELL("col";ponteiroData)` retorna o índice da coluna desta célula
+
+- `YnabRendaTotal` é um named range na planilha com os dados que inclui uma linha inteira, i.e., todas as colunas da planílha estarão presentes com o mesmo índice neste range.
+- `D$2-1` aponta para o índice da coluna do date anchor na planilha com os dados. Subtraimos 1 para usar no offset, ex:
+  - `'db. YNAB'!D1` → Col D → índice 4 (1-indexed) → ofsset = 3 (desloca 3 colunas partindo da inicial)
+- `=OFFSET(YnabRendaTotal;0;COL-1;1;1)` obtém o valor do named range na coluna
+  - YnabRendaTotal: named range
+  - 0: não desloca linhas
+  - COL-1: desloca colunas (ex: A=1 (1-indexed) → 1-1=0 → não desloca nenhuma coluna para A)
+  - 1,1: resultado vai ser 1 coluna e 1 linha, ou seja, apenas um valor
+
+#### Old 0.2
+
 `=OFFSET(InvestLiquidez;0;COLUMN(INDIRECT(E$3))-1;1;1)`
 
 - `InvestLiquidez` é um named range na planilha com os dados que inclui uma linha inteira, i.e., podemos usar qualquer índice de colunas da planilha nele.
@@ -31,7 +48,7 @@ Reads values from DB sheets and present them on an easy to read way
   - COL-1: desloca colunas (ex: A=1 (1-indexed) → 1-1=0 → não desloca nenhuma coluna para A)
   - 1,1: resultado vai ser 1 coluna e 1 linha, ou seja, apenas um valor
 
-#### Old
+#### Old 0.1
 
 `=OFFSET(INDIRECT($E$2);42+A7;0)`
 

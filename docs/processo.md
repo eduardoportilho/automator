@@ -77,8 +77,12 @@ $ ./src/scripts/ynab-budget-api-to-sheets.ts $BUDGET_EDU_2025 $YNAB_ACCESS_TOKEN
 ### 2. Gerar entrada na planilha `💷 Patrimônio (2025) 💶` / `1. Relatório`
 
 - Na planilha "1. Relatório"
-  - Copiar valores da entrada anterior: `Date anchor in 'db. YNAB'`, `Date anchor in 'db. Investimentos'`, `Mês`
+  - Copiar valores da entrada anterior: `COL in "db. YNAB"`, `COL in "db. Investimentos"`, `Mês`
   - Ajustar valores:
-    - `Date anchor in 'db. YNAB'`: referência da célula com a data (date anchor) a ser utilizada na planilha `db. YNAB`, ex. `db. YNAB!D1`
-    - `Date anchor in 'db. Investimentos'`: referência da célula com a data a ser utilizada na planilha `db. Investimentos`, ex. `db. Investimentos!L1`
+    - `COL in "db. YNAB"`: substituir a referência da célula com a data (date anchor) a ser utilizada na planilha `db. YNAB`
+      - Anterior: `=CELL("col";'db. YNAB'!F1)`
+      - Apagar referência: `=CELL("col";  )`
+      - Clicar na nova célula com data em `db. YNAB`: `=CELL("col";'db. YNAB'!G1)`
+    - `COL in "db. Investimentos"`: substituir a referência da célula com a data a ser utilizada na planilha `db. Investimentos` (mesmo processo do item acima)
     - `Mês`: Mês dos dados utilizados nesse relatório, apenas um label. ex. 2024-10 gastos de outubro no budget, investimentos no final de outubro (ou inicio de novembro)
+  - Arrastar copiando todas as fórmulas (de "Renda total" até "Variação Patr. %")
