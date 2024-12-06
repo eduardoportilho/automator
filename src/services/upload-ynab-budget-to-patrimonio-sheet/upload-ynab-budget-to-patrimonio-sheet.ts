@@ -17,6 +17,7 @@ export const uploadYnabBudgetToPatrimonioSheet = async (budget: YnabBudget) => {
 
   const datePosition = findNextDateCellPosition(ynabSheetContent);
 
+  // Report is generated in this step
   const budgetEntry = createBudgetEntry({
     sheetContent: ynabSheetContent,
     budget,

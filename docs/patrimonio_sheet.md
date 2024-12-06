@@ -17,6 +17,22 @@ Reads values from DB sheets and present them on an easy to read way
 
 ### Formula break-down:
 
+#### Buscar valor em named range
+
+`=OFFSET(InvestLiquidez;0;COLUMN(INDIRECT(E$3))-1;1;1)`
+
+- `InvestLiquidez` é um named range na planilha com os dados que inclui uma linha inteira, i.e., podemos usar qualquer índice de colunas da planilha nele.
+- `E$3` aponta para o date anchor na planilha com os dados. Essa célula é usada para obter o índice da coluna. Ex. conteúdo: `db. Investimentos!H1`
+- `INDIRECT(E$3)` converte o conteúdo da célula (string) em uma referência que pode ser usada em fórmulas
+- `COLUMN(ref)-1` obtém o índice da coluna e subtrai 1 para usar no offset, ex. `db. Investimentos!B1` → `B=2 (1-indexed)` -> `2-1 = 1`
+- `=OFFSET(InvestLiquidez;0;COL-1;1;1)` obtém o valor do named range na coluna
+  - InvestLiquidez: named range
+  - 0: não desloca linhas
+  - COL-1: desloca colunas (ex: A=1 (1-indexed) → 1-1=0 → não desloca nenhuma coluna para A)
+  - 1,1: resultado vai ser 1 coluna e 1 linha, ou seja, apenas um valor
+
+#### Old
+
 `=OFFSET(INDIRECT($E$2);42+A7;0)`
 
 - Look for values shifted from the **date anchors** in the `db. YNAB` and `db. Investimentos` sheets

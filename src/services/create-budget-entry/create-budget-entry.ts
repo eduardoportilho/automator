@@ -75,6 +75,8 @@ export const createBudgetEntry = ({
 
   const categoriesSection = createCategoriesSection({ sheetContent, budget });
   const accountsSection = createAccountsSection({ sheetContent, budget });
+
+  // Report is generated here
   const reportSection = createReportSection({ sheetContent, budget });
 
   return [

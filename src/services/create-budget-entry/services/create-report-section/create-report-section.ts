@@ -5,7 +5,7 @@ import { YNAB_DATE_FORMAT } from "../../../../utils/date/date";
 import { getGroupActivity } from "../get-budget-activity/get-budget-activity";
 import { convertYnabToAmount } from "../../../../utils/currency/currency";
 
-const ROW_HEADERS = {
+export const ROW_HEADERS = {
   RENDA_TOTAL: "Renda total",
   RENDA_PASSIVA: "Renda Passiva",
   RENDA_ATIVA: "Renda Ativa",
@@ -18,9 +18,8 @@ const ROW_HEADERS = {
   LIQUIDEZ_YNAB: "Liquidez YNAB",
 };
 
-const ITAU_CDB_DI = "Itaú: CDB-DI";
+export const ITAU_CDB_DI = "Itaú: CDB-DI";
 
-// TODO: add unit tests
 export const createReportSection = ({
   sheetContent,
   budget,
@@ -30,15 +29,20 @@ export const createReportSection = ({
 }) => {
   const processingDate = format(new Date(), YNAB_DATE_FORMAT);
 
+  // Positive values
   const rendaPassiva = getGroupActivity({ budget, groupName: "Renda Passiva" });
   const rendaAtiva = getGroupActivity({ budget, groupName: "Renda Ativa" });
+
+  // Negative values
   const recorrentes = getGroupActivity({ budget, groupName: "Recorrentes" });
   const superfluos = getGroupActivity({ budget, groupName: "Superfluos" });
   const naoMensais = getGroupActivity({ budget, groupName: "Não-mensais" });
   const outros = getGroupActivity({ budget, groupName: "Outros" });
+
   const gastoTotal = recorrentes + superfluos + naoMensais + outros;
   const rendaTotal = rendaPassiva + rendaAtiva;
-  const delta = rendaTotal - gastoTotal;
+  const delta = rendaTotal + gastoTotal;
+
   const liquidezYnab = convertYnabToAmount(
     (budget.accounts ?? [])
       .filter(({ name }) => name !== ITAU_CDB_DI) // Exclude 'Itaú: CDB-DI' since it is an investiment account

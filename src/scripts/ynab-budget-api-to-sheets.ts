@@ -24,6 +24,7 @@ import { fetchYnabBudget } from "../services/fetch-ynab-txs/fetch-ynab-txs";
     });
 
     // Send to sheets...
+    // Report is generated in this step
     await uploadYnabBudgetToPatrimonioSheet(ynabBudget);
 
     console.log(
