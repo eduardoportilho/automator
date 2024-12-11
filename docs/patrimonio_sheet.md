@@ -27,7 +27,7 @@ Reads values from DB sheets and present them on an easy to read way
 
 - `YnabRendaTotal` é um named range na planilha com os dados que inclui uma linha inteira, i.e., todas as colunas da planílha estarão presentes com o mesmo índice neste range.
 - `D$2-1` aponta para o índice da coluna do date anchor na planilha com os dados. Subtraimos 1 para usar no offset, ex:
-  - `'db. YNAB'!D1` → Col D → índice 4 (1-indexed) → ofsset = 3 (desloca 3 colunas partindo da inicial)
+  - `'db. YNAB'!D1` → Col D → índice 4 (1-indexed) → offset = 3 (desloca 3 colunas partindo da inicial)
 - `=OFFSET(YnabRendaTotal;0;COL-1;1;1)` obtém o valor do named range na coluna
   - YnabRendaTotal: named range
   - 0: não desloca linhas

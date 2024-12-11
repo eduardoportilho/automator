@@ -2,10 +2,32 @@ import { parse, format } from "date-fns";
 
 export const DMY_FORMAT = "dd/MM/yyyy";
 export const DMY_REGEX = /[0-3]\d\/[0-1]\d\/\d{4}/;
+export const MMYYYY_REGEX = /[0-1]\d\/\d{4}/; // 07/2024
 export const MDY_FORMAT = "MM/dd/yyyy";
 export const YNAB_DATE_FORMAT = "yyyy-MM-dd";
-export const YNAB_MONTH_FORMAT = "MMM yyyy"; //Sep 2024
+export const YNAB_MONTH_FORMAT = "MMM yyyy"; // Sep 2024
 export const ISO_MONTH_FORMAT = "yyyy-MM";
+
+export const MONTHS_PT_BR = [
+  "janeiro",
+  "fevereiro",
+  "março",
+  "abril",
+  "maio",
+  "junho",
+  "julho",
+  "agosto",
+  "setembro",
+  "outubro",
+  "novembro",
+  "dezembro",
+];
+
+// Outubro/2024
+export const MONTH_YEAR_PT_BR_REGEX = new RegExp(
+  `(?<mes>${MONTHS_PT_BR.join("|")})` + /\/(?<ano>\d{4})/.source,
+  "i"
+);
 
 export const convertDateDMYtoMDY = (dateDMY: string) => {
   if (!dateDMY) {

@@ -107,3 +107,13 @@ export interface YnabBudgetResponse {
     categories: YnabBudgetResponseCategory[];
   }[];
 }
+
+export interface AluguelReportEntry {
+  imovel: string;
+  dataPagamento: string; // dd/MM/yyyy
+  mesCompetencia: string; // MM/yyyy
+  valorAluguel: number; // 18.299,60
+  taxaAdministracao: number; // 914,98
+  valorIr?: number; // 3.981,57
+  valorRepasse: number; // 13.403,05
+}
