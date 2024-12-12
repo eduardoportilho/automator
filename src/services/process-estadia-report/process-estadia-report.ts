@@ -1,8 +1,12 @@
 import { AluguelReportEntry } from "../../types";
 import { GTC, LEBLON } from "../../constants";
 import { splitRows } from "../../utils/rows";
-import { parseAmountBR } from "../../utils/currency/currency";
-import { convertDateFormat, DMY_FORMAT } from "../../utils/date/date";
+import { parseAmountBR, roundCurrency } from "../../utils/currency/currency";
+import {
+  convertDateFormat,
+  diffInDays,
+  DMY_FORMAT,
+} from "../../utils/date/date";
 
 // dd-MM-yyyy
 const DATE_REGEX = /(?<day>[0-3]\d)-(?<month>[0-1]\d)-(?<year>\d{4})/;
@@ -110,6 +114,27 @@ const getValorAluguelRepasseAdm = (rows: string[]) => {
   };
 };
 
+const calculateDiariaLiquida = ({
+  dataEntrada,
+  dataSaida,
+  valorRepasse,
+}: {
+  dataEntrada?: string; // dd/MM/yyyy
+  dataSaida?: string; // dd/MM/yyyy
+  valorRepasse: number; // 13.403,05
+}) => {
+  if (!dataEntrada || !dataSaida) {
+    return undefined;
+  }
+
+  const diarias = diffInDays({
+    earlierDate: dataEntrada,
+    laterDate: dataSaida,
+  });
+
+  return roundCurrency(valorRepasse / diarias);
+};
+
 export const isEstadiaReport = (content: string) => {
   return /Estadia Carioca Negócios Imobiliários LTDA/.test(content);
 };
@@ -117,10 +142,15 @@ export const isEstadiaReport = (content: string) => {
 export const processEstadiaReport = (content: string): AluguelReportEntry => {
   const rows = splitRows(content);
 
-  return {
+  const entry = {
     imovel: getImovel(rows),
     ...getDataPagamentoMesCompetencia(rows),
     ...getValorAluguelRepasseAdm(rows),
     ...getPeriodoEstadia(rows),
-  } as AluguelReportEntry;
+  };
+
+  return {
+    ...entry,
+    diariaLiquida: calculateDiariaLiquida(entry),
+  };
 };

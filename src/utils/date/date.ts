@@ -1,4 +1,4 @@
-import { parse, format } from "date-fns";
+import { parse, format, differenceInCalendarDays } from "date-fns";
 
 export const DMY_FORMAT = "dd/MM/yyyy";
 export const DMY_REGEX = /[0-3]\d\/[0-1]\d\/\d{4}/;
@@ -86,4 +86,20 @@ export const isValidDateObject = (object: any) => {
   }
 
   return true;
+};
+
+export const diffInDays = ({
+  laterDate,
+  earlierDate,
+  dateFormat = DMY_FORMAT,
+}: {
+  laterDate: string;
+  earlierDate: string;
+  dateFormat?: string;
+}) => {
+  // Number of calendar days between the given dates - times are removed from the dates and then the difference in days is calculated.
+  return differenceInCalendarDays(
+    parse(laterDate, dateFormat, new Date()),
+    parse(earlierDate, dateFormat, new Date())
+  );
 };

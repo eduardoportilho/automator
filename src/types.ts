@@ -116,6 +116,8 @@ export interface AluguelReportEntry {
   taxaAdministracao: number; // 914,98
   valorRepasse: number; // 13.403,05
   valorIr?: number; // 3.981,57
+  // Airbnb fields
   dataEntrada?: string; // dd/MM/yyyy
   dataSaida?: string; // dd/MM/yyyy
+  diariaLiquida?: number;
 }
