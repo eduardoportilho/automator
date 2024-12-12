@@ -101,7 +101,7 @@ const ALUGUEIS_SUBFOLDER_MAP: Record<string, string> = {
     );
 
     console.log(`📂 Copying file to "${destinationPath}"...\n`);
-    copyFileSync(inputPath, destinationPath);
+    // copyFileSync(inputPath, destinationPath);
 
     console.log("✅ Done!");
   } catch (error) {
