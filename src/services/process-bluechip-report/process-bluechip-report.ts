@@ -161,14 +161,12 @@ const getValorRepasse = (rows: string[]) => {
   return Math.abs(parseAmountBR(valorRepasse));
 };
 
-export const isMilleniumReport = (content: string) => {
-  const rows = splitRows(content);
-
-  return rows.some((row) => MILLENIUM_REGEX.test(row));
+export const isBlueChipReport = (content: string) => {
+  return MILLENIUM_REGEX.test(content);
 };
 
 export const processBluechipReport = (content: string): AluguelReportEntry => {
-  const isMillenium = isMilleniumReport(content);
+  const isMillenium = isBlueChipReport(content);
 
   if (!isMillenium) {
     return null;

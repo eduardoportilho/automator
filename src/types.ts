@@ -114,6 +114,8 @@ export interface AluguelReportEntry {
   mesCompetencia: string; // MM/yyyy
   valorAluguel: number; // 18.299,60
   taxaAdministracao: number; // 914,98
-  valorIr?: number; // 3.981,57
   valorRepasse: number; // 13.403,05
+  valorIr?: number; // 3.981,57
+  dataEntrada?: string; // dd/MM/yyyy
+  dataSaida?: string; // dd/MM/yyyy
 }

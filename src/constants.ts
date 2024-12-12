@@ -13,7 +13,9 @@ export const FUNDOS_INVESTIMENTOS_TITLE = "Fundos de Investimentos";
 
 // Imóveis
 export const MARIA_QUITERIA = "Rua Maria Quitéria 95";
-export const COPA_542 = "Copacabana 542 / Sl. 605";
-export const OPEN_MALL = "Open Mall Bl. 2 / Sl. 215";
-export const GRANJA_BRASIL = "Granja Brasil Apto. 201";
-export const MILLENIUM = "Millenium Bl. 2 / Sl. 222";
+export const COPA_542 = "Copacabana 542, Sala 605";
+export const OPEN_MALL = "Open Mall Bl. 2, Sala 215";
+export const GRANJA_BRASIL = "Granja Brasil Apt 201";
+export const MILLENIUM = "Millenium Bl. 2, Sala 222";
+export const GTC = "Marquês de São Vicente 124, Apt 406";
+export const LEBLON = "Ataulfo de Paiva 734, Apt 401";

@@ -24,8 +24,8 @@
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/carteira-safra-to-sheets.ts",
-        "/Users/eduardoportilho/hazel/safra.tsv",
+        "${workspaceFolder}/src/scripts/aluguel-report.ts",
+        "/Users/eduardoportilho/hazel/hazel-lab/estadia.pdf",
         // "2024-10",
         // "${env:BUDGET_EDU_2025}",
         // "${env:ACCOUNT_EDU_2025_SAFRA_CONTA_EDU}",
