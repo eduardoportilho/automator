@@ -12,6 +12,7 @@ import {
   MILLENIUM,
   GTC,
   LEBLON,
+  CONTROLE_SPREADSHEET_ID,
 } from "../constants";
 import nodePath from "path";
 import { copyFileSync } from "fs";
@@ -27,6 +28,7 @@ import {
   isEstadiaReport,
   processEstadiaReport,
 } from "../services/process-estadia-report/process-estadia-report";
+import { appendToSheet } from "../utils/sheets/sheets";
 
 const ALUGUEIS_ROOT_FOLDER_PATH =
   "/Users/eduardoportilho/My Drive (eduardo.portilho@gmail.com)/_EPPCloud/__Financas/__2023/Alugueis";
@@ -48,11 +50,10 @@ const ALUGUEIS_SUBFOLDER_MAP: Record<string, string> = {
       errorMessage: `Missing arguments. Usage: read-pdf.ts <path/to/file.pdf>`,
     });
 
+    console.log(`🔦 Reading PDF...\n`);
     const pdfContent = await readPdf(inputPath);
 
-    console.log(`>>>---<<<`);
-    console.log(pdfContent);
-    console.log(`>>>---<<<`);
+    // console.log(`>>>---<<<`, pdfContent, `>>>---<<<`);
 
     const isBlueChip = isBlueChipReport(pdfContent);
     const isEstadia = isEstadiaReport(pdfContent);
@@ -63,11 +64,31 @@ const ALUGUEIS_SUBFOLDER_MAP: Record<string, string> = {
       ? processEstadiaReport(pdfContent)
       : processArpoadorReport(pdfContent);
 
-    console.log(entry);
+    console.log(`>>>---<<<`, entry, `>>>---<<<\n`);
 
     // append to alugueis gsheet (entry):
     // - const sheetRowEntry = buildSheetRowEntry(entry)
     // - appendToSheet(sheetRowEntry, 'sheet', 'page')
+
+    console.log(`🛫 Appending to "🕹️ Controle (2025) 🕹️" sheet...\n`);
+    appendToSheet({
+      spreadsheetId: CONTROLE_SPREADSHEET_ID,
+      tableHeaderRangeA1: "'🏡Alugueis'!A1:J1",
+      rowsToAppend: [
+        [
+          entry.imovel,
+          entry.mesCompetencia,
+          entry.dataPagamento,
+          entry.valorAluguel,
+          entry.taxaAdministracao,
+          entry.valorIr,
+          entry.valorRepasse,
+          entry.dataEntrada,
+          entry.dataSaida,
+          entry.diariaLiquida,
+        ],
+      ],
+    });
 
     const destinationPath = nodePath.join(
       ALUGUEIS_ROOT_FOLDER_PATH,
@@ -79,10 +100,10 @@ const ALUGUEIS_SUBFOLDER_MAP: Record<string, string> = {
       }) + ".pdf"
     );
 
-    console.log(`Copying file to "${destinationPath}"...`);
-    // copyFileSync(inputPath, destinationPath);
+    console.log(`📂 Copying file to "${destinationPath}"...\n`);
+    copyFileSync(inputPath, destinationPath);
 
-    console.log("Done!");
+    console.log("✅ Done!");
   } catch (error) {
     console.error("Error encountered, aborting.");
     console.error(error);

@@ -1,6 +1,6 @@
 import { google, sheets_v4 } from "googleapis";
 import { GaxiosPromise } from "googleapis-common";
-import { rangeA1 } from "./cellref";
+import { rangeA1, rangeA1String } from "./cellref";
 import { SheetContent } from "../../types";
 
 const sheets = google.sheets("v4");
@@ -72,11 +72,41 @@ export const writeSheetRange = async ({
     ];
 
     const { auth } = await getAuth();
+    // https://developers.google.com/sheets/api/samples/writing#multiple-ranges
+    // https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate
     return await sheets.spreadsheets.values.batchUpdate({
       spreadsheetId,
       requestBody: {
         valueInputOption: "RAW",
         data: rangeValues,
+      },
+      auth,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const appendToSheet = async ({
+  spreadsheetId,
+  tableHeaderRangeA1,
+  rowsToAppend,
+}: {
+  spreadsheetId: string;
+  tableHeaderRangeA1: string;
+  rowsToAppend: (string | number)[][];
+}): GaxiosPromise<sheets_v4.Schema$AppendValuesResponse> => {
+  try {
+    const { auth } = await getAuth();
+    // https://developers.google.com/sheets/api/samples/writing#append_values
+    // https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append#InsertDataOption
+    return await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: tableHeaderRangeA1,
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      requestBody: {
+        values: rowsToAppend,
       },
       auth,
     });

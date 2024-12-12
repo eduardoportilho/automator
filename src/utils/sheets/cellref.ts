@@ -55,6 +55,14 @@ export const rangeA1 = (
   const startRC = a1ToRowCol(startA1);
   const endRC = addRowCol(startRC, { rows, cols });
   const endA1 = rowColToA1(endRC);
+  return rangeA1String(sheet, startA1, endA1);
+};
+
+export const rangeA1String = (
+  sheet: string,
+  startA1: string,
+  endA1: string
+): string => {
   const sheetPrefix = sheet ? `${sheet}!` : "";
   return `${sheetPrefix}${startA1}:${endA1}`;
 };

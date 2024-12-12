@@ -11,6 +11,12 @@ export const ACOES_TITLE = "Ações";
 export const RENDA_FIXA_TITLE = "Renda Fixa";
 export const FUNDOS_INVESTIMENTOS_TITLE = "Fundos de Investimentos";
 
+// 🕹️ Controle (2025) 🕹️
+export const CONTROLE_SPREADSHEET_ID =
+  "1--ReOsqh_nc9UNyEJauiEMrP0IxGQV0s4LkY2z-uNfU";
+export const CONTROLE_SPREADSHEET_URL =
+  "https://docs.google.com/spreadsheets/d/1--ReOsqh_nc9UNyEJauiEMrP0IxGQV0s4LkY2z-uNfU/edit?gid=0#gid=0";
+
 // Imóveis
 export const MARIA_QUITERIA = "Rua Maria Quitéria 95";
 export const COPA_542 = "Copacabana 542, Sala 605";
