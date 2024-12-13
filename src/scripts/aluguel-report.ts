@@ -17,18 +17,9 @@ import {
 import nodePath from "path";
 import { copyFileSync } from "fs";
 import { getArgs } from "../utils/scripts";
-import { readPdf } from "../utils/read-pdf/read-pdf";
-import { processArpoadorReport } from "../services/process-arpoador-report/process-arpoador-report";
-import {
-  processBluechipReport,
-  isBlueChipReport,
-} from "../services/process-bluechip-report/process-bluechip-report";
 import { convertDateFormat, DMY_FORMAT } from "../utils/date/date";
-import {
-  isEstadiaReport,
-  processEstadiaReport,
-} from "../services/process-estadia-report/process-estadia-report";
 import { appendToSheet } from "../utils/sheets/sheets";
+import { readAluguelReportPdf } from "../services/read-aluguel-report-pdf/read-aluguel-report-pdf";
 
 const ALUGUEIS_ROOT_FOLDER_PATH =
   "/Users/eduardoportilho/My Drive (eduardo.portilho@gmail.com)/_EPPCloud/__Financas/__2023/Alugueis";
@@ -51,18 +42,8 @@ const ALUGUEIS_SUBFOLDER_MAP: Record<string, string> = {
     });
 
     console.log(`🔦 Reading PDF...\n`);
-    const pdfContent = await readPdf(inputPath);
 
-    // console.log(`>>>---<<<`, pdfContent, `>>>---<<<`);
-
-    const isBlueChip = isBlueChipReport(pdfContent);
-    const isEstadia = isEstadiaReport(pdfContent);
-
-    const entry = isBlueChip
-      ? processBluechipReport(pdfContent)
-      : isEstadia
-      ? processEstadiaReport(pdfContent)
-      : processArpoadorReport(pdfContent);
+    const { entry, isAirbnb } = await readAluguelReportPdf(inputPath);
 
     console.log(`>>>---<<<`, entry, `>>>---<<<\n`);
 
@@ -96,7 +77,7 @@ const ALUGUEIS_SUBFOLDER_MAP: Record<string, string> = {
       convertDateFormat({
         date: entry.dataPagamento,
         inputFormat: DMY_FORMAT,
-        outputFormat: isEstadia ? "yyMMdd" : "yyMM",
+        outputFormat: isAirbnb ? "yyMMdd" : "yyMM",
       }) + ".pdf"
     );
 

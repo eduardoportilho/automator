@@ -1,10 +1,10 @@
 export const getArgs = ({
-  requiredCount,
-  errorMessage,
+  requiredCount = 0,
+  errorMessage = "Missing arguments.",
 }: {
-  requiredCount: number;
-  errorMessage: string;
-}) => {
+  requiredCount?: number;
+  errorMessage?: string;
+} = {}) => {
   // Remove first 2: command, file
   const args = process.argv.slice(2);
 
