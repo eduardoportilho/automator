@@ -1,8 +1,11 @@
 import path from "path";
-import { readFileSync, readdirSync, renameSync } from "fs";
+import { readFileSync, readdirSync, renameSync, writeFileSync } from "fs";
 
 export const readFile = (filePath: string): string =>
   readFileSync(filePath, "utf8");
+
+export const writeFile = (filePath: string, data: string) =>
+  writeFileSync(filePath, data, { encoding: "utf8" });
 
 export const listFiles = ({
   folderPath,

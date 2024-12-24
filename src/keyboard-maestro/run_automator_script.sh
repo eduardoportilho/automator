@@ -17,6 +17,7 @@ echo "" >> $HAZEL_LOG_FILE
 # Obs: "Path" is set in KM UI
 echo "Selected file in finder (KMVAR_Path): [$KMVAR_Path]" >> $HAZEL_LOG_FILE
 echo "Automator script to be executed (KMVAR_AUTOMATOR_SCRIPT): [$KMVAR_AUTOMATOR_SCRIPT]" >> $HAZEL_LOG_FILE
+echo "Run once a day (KMVAR_RUN_ONCE_A_DAY): [$KMVAR_RUN_ONCE_A_DAY]" >> $HAZEL_LOG_FILE
 
 # Is -ld "$KMVAR_Path"
 

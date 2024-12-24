@@ -1,4 +1,4 @@
-import { parse, format, differenceInCalendarDays } from "date-fns";
+import { parse, format, differenceInCalendarDays, formatISO } from "date-fns";
 import { UTCDate } from "@date-fns/utc";
 
 export const DMY_FORMAT = "dd/MM/yyyy";
@@ -30,6 +30,8 @@ export const MONTH_YEAR_PT_BR_REGEX = new RegExp(
   `(?<mes>${MONTHS_PT_BR.join("|")})` + /\/(?<ano>\d{4})/.source,
   "i"
 );
+
+export const nowIsoString = () => formatISO(new UTCDate());
 
 export const convertDateDMYtoMDY = (dateDMY: string) => {
   if (!dateDMY) {

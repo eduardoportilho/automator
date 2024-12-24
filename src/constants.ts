@@ -17,6 +17,8 @@ export const CONTROLE_SPREADSHEET_ID =
 export const CONTROLE_SPREADSHEET_URL =
   "https://docs.google.com/spreadsheets/d/1--ReOsqh_nc9UNyEJauiEMrP0IxGQV0s4LkY2z-uNfU/edit?gid=0#gid=0";
 export const TASKS_SHEET_TITLE = "🚧Tasks";
+export const TASKS_SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/1--ReOsqh_nc9UNyEJauiEMrP0IxGQV0s4LkY2z-uNfU/edit?gid=2087879779#gid=2087879779";
 
 // Imóveis
 export const MARIA_QUITERIA = "Rua Maria Quitéria 95";

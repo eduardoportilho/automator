@@ -52,21 +52,24 @@ export const displayMacOsNotificationTN = ({
   subtitle,
   sound,
   url,
+  group,
 }: {
   notificationText: string;
   title?: string;
   subtitle?: string;
   sound?: Sound | "default";
   url?: string;
+  group?: string;
 }) => {
   const options = [
     `-message '${notificationText}'`,
     title ? `-title '${title}'` : null,
     subtitle ? `-subtitle '${subtitle}'` : null,
+    group ? `-group '${group}'` : null,
     sound ? `-sound '${sound}'` : null,
     url ? `-open '${url}'` : null,
   ];
   const cmd = `terminal-notifier ${options.join(" ")}`;
-
+  console.log(`\n\n>>>`, cmd);
   require("child_process").exec(cmd);
 };

@@ -16,7 +16,7 @@ export const getArgs = ({
   return args;
 };
 
-export const getEnvVars = (varNames: string[]) => {
+export const getEnvVars = (varNames: string[]): string[] => {
   const missing = varNames.filter((varName) => !process.env[varName]);
 
   if (missing.length > 0) {
@@ -32,4 +32,8 @@ export const getEnvVars = (varNames: string[]) => {
   }
 
   return varNames.map((varName) => process.env[varName]);
+};
+
+export const checkBoolEnvVar = (varName: string): boolean => {
+  return (process.env[varName] ?? "false").toLowerCase() === "true";
 };

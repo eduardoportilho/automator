@@ -9,6 +9,10 @@ import {
   Task,
 } from "../services/read-tasks-from-ctrl-sheet/read-tasks-from-ctrl-sheet";
 import { displayMacOsNotificationTN as displayMacOsNotification } from "../utils/notifications/notifications";
+import { checkLastUpdateToday } from "../utils/local-db/local-db";
+import { checkBoolEnvVar } from "../utils/scripts";
+import { TASKS_SHEET_URL } from "../constants";
+import { fetchCotacaoDolar } from "../services/fetch-dolar/fetch-dolar";
 
 const buildNotificationMessage = (label: string, tasks: Task[]) => {
   if (tasks.length === 0) {
@@ -22,8 +26,15 @@ const buildNotificationMessage = (label: string, tasks: Task[]) => {
 
 (async () => {
   try {
-    const tasks = await readTasksFromCtrlSheet();
-    const { due, willBeDueInNearFuture } = tasks;
+    const runOnceADay = checkBoolEnvVar("KMVAR_RUN_ONCE_A_DAY");
+    const hasScriptBeenExecutedToday =
+      runOnceADay && checkLastUpdateToday("check-task-sheet/last-update");
+
+    if (hasScriptBeenExecutedToday) {
+      console.log("❌ The script has already been executed today, aborting.");
+      return;
+    }
+    const { due, willBeDueInNearFuture } = await readTasksFromCtrlSheet();
 
     const notificationText = [
       buildNotificationMessage("⛔️ Vencidas", due),
@@ -32,12 +43,13 @@ const buildNotificationMessage = (label: string, tasks: Task[]) => {
       .filter(Boolean)
       .join("\n");
 
+    const { bid } = await fetchCotacaoDolar();
+
     if (notificationText) {
-      console.log(notificationText);
       displayMacOsNotification({
-        title: "Tarefas:",
+        title: `Tarefas (💰 Dolar: ${bid} 💰)`,
         notificationText,
-        url: "https://docs.google.com/spreadsheets/d/1--ReOsqh_nc9UNyEJauiEMrP0IxGQV0s4LkY2z-uNfU/edit?gid=2087879779#gid=2087879779",
+        url: TASKS_SHEET_URL,
         sound: "Frog",
       });
     }
