@@ -28,15 +28,26 @@ const getAuth = async () => {
   }
 };
 
+/**
+ *
+ * @param spreadsheetId
+ * @param ranges
+ * @param valueRenderOption FORMATTED_VALUE, UNFORMATTED_VALUE, FORMULA (https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption)
+ * @returns
+ */
 export const getSheetRanges = async (
   spreadsheetId: string,
-  ranges: string[]
+  ranges: string[],
+  valueRenderOption?: "FORMATTED_VALUE" | "UNFORMATTED_VALUE" | "FORMULA"
 ): Promise<SheetContent[]> => {
   try {
     const { auth } = await getAuth();
+    // https://developers.google.com/sheets/api/samples/reading#multiple-ranges
+    // https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchGet
     const result = await sheets.spreadsheets.values.batchGet({
       spreadsheetId,
       ranges,
+      valueRenderOption,
       auth,
     });
     const data = result.data.valueRanges.map(

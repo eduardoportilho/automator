@@ -1,4 +1,5 @@
 import { parse, format, differenceInCalendarDays } from "date-fns";
+import { UTCDate } from "@date-fns/utc";
 
 export const DMY_FORMAT = "dd/MM/yyyy";
 export const DMY_REGEX = /[0-3]\d\/[0-1]\d\/\d{4}/;
@@ -22,6 +23,7 @@ export const MONTHS_PT_BR = [
   "novembro",
   "dezembro",
 ];
+export const MONTHS_MMM_PT_BR = MONTHS_PT_BR.map((month) => month.slice(0, 3));
 
 // Outubro/2024
 export const MONTH_YEAR_PT_BR_REGEX = new RegExp(
@@ -33,7 +35,7 @@ export const convertDateDMYtoMDY = (dateDMY: string) => {
   if (!dateDMY) {
     throw new Error("Error parsing date: empty string");
   }
-  const parsedDate = parse(dateDMY, DMY_FORMAT, new Date());
+  const parsedDate = parse(dateDMY, DMY_FORMAT, new UTCDate());
   return format(parsedDate, MDY_FORMAT);
 };
 
@@ -49,7 +51,7 @@ export const convertDateFormat = ({
   if (!date) {
     throw new Error("Error parsing date: empty string");
   }
-  const parsedDate = parse(date, inputFormat, new Date());
+  const parsedDate = parse(date, inputFormat, new UTCDate());
   return format(parsedDate, outputFormat);
 };
 
@@ -64,7 +66,7 @@ export const parseDateStringIfValid = ({
     if (typeof value !== "string") {
       return null;
     }
-    const date = parse(value, dateFormat, new Date());
+    const date = parse(value, dateFormat, new UTCDate());
 
     if (!isValidDateObject(date)) {
       return null;
@@ -99,7 +101,7 @@ export const diffInDays = ({
 }) => {
   // Number of calendar days between the given dates - times are removed from the dates and then the difference in days is calculated.
   return differenceInCalendarDays(
-    parse(laterDate, dateFormat, new Date()),
-    parse(earlierDate, dateFormat, new Date())
+    parse(laterDate, dateFormat, new UTCDate()),
+    parse(earlierDate, dateFormat, new UTCDate())
   );
 };

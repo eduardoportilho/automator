@@ -24,6 +24,7 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "@date-fns/utc": "^2.1.0",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
     "googleapis": "^144.0.0",

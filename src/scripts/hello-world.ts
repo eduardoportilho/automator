@@ -12,6 +12,8 @@ import { getArgs } from "../utils/scripts";
     const [arg] = getArgs();
 
     console.log(`Hello world! Arg is [${arg}]"`);
+
+    return `Hello world! Arg is [${arg}]"`;
   } catch (error) {
     console.error("Error encountered, aborting.");
     console.error(error);
