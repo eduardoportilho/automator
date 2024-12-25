@@ -15,8 +15,9 @@ echo "Selected file on Finder: $KMVAR_Path" >> $HAZEL_LOG_FILE
 echo "" >> $HAZEL_LOG_FILE
 
 # Echo command for debbuging
-# echo "" >> $HAZEL_LOG_FILE
-# echo "$AUTOMATOR_SCRIPTS_PATH/aluguel-report.ts $1" >> $HAZEL_LOG_FILE
+echo "" >> $HAZEL_LOG_FILE
+echo "Command that will be executed:" >> $HAZEL_LOG_FILE
+echo "$AUTOMATOR_SCRIPTS_PATH/aluguel-report-to-sheets.ts \"$KMVAR_Path\"" >> $HAZEL_LOG_FILE
 
 echo "" >> $HAZEL_LOG_FILE
 

@@ -16,6 +16,10 @@ export const readAluguelReportPdf = async (
   console.log(`🔦 Reading PDF (${filePath})...\n`);
   const pdfContent = await readPdf(filePath);
 
+  if (pdfContent.trim().length === 0) {
+    throw new Error("PDF is empty (not OCR'd?), aborting...");
+  }
+
   // console.log(`>>>---<<<`, pdfContent, `>>>---<<<`);
 
   const isBlueChip = isBlueChipReport(pdfContent);

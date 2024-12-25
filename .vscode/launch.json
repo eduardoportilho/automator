@@ -24,8 +24,8 @@
         "ts-node/register"
       ],
       "args": [
-        "${workspaceFolder}/src/scripts/check-task-sheet.ts",
-        // "/Users/eduardoportilho/hazel/hazel-lab/estadia.pdf",
+        "${workspaceFolder}/src/scripts/aluguel-report-to-sheets.ts",
+        "/Users/eduardoportilho/My Drive (eduardo.portilho@gmail.com)/_EPPCloud/__Financas/__2023 e 2024/Alugueis/Granja Brasil/2409-ocr.pdf",
         // "2024-10",
         // "${env:BUDGET_EDU_2025}",
         // "${env:ACCOUNT_EDU_2025_SAFRA_CONTA_EDU}",
