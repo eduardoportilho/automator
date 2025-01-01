@@ -18,7 +18,7 @@ import { readAluguelReportPdf } from "../services/read-aluguel-report-pdf/read-a
 
     console.log(`🔦 Reading PDF...\n`);
 
-    const { entry } = await readAluguelReportPdf(inputPath);
+    const { entry, isAirbnb } = await readAluguelReportPdf(inputPath);
 
     // console.log(`>>>---<<<`, entry, `>>>---<<<\n`);
 
@@ -26,13 +26,18 @@ import { readAluguelReportPdf } from "../services/read-aluguel-report-pdf/read-a
     // - const sheetRowEntry = buildSheetRowEntry(entry)
     // - appendToSheet(sheetRowEntry, 'sheet', 'page')
 
-    console.log(`🛫 Appending to "🕹️ Controle (2025) 🕹️" sheet...\n`);
-
-    appendToSheet({
-      spreadsheetId: CONTROLE_SPREADSHEET_ID,
-      tableHeaderRangeA1: "'🏡Alugueis'!A1:J1",
-      rowsToAppend: [
-        [
+    const tituloPlanilha = isAirbnb ? "🏨Airbnb" : "🏡Alugueis";
+    const sheetRow = isAirbnb
+      ? [
+          entry.imovel,
+          entry.dataPagamento,
+          entry.valorAluguel,
+          entry.taxaAdministracao,
+          entry.valorRepasse,
+          entry.numeroDiarias,
+          entry.diariaLiquida,
+        ]
+      : [
           entry.imovel,
           entry.mesCompetencia,
           entry.dataPagamento,
@@ -40,11 +45,16 @@ import { readAluguelReportPdf } from "../services/read-aluguel-report-pdf/read-a
           entry.taxaAdministracao,
           entry.valorIr,
           entry.valorRepasse,
-          entry.dataEntrada,
-          entry.dataSaida,
-          entry.diariaLiquida,
-        ],
-      ],
+        ];
+
+    console.log(
+      `🛫 Appending to "🕹️ Controle (2025) 🕹️/${tituloPlanilha}" sheet...\n`
+    );
+
+    appendToSheet({
+      spreadsheetId: CONTROLE_SPREADSHEET_ID,
+      tableHeaderRangeA1: `'${tituloPlanilha}'!A1:J1`,
+      rowsToAppend: [sheetRow],
     });
 
     console.log("✅ Done!");

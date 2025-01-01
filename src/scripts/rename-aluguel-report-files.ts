@@ -1,3 +1,5 @@
+#!/usr/bin/env /opt/homebrew/bin/ts-node
+
 import path from "path";
 import {
   MARIA_QUITERIA,
@@ -42,9 +44,10 @@ const ALUGUEIS_PREFIX_MAP: Record<string, string> = {
       const dtref = convertDateFormat({
         date: entry.dataPagamento,
         inputFormat: "dd/MM/yyyy",
-        outputFormat: "yyMM",
+        outputFormat: "yyMMdd",
       });
-      const newName = `${prefix}-${dtref}-${original.name}`;
+      const newName = dtref;
+      // const newName = `${prefix}-${dtref}-${original.name}`;
 
       // console.log(`⚙️ Renaming "${filePath}" to "${newName}"...\n`);
 
