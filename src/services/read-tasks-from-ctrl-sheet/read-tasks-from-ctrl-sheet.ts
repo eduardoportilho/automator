@@ -60,9 +60,15 @@ export const readTasksFromCtrlSheet = async (): Promise<CtrlSheetTasks> => {
       }
 
       const completionDateStr = row[currentMonthColIndex];
+
+      // HERE WE CHECK IF TASK IS COMPLETED
+      // const isCompleted =
+      //   completionDateStr &&
+      //   /^[0123]?\d\/[01]?\d$/.test(completionDateStr.toString());
       const isCompleted =
         completionDateStr &&
-        /^[0123]?\d\/[01]?\d$/.test(completionDateStr.toString());
+        !["⛔️", "🔜"].includes(completionDateStr.toString());
+      // HERE WE CHECK IF TASK IS COMPLETED
 
       const taskDueDate = isInteger(day.toString())
         ? setDate(now, parseInt(day.toString()))
@@ -91,6 +97,11 @@ export const readTasksFromCtrlSheet = async (): Promise<CtrlSheetTasks> => {
   const willBeDueInNearFutureTasks = notCompleted.filter(
     ({ willBeDueInNearFuture }) => willBeDueInNearFuture
   );
+  // const completed = tasks.filter(({ isCompleted }) => isCompleted);
+  // console.log(`>>>notCompleted:`, notCompleted);
+  // console.log(`>>>completed:`, completed);
+  // console.log(`>>>dueTasks:`, dueTasks);
+  // console.log(`>>>willBeDueInNearFutureTasks:`, willBeDueInNearFutureTasks);
 
   return {
     due: dueTasks,

@@ -4,15 +4,28 @@
 // $ chmod +x ./src/scripts/check-task-sheet.ts
 // $ ./src/scripts/check-task-sheet.ts
 
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
+
 import {
   readTasksFromCtrlSheet,
   Task,
+  NEAR_FUTURE_DUE_DAYS,
 } from "../services/read-tasks-from-ctrl-sheet/read-tasks-from-ctrl-sheet";
 import { displayMacOsNotificationTN as displayMacOsNotification } from "../utils/notifications/notifications";
 import { checkLastUpdateToday } from "../utils/local-db/local-db";
 import { checkBoolEnvVar } from "../utils/scripts";
 import { TASKS_SHEET_URL } from "../constants";
 import { fetchCotacaoDolar } from "../services/fetch-dolar/fetch-dolar";
+
+const buildTituloNotificacao = async () => {
+  const cotacao = await fetchCotacaoDolar();
+  const data = format(new Date(), "- d/M eeeeee", { locale: ptBR });
+
+  return ["Tarefas", data, cotacao ? `(💰 Dolar: ${cotacao.bid} 💰)` : null]
+    .filter(Boolean)
+    .join(" ");
+};
 
 const buildNotificationMessage = (label: string, tasks: Task[]) => {
   if (tasks.length === 0) {
@@ -36,23 +49,24 @@ const buildNotificationMessage = (label: string, tasks: Task[]) => {
     }
     const { due, willBeDueInNearFuture } = await readTasksFromCtrlSheet();
 
-    const notificationText = [
-      buildNotificationMessage("⛔️ Vencidas", due),
-      buildNotificationMessage("⚠️ Próximas", willBeDueInNearFuture),
-    ]
-      .filter(Boolean)
-      .join("\n");
+    const notificationText =
+      due.length || willBeDueInNearFuture.length
+        ? [
+            buildNotificationMessage("⛔️ Vencidas", due),
+            buildNotificationMessage("⚠️ Próximas", willBeDueInNearFuture),
+          ]
+            .filter(Boolean)
+            .join("\n")
+        : `🏝️ Nada por aqui! Nenhuma tarefa vencida, ou vencendo nos próximos ${NEAR_FUTURE_DUE_DAYS} dias! 😌🫡`;
 
-    const { bid } = await fetchCotacaoDolar();
+    const tituloNotificacao = await buildTituloNotificacao();
 
-    if (notificationText) {
-      displayMacOsNotification({
-        title: `Tarefas (💰 Dolar: ${bid} 💰)`,
-        notificationText,
-        url: TASKS_SHEET_URL,
-        sound: "Frog",
-      });
-    }
+    displayMacOsNotification({
+      title: tituloNotificacao,
+      notificationText,
+      url: TASKS_SHEET_URL,
+      sound: "Frog",
+    });
 
     console.log("✅ Done!");
   } catch (error) {

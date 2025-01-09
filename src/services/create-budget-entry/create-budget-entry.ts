@@ -14,6 +14,7 @@ const createCategoriesSection = ({
   sheetContent: SheetContent;
   budget: YnabBudget;
 }) => {
+  // TODO: warn about mismatch between CATEGORIES in sheetContent and budget
   const categories = findSectionByHeader({
     rows: sheetContent,
     headerValue: "Category",
@@ -51,6 +52,7 @@ const createAccountsSection = ({
     headerValue: "Account",
   }).map((row) => row[0]);
 
+  // TODO: warn about mismatch between ACCOUNTS in sheetContent and budget
   return [
     [processingDate],
     ...accountNames.map((accountName) => {

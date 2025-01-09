@@ -14,21 +14,22 @@ interface Cotacao {
   create_date: string; // '2024-12-24 16:09:25'
 }
 
-export const fetchCotacaoDolar = async (): Promise<Cotacao> => {
+export const fetchCotacaoDolar = async (): Promise<Cotacao | null> => {
   const url = "https://economia.awesomeapi.com.br/json/last/USD-BRL";
   try {
     const response = await axios.get(url);
     const cotacao = response.data["USDBRL"] as Cotacao;
 
-    console.log(`>>>`, cotacao);
+    console.log(`>>> fetchCotacaoDolar:`, cotacao);
     return cotacao;
   } catch (error) {
+    console.log(`fetchCotacaoDolar: Erro buscando cotação`);
     if (error.response?.data?.error) {
       console.error(
         "Response error:",
         JSON.stringify(error.response.data.error, null, 2)
       );
     }
-    throw error;
+    return null;
   }
 };
