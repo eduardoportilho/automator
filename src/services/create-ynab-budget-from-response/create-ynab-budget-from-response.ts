@@ -23,6 +23,9 @@ export const createYnabBudgetFromResponse = (
         id,
         name,
         categories: [],
+        budgeted: 0,
+        activity: 0,
+        balance: 0,
       };
       return map;
     }, {} as Record<string, YnabBudgetCategoryGroup>);
@@ -41,6 +44,9 @@ export const createYnabBudgetFromResponse = (
         activity: cat.activity,
         balance: cat.balance,
       });
+      categoryGroupMap[cat.category_group_id].budgeted += cat.budgeted;
+      categoryGroupMap[cat.category_group_id].activity += cat.activity;
+      categoryGroupMap[cat.category_group_id].balance += cat.balance;
     });
 
   const accounts = response.accounts
@@ -52,6 +58,7 @@ export const createYnabBudgetFromResponse = (
     }));
 
   return {
+    lastModifiedOn: response.last_modified_on,
     month: budgetMonth.slice(0, 7), // "yyyy-MM-dd" → "yyyy-MM"
     categoryGroups: Object.values(categoryGroupMap),
     accounts: accounts,

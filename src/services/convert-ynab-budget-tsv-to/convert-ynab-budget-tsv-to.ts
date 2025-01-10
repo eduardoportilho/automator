@@ -48,6 +48,9 @@ const getCategoryGroup = (
       id: categoryGroupName,
       name: categoryGroupName,
       categories: [],
+      budgeted: 0,
+      activity: 0,
+      balance: 0,
     };
     budget.categoryGroups = [...budget.categoryGroups, categoryGroup];
   }

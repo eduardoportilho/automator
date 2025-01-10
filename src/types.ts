@@ -9,9 +9,13 @@ export interface YnabBudgetCategoryGroup {
   id: string;
   name: string;
   categories: YnabBudgetCategory[];
+  budgeted: number;
+  activity: number;
+  balance: number;
 }
 
 export interface YnabBudget {
+  lastModifiedOn: string; // "2025-01-10T12:18:27Z"
   month: string; // "yyyy-MM"
   categoryGroups: YnabBudgetCategoryGroup[];
   accounts?: YnabAccount[];
@@ -79,6 +83,7 @@ interface YnabBudgetResponseCategory {
 export interface YnabBudgetResponse {
   first_month: string; //"2024-09-01",
   last_month: string; //"2024-10-01",
+  last_modified_on: string; //"2025-01-10T12:18:27Z"
   category_groups: {
     id: string;
     name: string;

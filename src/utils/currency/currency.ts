@@ -39,13 +39,31 @@ export const cleanAndParseAmountBR = (amountBR: string): number => {
 };
 
 /**
+ * Format YNAB amount in BR standard
+ * @param ynabAmount ex. 1234.60
+ * @returns ex. "1234,56"
+ */
+export const formatAmountBR = (amount: number) =>
+  amount.toFixed(2).replace(".", ",");
+
+/**
  * Format YNAB amount in US standard
  * @param ynabAmount currency * 1000, ex. 1234560
  * @returns ex. "1234.56"
  */
 export const formatYnabAmountUS = (ynabAmount: number) => {
-  const amount = ynabAmount / 1000.0;
+  const amount = convertYnabToAmount(ynabAmount);
   return amount.toFixed(2);
+};
+
+/**
+ * Format YNAB amount in BR standard
+ * @param ynabAmount currency * 1000, ex. 1234560
+ * @returns ex. "1234,56"
+ */
+export const formatYnabAmountBR = (ynabAmount: number) => {
+  const amount = convertYnabToAmount(ynabAmount);
+  return formatAmountBR(amount);
 };
 
 export const convertYnabToAmount = (ynabAmount: number) => {

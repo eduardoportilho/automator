@@ -75,6 +75,8 @@ export const fetchYnabAccounts = async ({
     (account: { id: string; name: string; balance: number }) => ({
       id: account.id,
       name: account.name,
+
+      // Inconsistency: account.balance is converted from YNAB amount, but fetchYnabBudget doesn't do the same
       balance: convertYnabToAmount(account.balance),
     })
   );

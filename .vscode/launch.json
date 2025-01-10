@@ -24,14 +24,13 @@
         "ts-node/register"
       ],
       "args": [
-        // "${workspaceFolder}/src/scripts/aluguel-report-to-sheets.ts",
-        "${workspaceFolder}/src/services/process-hn-who-is-hiring/process-hn-who-is-hiring.ts",
+        "${workspaceFolder}/src/scripts/get-ynab-status.ts",
         // "/Users/eduardoportilho/My Drive (eduardo.portilho@gmail.com)/_EPPCloud/__Financas/__2023 e 2024/Alugueis/Airbnb - GTC e Leblon/231219.pdf",
         // "/Users/eduardoportilho/My Drive (eduardo.portilho@gmail.com)/_EPPCloud/__Financas/__2023 e 2024/Alugueis/Airbnb - GTC e Leblon/240119.pdf",
         // "2024-10",
-        // "${env:BUDGET_EDU_2025}",
+        "${env:BUDGET_EDU_2025}",
         // "${env:ACCOUNT_EDU_2025_SAFRA_CONTA_EDU}",
-        // "${env:YNAB_ACCESS_TOKEN}"
+        "${env:YNAB_ACCESS_TOKEN}"
       ],
     }
   ]
