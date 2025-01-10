@@ -28,37 +28,6 @@ rootcoms
     .map((it) => it.querySelector(".commtext").innerText.split("\n")[0]); // get the first line of the text node
   // .filter((str) => /remote/i.test(str)); // uncomment to keep only the ones with "remote"
 
-  // Formal | Founding Software Engineer (Compilers, Verification) | REMOTE | Full-Time | >= $200k + 0.5% equity
-  const processRow = (row) => {
-    if (!row.includes("|")) {
-      return row;
-    }
-
-    const { where, url, otherTokens } = row.split("|").reduce(
-      (acc, col) => {
-        if (
-          acc.where.lenght === 0 &&
-          WHERE_REGEXS.some((regex) => regex.test(col.toLowerCase()))
-        ) {
-          acc.where = [col];
-        } else if (acc.url.lenght === 0 && URL_REGEX.test(col.toLowerCase())) {
-          acc.url = [col];
-        } else {
-          acc.otherTokens.push(col);
-        }
-
-        return acc;
-      },
-      {
-        where: [],
-        url: [],
-        otherTokens: [],
-      }
-    );
-
-    return [...where, ...url, ...otherTokens].join("|");
-  };
-
-  // Copy result to clipboard
-  copy(headers.map(processRow).join("\n"));
+  // Copy result to clipboard (`copy` is devtools API)
+  copy(headers.join("\n"));
 })();
