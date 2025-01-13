@@ -41,10 +41,14 @@ export const cleanAndParseAmountBR = (amountBR: string): number => {
 /**
  * Format YNAB amount in BR standard
  * @param ynabAmount ex. 1234.60
- * @returns ex. "1234,56"
+ * @returns ex. "1.234,56"
  */
-export const formatAmountBR = (amount: number) =>
-  amount.toFixed(2).replace(".", ",");
+export const formatAmountBR = (amount: number) => {
+  return new Intl.NumberFormat("pt-BR", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  }).format(amount);
+};
 
 /**
  * Format YNAB amount in US standard

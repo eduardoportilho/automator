@@ -4,7 +4,7 @@
 // $ chmod +x ./src/scripts/get-ynab-status.ts
 // $ ./src/scripts/get-ynab-status.ts $BUDGET_EDU_2025 $YNAB_ACCESS_TOKEN
 import { osxCopy } from "../utils/clipboard/clipboard";
-import { getEnvVars } from "../utils/scripts";
+import { getArgs } from "../utils/scripts";
 import { format, parseISO } from "date-fns";
 
 import { fetchYnabBudget } from "../services/fetch-ynab-txs/fetch-ynab-txs";
@@ -31,20 +31,10 @@ const SORTED_ACCOUNT_NAMES = [
 
 (async () => {
   try {
-    // Lendo das envs pq quero executar esse script pelo KM via `src/keyboard-maestro/run_automator_script.sh`
-    // TODO: Seria legal parametrizar, por exemplo:
-    // - especificar no KM os nomes das variaveis cujo valor sera passado como arg do script
-    // - mudar `run_automator_script.sh` para ler esses nomes, pegar os valore em `env` e passa-los como arg para o script
-    // Dessa forma esse script fica genérico, podendo ler budgetId e accessToken com getArgs ao invés de getEnvVars
-    const [budgetId, accessToken] = getEnvVars([
-      "BUDGET_EDU_2025",
-      "YNAB_ACCESS_TOKEN",
-    ]);
-
-    // const [budgetId, accessToken] = getArgs({
-    //   requiredCount: 2,
-    //   errorMessage: `Missing arguments. Usage: get-ynab-status <budget-id> <access-token>`,
-    // });
+    const [budgetId, accessToken] = getArgs({
+      requiredCount: 2,
+      errorMessage: `Missing arguments. Usage: get-ynab-status <budget-id> <access-token>`,
+    });
 
     let { categoryGroups, lastModifiedOn, accounts } = await fetchYnabBudget({
       budgetId,

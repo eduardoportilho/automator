@@ -12,26 +12,9 @@ import { getArgs, getEnvVars } from "../utils/scripts";
 
 (async () => {
   try {
-    const [arg] = getArgs();
-    const [token, chatId] = getEnvVars([
-      "TELEGRAM_ARMINIO_BOT_API_TOKEN",
-      "TELEGRAM_EDUARDOPORTILHO_USER_ID",
-    ]);
+    const args = getArgs();
 
-    const updatedToday = checkLastUpdateToday("hello-world-last-update");
-
-    console.log(`was updated today? [${updatedToday}]"`);
-    console.log(`Hello world! Arg is [${arg}]"`);
-
-    const { bid } = await fetchCotacaoDolar();
-
-    sendMessage({
-      token,
-      chatId,
-      text: `Hello World! O dolar hoje é ${bid}`,
-    });
-
-    return `Hello world! Arg is [${arg}]"`;
+    console.log(`Hello world! Args are [${args.join(", ")}]"`);
   } catch (error) {
     console.error("Error encountered, aborting.");
     console.error(error);
