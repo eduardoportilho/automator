@@ -5,10 +5,7 @@
 // $ chmod +x ./src/scripts/*.*
 // $ ./src/scripts/hello-world.ts
 
-import { sendMessage } from "../services/api/telegram/telegram";
-import { fetchCotacaoDolar } from "../services/fetch-dolar/fetch-dolar";
-import { checkLastUpdateToday } from "../utils/local-db/local-db";
-import { getArgs, getEnvVars } from "../utils/scripts";
+import { getArgs } from "../utils/scripts";
 
 (async () => {
   try {

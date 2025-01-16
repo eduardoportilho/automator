@@ -32,6 +32,14 @@ Commands:
 
 - `a=$(ls -alh)`: Store the output of the command in a variable
 
+## Array:
+
+- New array: `array=()` / `array=(1 2 3 4 5)`
+- Print one item per row: `print -l $array`
+- Slice: `${array[@]:start:end}`
+  - You can omit the `end` or use negative indices
+  - Ex - from idx 2 til end: `${array[@]:2}`
+
 ## For loop
 
 ```zsh
@@ -72,6 +80,19 @@ if [ -n $HOME ]; then
 fi
 ```
 
+## Indirect variable reference:
+
+or, "How to read the value of a variable given its name in a string":
+(https://linux.die.net/man/1/zshexpn -> Parameter Expansion Flags)
+
+```zsh
+VAR1="VAR2"
+VAR2='Indirect Redirection'
+VAR3=${(P)VAR1}
+echo $VAR3
+# Indirect Redirection
+```
+
 ## Misc:
 
 ### Split string:
@@ -84,7 +105,7 @@ ARRAY=(${(s<:>)STRING})
 print -l $ARRAY
 ```
 
-### Dinamiccaly read value of variables (var name is stored in string):
+### Dynamically read value of variables (var name is stored in string):
 
 ```zsh
 ENV_1="Hello world"

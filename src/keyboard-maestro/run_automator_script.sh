@@ -51,8 +51,8 @@ fi
 echo "" >> $HAZEL_LOG_FILE
 
 # --- \ Echo command for debbuging / --- #
-# echo "" >> $HAZEL_LOG_FILE
 # echo "$AUTOMATOR_SCRIPTS_PATH/$KMVAR_AUTOMATOR_SCRIPT" $arguments >> $HAZEL_LOG_FILE
+# echo "" >> $HAZEL_LOG_FILE
 # --- / Echo command for debbuging \ --- #
 
 # Execute command
