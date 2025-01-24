@@ -22,9 +22,13 @@ import { readAluguelReportPdf } from "../services/read-aluguel-report-pdf/read-a
 
     // console.log(`>>>---<<<`, entry, `>>>---<<<\n`);
 
-    // append to alugueis gsheet (entry):
-    // - const sheetRowEntry = buildSheetRowEntry(entry)
-    // - appendToSheet(sheetRowEntry, 'sheet', 'page')
+    // AirBnb entry:
+    // Imóvel                        | Dt. Pgto   | Aluguel  | Taxa adm. | Valor repasse | Num. diárias | Diária liq.
+    // Ataulfo de Paiva 734, Apt 401 | 16/02/2024 | 8.260,89 | 1.652,18  | 6.257,59      | 5            | 1.251,52
+
+    // Aluguel entry:
+    // Imóvel                | Competência | Dt. Pgto   | Aluguel   | Taxa adm. | IR       | Valor repasse
+    // Rua Maria Quitéria 95 | 06/2024     | 01/07/2024 | 17.468,12 | 873,41    | 3.908,21 | 14.370,73
 
     const tituloPlanilha = isAirbnb ? "🏨Airbnb" : "🏡Alugueis";
     const sheetRow = isAirbnb

@@ -9,6 +9,7 @@ import {
   processBluechipReport,
   isBlueChipReport,
 } from "../process-bluechip-report/process-bluechip-report";
+import { LEBLON } from "../../constants";
 
 export const readAluguelReportPdf = async (
   filePath: string
@@ -31,5 +32,7 @@ export const readAluguelReportPdf = async (
     ? processEstadiaReport(pdfContent)
     : processArpoadorReport(pdfContent);
 
-  return { entry, isAirbnb: isEstadia };
+  const isAirbnb = entry.imovel === LEBLON;
+
+  return { entry, isAirbnb };
 };
