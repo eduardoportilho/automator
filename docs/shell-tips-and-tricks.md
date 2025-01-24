@@ -3,6 +3,7 @@
 - https://hcsonline.com/images/PDFs/Scripting_Intro_Zsh.pdf
 - https://helpful.wiki/zsh/
 - https://gist.github.com/ClementNerma/1dd94cb0f1884b9c20d1ba0037bdcde2
+- https://gist.github.com/ClementNerma/1dd94cb0f1884b9c20d1ba0037bdcde2?permalink_comment_id=4257229
 
 ## Script arguments
 
@@ -64,6 +65,10 @@ elif [ $count -gt 100 ]; then
 else;
   echo "Count is not 100"
 fi
+```
+
+```zsh
+if [[ $KMVAR_AddPathToArgs = "true" ]]; then
 ```
 
 ### Check if variable is empty:

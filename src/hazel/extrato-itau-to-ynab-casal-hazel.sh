@@ -1,3 +1,6 @@
+# Replaced by:
+# source /Users/eduardoportilho/dev/personal/automator/src/hazel/run_automator_script.sh $1 extrato-itau-to-ynab-post.ts BUDGET_CASAL ACCOUNT_ITAU_CASAL YNAB_ACCESS_TOKEN
+
 # Required environment variables:
 # - $1 (Input file path provided by Hazel)
 # - AUTOMATOR_SCRIPTS_PATH

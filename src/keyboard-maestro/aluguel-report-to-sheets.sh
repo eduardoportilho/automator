@@ -1,3 +1,7 @@
+# Replaced by:
+# - Set Variable "AUTOMATOR_SCRIPT" to Text "aluguel-report-to-sheets.ts"
+# - Execute "run_automator_script.sh" Shell Script (~/dev/personal/automator/src/keyboard-maestro/run_automator_script.sh)
+
 # Required environment variables:
 # - $1 (Input file path provided by Hazel)
 # - AUTOMATOR_SCRIPTS_PATH

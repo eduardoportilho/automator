@@ -25,19 +25,26 @@ echo "\"run_automator_script.sh\" script executed at: $(date +%d/%m/%Y-%H:%M:%S)
 
 # --- \ Log important variables / --- #
 # https://wiki.keyboardmaestro.com/action/Execute_a_Shell_Script#Execute_a_Shell_Script
-echo "- Keyboard Maestro Macro: [$KMINFO_MacroName]" >> $HAZEL_LOG_FILE
-# KMVAR_Path contains the path of the selected file in finder (https://wiki.keyboardmaestro.com/collection/Finders_Selection)
-# Obs: "Path" is set in KM UI
-# echo "Selected file in finder (KMVAR_Path): [$KMVAR_Path]" >> $HAZEL_LOG_FILE
 # Script file name - should exist in $AUTOMATOR_SCRIPTS_PATH (`/src/scripts``)
+echo "- Keyboard Maestro Macro: [$KMINFO_MacroName]" >> $HAZEL_LOG_FILE
 echo "- Automator script to run: [$KMVAR_AUTOMATOR_SCRIPT]" >> $HAZEL_LOG_FILE
 echo "- Run once a day? [$KMVAR_RUN_ONCE_A_DAY]" >> $HAZEL_LOG_FILE
+echo "- Add path to args? [$KMVAR_AddPathToArgs]" >> $HAZEL_LOG_FILE
 echo "- Env vars to use as script arguments: [$KMVAR_EnvToArgs]" >> $HAZEL_LOG_FILE
 # --- / Log important variables \ --- #
 
+arguments=()
+
+# --- \ Add path to args / --- #
+if [[ $KMVAR_AddPathToArgs = "true" ]]; then
+# KMVAR_Path contains the path of the selected file in finder (https://wiki.keyboardmaestro.com/collection/Finders_Selection)
+# Obs: "Path" is set in KM UI
+  echo "- Selected file in finder (KMVAR_Path): [$KMVAR_Path]" >> $HAZEL_LOG_FILE
+  arguments+=($KMVAR_Path)
+fi
+# --- / Add path to args \ --- #
 
 # --- \ Pass env vars as args / --- #
-arguments=()
 # `-n` -> $KMVAR_EnvToArgs is not empty
 if [ -n $KMVAR_EnvToArgs ]; then
   # Split value with separator `,`
