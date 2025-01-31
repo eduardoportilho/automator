@@ -90,7 +90,7 @@ export const fetchYnabBudget = async ({
 }: {
   budgetId: string;
   accessToken: string;
-  month?: string;
+  month?: string; // "yyyy-MM-01" (last_month will be used if this arg is not present)
 }): Promise<YnabBudget> => {
   const accountTxsUrl = `/budgets/${budgetId}`;
 

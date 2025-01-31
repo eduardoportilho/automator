@@ -9,7 +9,11 @@ import { format, parseISO } from "date-fns";
 
 import { fetchYnabBudget } from "../services/fetch-ynab-txs/fetch-ynab-txs";
 import { formatYnabAmountBR } from "../utils/currency/currency";
-import { DMY_FORMAT } from "../utils/date/date";
+import {
+  DMY_FORMAT,
+  YNAB_DATE_FORMAT,
+  firstDayOfMoth,
+} from "../utils/date/date";
 import { sortByFieldIndex } from "../utils/array/array";
 
 const COL_SEPARATOR = "\t";
@@ -36,10 +40,14 @@ const SORTED_ACCOUNT_NAMES = [
       errorMessage: `Missing arguments. Usage: get-ynab-status <budget-id> <access-token>`,
     });
 
-    let { categoryGroups, lastModifiedOn, accounts } = await fetchYnabBudget({
-      budgetId,
-      accessToken,
-    });
+    const requestMoth = format(firstDayOfMoth(), YNAB_DATE_FORMAT);
+
+    let { categoryGroups, lastModifiedOn, accounts, month } =
+      await fetchYnabBudget({
+        budgetId,
+        accessToken,
+        month: requestMoth,
+      });
     // Remove groups that doesn't matter
     categoryGroups = categoryGroups.filter(
       ({ name }) => !EXCLUDE_CAT_GROUPS.includes(name)
@@ -54,6 +62,7 @@ const SORTED_ACCOUNT_NAMES = [
     const date = format(parseISO(lastModifiedOn), DMY_FORMAT);
 
     const statusReport = [
+      ["Budget month", month],
       ["Category group", `Activity on ${date}`],
       ...categoryGroups.map((group) => [
         group.name,
@@ -65,11 +74,12 @@ const SORTED_ACCOUNT_NAMES = [
       .map((cols) => cols.join(COL_SEPARATOR))
       .join(ROW_SEPARATOR);
 
-    console.log(`>>> YNAB status:`, statusReport);
+    console.log(`>>> YNAB status:\n`);
+    console.log(statusReport);
 
     osxCopy(statusReport);
 
-    console.log(`Done! The results were copied to the clipboard.`);
+    console.log(`\nDone! The results were copied to the clipboard.`);
   } catch (error) {
     console.error("Error encountered, aborting.");
     console.error(error);

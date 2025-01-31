@@ -1,4 +1,10 @@
-import { parse, format, differenceInCalendarDays, formatISO } from "date-fns";
+import {
+  parse,
+  format,
+  differenceInCalendarDays,
+  formatISO,
+  startOfMonth,
+} from "date-fns";
 import { UTCDate } from "@date-fns/utc";
 
 export const DMY_FORMAT = "dd/MM/yyyy";
@@ -32,6 +38,8 @@ export const MONTH_YEAR_PT_BR_REGEX = new RegExp(
 );
 
 export const nowIsoString = () => formatISO(new UTCDate());
+
+export const firstDayOfMoth = () => startOfMonth(new UTCDate());
 
 export const convertDateDMYtoMDY = (dateDMY: string) => {
   if (!dateDMY) {

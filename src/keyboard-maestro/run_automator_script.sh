@@ -31,6 +31,7 @@ echo "- Automator script to run: [$KMVAR_AUTOMATOR_SCRIPT]" >> $HAZEL_LOG_FILE
 echo "- Run once a day? [$KMVAR_RUN_ONCE_A_DAY]" >> $HAZEL_LOG_FILE
 echo "- Add path to args? [$KMVAR_AddPathToArgs]" >> $HAZEL_LOG_FILE
 echo "- Env vars to use as script arguments: [$KMVAR_EnvToArgs]" >> $HAZEL_LOG_FILE
+echo "- Other arguments: [$KMVAR_Args]" >> $HAZEL_LOG_FILE
 # --- / Log important variables \ --- #
 
 arguments=()
@@ -54,6 +55,17 @@ if [ -n $KMVAR_EnvToArgs ]; then
   done
 fi
 # --- / Pass env vars as args \ --- #
+
+# --- \ Pass other args / --- #
+# `-n` -> $KMVAR_Args is not empty
+if [ -n $KMVAR_Args ]; then
+  # Split value with separator ` `
+  otherVars=(${(s< >)KMVAR_Args})
+  for otherVar in $otherVars; do
+    arguments+=($otherVar)
+  done
+fi
+# --- / Pass other args \ --- #
 
 echo "" >> $HAZEL_LOG_FILE
 
