@@ -1,3 +1,6 @@
+# Replaced by:
+# source /Users/eduardoportilho/dev/personal/automator/src/hazel/run_automator_script.sh $1 extrato-xp-to-ynab-post.ts BUDGET_EDU_2025 ACCOUNT_EDU_2025_XP_CONTA_EDU YNAB_ACCESS_TOKEN
+
 # Required environment variables:
 # - $1 (Input file path provided by Hazel)
 # - AUTOMATOR_SCRIPTS_PATH
