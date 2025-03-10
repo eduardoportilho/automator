@@ -1,3 +1,12 @@
+# Deleting after replacing:
+
+# source /Users/eduardoportilho/dev/personal/automator/src/hazel/aluguel-report-hazel.sh
+
+# With:
+
+# source /Users/eduardoportilho/dev/personal/automator/src/hazel/run_automator_script.sh $1 aluguel-report-to-sheets.ts
+
+
 # Required environment variables:
 # - $1 (Input file path provided by Hazel)
 # - AUTOMATOR_SCRIPTS_PATH
