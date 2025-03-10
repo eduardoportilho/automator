@@ -33,7 +33,7 @@ interface CtrlSheetTasks {
 export const readTasksFromCtrlSheet = async (): Promise<CtrlSheetTasks> => {
   const [sheetContent] = await getSheetRanges(
     CONTROLE_SPREADSHEET_ID,
-    [`${TASKS_SHEET_TITLE}!A:Z`],
+    [TASKS_SHEET_TITLE], // Sheet1 refers to all the cells in Sheet1.
     "FORMATTED_VALUE"
   );
   const [headerRow, ...taskRows] = sheetContent;

@@ -73,6 +73,7 @@ const rowToFundo = ({
   const [quantidade, precoUnitario, posicaoMercado, valorLiquido] =
     rowEntry.values;
 
+  // DEBUG:está pegando "Valor líquido"?
   return {
     nome: rowEntry.ativo,
     quantidade: isEmptyCellValue(quantidade) ? 0 : parseCellNumber(quantidade),
@@ -118,6 +119,7 @@ export const readCarteiraFromPatrimonioSheet = ({
     sectionTitle: RENDA_FIXA_TITLE,
     sheetContent,
   });
+  // DEBUG:está pegando "Valor líquido"?
   const fundosInvestimentoData = findSheetSection({
     sectionTitle: FUNDOS_INVESTIMENTOS_TITLE,
     sheetContent,

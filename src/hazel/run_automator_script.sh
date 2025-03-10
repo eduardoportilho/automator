@@ -10,6 +10,10 @@
 # Example:
 # `source /Users/eduardoportilho/dev/personal/automator/src/hazel/run_automator_script.sh $1 extrato-itau-to-ynab-post.ts BUDGET_EDU_2025 ACCOUNT_EDU_2025_ITAU_CONTA_EDU YNAB_ACCESS_TOKEN`
 
+# Suppress deprecation warnings like "(node:21673) [DEP0040] DeprecationWarning: The `punycode` module is deprecated.""
+# @see https://stackoverflow.com/questions/77587325/deprecationwarning-the-punycode-module-is-deprecated
+export NODE_OPTIONS="--no-deprecation"
+
 # --- \ Load environment variables / --- #
 # Set secrets
 source /Users/eduardoportilho/dev/personal/automator/.envrc

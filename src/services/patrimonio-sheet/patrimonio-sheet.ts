@@ -15,7 +15,7 @@ import { cellValueEqualsTo } from "../../utils/cell-value/cell-value";
 export const fetchPatrimonioSheet = async () => {
   //Read all columns from A to Z
   const [sheetContent] = await getSheetRanges(INVESTIMENTOS_SPREADSHEET_ID, [
-    `${INVESTIMENTOS_SHEET_TITLE}!A:Z`,
+    INVESTIMENTOS_SHEET_TITLE, // `Sheet1` refers to all the cells in Sheet1.
   ]);
 
   return sheetContent;
@@ -24,7 +24,7 @@ export const fetchPatrimonioSheet = async () => {
 export const fetchYnabSheet = async () => {
   //Read all columns from A to Z
   const [sheetContent] = await getSheetRanges(INVESTIMENTOS_SPREADSHEET_ID, [
-    `${YNAB_SHEET_TITLE}!A:Z`,
+    YNAB_SHEET_TITLE, // `Sheet1` refers to all the cells in Sheet1.
   ]);
 
   return sheetContent;

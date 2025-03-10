@@ -18,20 +18,20 @@ import { Carteira } from "../../types";
 export const uploadCarteiraToPatrimonioSheet = async (
   newCarteira: Carteira
 ) => {
-  // fetch range where data will be writen
   console.log("Fetching patrimônio sheet content...");
   const patrimonioSheetContent = await fetchPatrimonioSheet();
   const processingDate = format(new Date(), YNAB_DATE_FORMAT);
 
-  // Look for processing date on the sheet
+  // Look for <processingDate> on the sheet (date anchor position)
   let datePosition = findCellPosition({
     value: processingDate,
     sheetContent: patrimonioSheetContent,
   });
   let carteiraOnDate = newCarteira;
 
-  // Is there an entry on this date?
+  // <processingDate> exists? (i.e. is there an entry on this date?)
   if (datePosition) {
+    // Yes, read entry and merge with new data
     const existingCarteira = readCarteiraFromPatrimonioSheet({
       date: processingDate,
       sheetContent: patrimonioSheetContent,
@@ -39,6 +39,7 @@ export const uploadCarteiraToPatrimonioSheet = async (
 
     carteiraOnDate = mergeCarteiras(existingCarteira, newCarteira);
   } else {
+    // No, find the cell position of the next date anchor
     datePosition = findNextDateCellPosition(patrimonioSheetContent);
   }
 

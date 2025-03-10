@@ -6,6 +6,7 @@ import {
   NEXT_DATE_ANCHOR,
 } from "../../constants";
 import { Acao, Carteira, Fundo, SheetContent } from "../../types";
+import { displayMacOsNotificationTN as displayMacOsNotification } from "../../utils/notifications/notifications";
 
 import { findSheetSection } from "../patrimonio-sheet/patrimonio-sheet";
 
@@ -27,6 +28,11 @@ const logAssetNotFound = (
     );
     if (notFound.length > 0) {
       console.log(`\n\n!!! ${mensagem}: [${notFound.join(", ")}]\n\n`);
+      displayMacOsNotification({
+        title: "⛔️ Ativos não encontrados na planilha!",
+        notificationText: `${mensagem}:\n• ${notFound.join("\n• ")}`,
+        sound: "Frog",
+      });
     }
   });
 };
@@ -113,26 +119,23 @@ export const createPatrimonioEntry = ({
     {
       ativosPlanilha: ativosFiisInSheet,
       ativosCarteira: carteira.fiis.map((fii) => fii.ativo),
-      mensagem:
-        "Existem FIIs na carteira que não foram encontrados na planilha",
+      mensagem: "FIIs na carteira não encontrados na planilha",
     },
     {
       ativosPlanilha: ativosAcoesInSheet,
       ativosCarteira: carteira.acoes.map((acao) => acao.ativo),
-      mensagem:
-        "Existem Ações na carteira que não foram encontrados na planilha",
+      mensagem: "Ações na carteira não encontrados na planilha",
     },
     {
       ativosPlanilha: ativosRendaFixaInSheet,
       ativosCarteira: carteira.rendaFixa.map((rf) => rf.nome),
-      mensagem:
-        "Existem Fundos de Renda fixa na carteira que não foram encontrados na planilha",
+      mensagem: "Fundos de Renda fixa na carteira não encontrados na planilha",
     },
     {
       ativosPlanilha: ativosFundosInvestimentosInSheet,
       ativosCarteira: carteira.fundos.map((rf) => rf.nome),
       mensagem:
-        "Existem Fundos de Investimento na carteira que não foram encontrados na planilha",
+        "Fundos de Investimento na carteira não encontrados na planilha",
     },
   ]);
 

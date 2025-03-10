@@ -14,9 +14,22 @@ export const getCategoryActivity = ({
     ({ name }) => name === categoryGroupName
   );
   if (!group) {
+    console.log(
+      `\n!!! Não encontrei o grupo [${categoryGroupName}] no YNAB (existe na planilha)!\n`
+    );
     return 0;
   }
   const category = group.categories.find(({ name }) => name === categoryName);
+
+  if (categoryName.toLowerCase() === "total") {
+    return convertYnabToAmount(group.activity ?? 0);
+  }
+
+  if (!category) {
+    console.log(
+      `\n!!! Não encontrei a categoria [${categoryName}] do grupo [${categoryGroupName}] no YNAB (existe na planilha)!\n`
+    );
+  }
 
   return convertYnabToAmount(category?.activity ?? 0);
 };

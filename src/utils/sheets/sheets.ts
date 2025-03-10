@@ -1,6 +1,6 @@
 import { google, sheets_v4 } from "googleapis";
 import { GaxiosPromise } from "googleapis-common";
-import { rangeA1, rangeA1String } from "./cellref";
+import { rangeA1 } from "./cellref";
 import { SheetContent } from "../../types";
 
 const sheets = google.sheets("v4");
@@ -31,7 +31,7 @@ const getAuth = async () => {
 /**
  *
  * @param spreadsheetId
- * @param ranges
+ * @param ranges The A1 notation or R1C1 notation of the range to retrieve values from. (https://developers.google.com/sheets/api/guides/concepts#cell)
  * @param valueRenderOption FORMATTED_VALUE, UNFORMATTED_VALUE, FORMULA (https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption)
  * @returns
  */

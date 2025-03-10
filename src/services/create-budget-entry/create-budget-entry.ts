@@ -15,6 +15,9 @@ const createCategoriesSection = ({
   budget: YnabBudget;
 }) => {
   // TODO: warn about mismatch between CATEGORIES in sheetContent and budget
+
+  // Pega as linhas entre "... Category ..." e a próxima linha vazia;
+  // Extrai "Cat. Group" e "Category"
   const categories = findSectionByHeader({
     rows: sheetContent,
     headerValue: "Category",
@@ -26,6 +29,7 @@ const createCategoriesSection = ({
     };
   });
 
+  // retorna mês e um valor para cada linh (par "Cat. Group" e "Category")
   return [
     [budget.month],
     ...categories.map(({ categoryGroupName, categoryName }) => [
