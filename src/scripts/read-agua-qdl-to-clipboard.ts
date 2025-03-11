@@ -9,8 +9,6 @@ import { readAguaQdl } from "../services/read-agua-qdl/read-agua-qdl";
     errorMessage: `Missing arguments. Usage: read-agua-qdl-to-clipboard.ts <path/to/file.pdf>`,
   });
 
-  console.log(`🔦 Reading PDF...\n`);
-
   try {
     const {
       dataLeituraAtual,
