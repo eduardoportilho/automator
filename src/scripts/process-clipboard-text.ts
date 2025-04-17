@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-import { camelCase, kebabCase, snakeCase } from "lodash";
+import { camelCase, kebabCase, snakeCase, startCase, lowerCase } from "lodash";
 import { osxCopy, osxPaste } from "../utils/clipboard/clipboard";
 import { getArgs } from "../utils/scripts";
 
@@ -25,6 +25,9 @@ import { getArgs } from "../utils/scripts";
         break;
       case "snakeCase":
         processed = snakeCase(clipboardText);
+        break;
+      case "titleCase":
+        processed = startCase(lowerCase(clipboardText)); // "The Quick Brown Fox Jumps over the Lazy Dog"
         break;
       default:
         console.error(`Unknown action: ${action}`);
