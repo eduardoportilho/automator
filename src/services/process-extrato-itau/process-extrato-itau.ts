@@ -1,3 +1,4 @@
+import { isFuture, todayString } from "../../utils/date/date";
 import { YnabTx } from "../../types";
 import {
   TxProcessor,
@@ -83,7 +84,7 @@ const sanitizePayee = (payee: string) => {
     .trim();
 };
 
-const processTxs: TxProcessor = (tx: YnabTx) => {
+const applyPayeeRules: TxProcessor = (tx: YnabTx) => {
   const payeeName = sanitizePayee(tx.payee_name);
   const sanitizedTx = {
     ...tx,
@@ -96,4 +97,19 @@ const processTxs: TxProcessor = (tx: YnabTx) => {
   );
 };
 
-export const EXTRATO_ITAU_PROCESSORS = [processTxs];
+export const replaceFutureDateWithToday = (tx: YnabTx) => {
+  if (isFuture(tx.date)) {
+    const memo = `Future dt (${tx.date})`;
+    return {
+      ...tx,
+      date: todayString(),
+      memo: tx.memo ? `${tx.memo} ; ${memo}` : memo,
+    };
+  }
+  return tx;
+};
+
+export const EXTRATO_ITAU_PROCESSORS = [
+  applyPayeeRules,
+  replaceFutureDateWithToday,
+];

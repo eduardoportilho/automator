@@ -24,6 +24,7 @@ import {
       accountId,
     });
 
+    // Roda "processors" que transformam txs
     const processedTxs = processTxs({
       txs: importedTxs,
       processors: EXTRATO_ITAU_PROCESSORS,

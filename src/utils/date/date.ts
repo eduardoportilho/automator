@@ -1,9 +1,10 @@
 import {
   parse,
-  format,
+  format as formatDateFn,
   differenceInCalendarDays,
   formatISO,
   startOfMonth,
+  isFuture as isFutureDateFn,
 } from "date-fns";
 import { UTCDate } from "@date-fns/utc";
 
@@ -37,6 +38,15 @@ export const MONTH_YEAR_PT_BR_REGEX = new RegExp(
   "i"
 );
 
+export const isFuture = (date: string, dateFormat = YNAB_DATE_FORMAT) =>
+  isFutureDateFn(parse(date, dateFormat, new UTCDate()));
+
+export const formatDate = (date: Date, dateFormat = YNAB_DATE_FORMAT) =>
+  formatDateFn(date, dateFormat);
+
+export const todayString = (dateFormat = YNAB_DATE_FORMAT) =>
+  formatDateFn(new UTCDate(), dateFormat);
+
 export const nowIsoString = () => formatISO(new UTCDate());
 
 export const firstDayOfMoth = () => startOfMonth(new UTCDate());
@@ -46,7 +56,7 @@ export const convertDateDMYtoMDY = (dateDMY: string) => {
     throw new Error("Error parsing date: empty string");
   }
   const parsedDate = parse(dateDMY, DMY_FORMAT, new UTCDate());
-  return format(parsedDate, MDY_FORMAT);
+  return formatDateFn(parsedDate, MDY_FORMAT);
 };
 
 export const convertDateFormat = ({
@@ -62,7 +72,7 @@ export const convertDateFormat = ({
     throw new Error("Error parsing date: empty string");
   }
   const parsedDate = parse(date, inputFormat, new UTCDate());
-  return format(parsedDate, outputFormat);
+  return formatDateFn(parsedDate, outputFormat);
 };
 
 export const parseDateStringIfValid = ({
