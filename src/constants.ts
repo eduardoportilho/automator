@@ -20,6 +20,12 @@ export const TASKS_SHEET_TITLE = "🚧Tasks";
 export const TASKS_SHEET_URL =
   "https://docs.google.com/spreadsheets/d/1--ReOsqh_nc9UNyEJauiEMrP0IxGQV0s4LkY2z-uNfU/edit?gid=2087879779#gid=2087879779";
 
+// 💷 v2 - Patrimônio - 2025 💶
+export const PATRM_V2_SPREADSHEET_URL =
+  "https://docs.google.com/spreadsheets/d/1YZJDmnXx_bmASQZpJynJpjP_L8aD6pPVsZJQ0gj6tWE/edit?gid=735939259#gid=735939259";
+export const PATRM_V2_SPREADSHEET_ID =
+  "1YZJDmnXx_bmASQZpJynJpjP_L8aD6pPVsZJQ0gj6tWE";
+
 // Imóveis
 export const MARIA_QUITERIA = "Rua Maria Quitéria 95";
 export const COPA_542 = "Copacabana 542, Sala 605";

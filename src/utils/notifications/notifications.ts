@@ -70,6 +70,6 @@ export const displayMacOsNotificationTN = ({
     url ? `-open '${url}'` : null,
   ];
   const cmd = `terminal-notifier ${options.join(" ")}`;
-  console.log(`\n\n>>>`, cmd);
+  // console.log(`\n\n>>>`, cmd);
   require("child_process").exec(cmd);
 };

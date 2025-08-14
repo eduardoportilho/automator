@@ -143,3 +143,47 @@ export const clearSheet = async (
     console.log(err);
   }
 };
+
+export const writeToNewSheet = async ({
+  spreadsheetId,
+  sheetTitle,
+  data,
+}: {
+  spreadsheetId: string;
+  sheetTitle: string;
+  data: (string | number)[][];
+}): GaxiosPromise<sheets_v4.Schema$AppendValuesResponse> => {
+  try {
+    const { auth } = await getAuth();
+
+    // https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
+    // https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/request#addsheetrequest
+    //developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/request#appendcellsrequest
+    const response = await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      requestBody: {
+        requests: [
+          {
+            addSheet: {
+              properties: {
+                title: sheetTitle,
+              },
+            },
+          },
+        ],
+      },
+      auth,
+    });
+
+    const sheetId = response.data.replies.at(0).addSheet.properties.sheetId;
+    console.log(`>>> New sheet created: `, sheetId);
+
+    return appendToSheet({
+      spreadsheetId,
+      tableHeaderRangeA1: `'${sheetTitle}'!1:1`,
+      rowsToAppend: data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
