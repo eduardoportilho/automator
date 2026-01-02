@@ -1,43 +1,129 @@
+import { LEBLON } from "../../constants";
 import {
-  getPeriodoEstadia,
-  getValorAluguelRepasseAdm,
+  isEstadiaReport,
+  processEstadiaReport,
 } from "./process-estadia-report";
 
-describe("processEstadiaReport", () => {
-  describe("getPeriodoEstadia", () => {
-    it("get numero diarias from a single row", () => {
-      const { numeroDiarias } = getPeriodoEstadia([
-        "ReservaPeriodo de estadiaValor do aluguel*ComissãoPago ao proprietário",
-        "late check-out Miguel22-01-2024 - 23-01-2024250.0050.00200.00",
-        "Subtotal:  250,00  50,00200,00",
-      ]);
+const exemplo1 = `
+...
+22 nov 2025 - 30 nov 2025 - 8 Nights
+Aluguel
+R$ 4.773,19
+Estadia
+R$ 954,64
+ReservasReceitasDespesasSaldo
+R$ 3.818,55R$ 0,00R$ 0,00R$ 3.818,55
+Estadia Carioca
+...
+`;
 
-      expect(numeroDiarias).toBe(1);
+const buildExemplo = ({
+  dti = "21 dez 2025",
+  dtf = "26 dez 2025",
+  noites = "5 Noite(s)",
+  aluguel = "R$ 4.489,49",
+  estadia = "R$ 897,90",
+  saldo = "R$ 3.591,59",
+}: {
+  dti?: string;
+  dtf?: string;
+  noites?: string;
+  aluguel?: string;
+  estadia?: string;
+  saldo?: string;
+}) => `
+...
+${dti} - ${dtf} - ${noites}
+Aluguel
+${aluguel}
+Estadia
+${estadia}
+ReservasReceitasDespesasSaldo
+${saldo}R$ 0,00R$ 0,00${saldo}
+Estadia Carioca
+...
+`;
+
+describe("processEstadiaReport", () => {
+  describe("isEstadiaReport", () => {
+    it("return true when 'Estadia Carioca' is present", () => {
+      expect(isEstadiaReport(exemplo1)).toBe(true);
+      expect(isEstadiaReport("...Estadia Carioca...")).toBe(true);
     });
 
-    it("get numero diarias from multiple rows", () => {
-      const { numeroDiarias } = getPeriodoEstadia([
-        "ReservaPeriodo de estadiaValor do aluguel*ComissãoPago ao proprietário",
-        "Felipe13-01-2024 - 15-01-20241000.00-38.001038.00",
-        "MIguel15-01-2024 - 22-01-20242982.43596.492385.94",
-        "Subtotal:  3.982,43  558,493.423,94",
-      ]);
-
-      expect(numeroDiarias).toBe(2 + 7);
+    it("return false when 'Estadia Carioca' is not present", () => {
+      expect(isEstadiaReport("...estadia carioca...")).toBe(false);
+      expect(isEstadiaReport("... Estadia ...")).toBe(false);
+      expect(isEstadiaReport("... Carioca ...")).toBe(false);
     });
   });
 
-  describe("getValorAluguelRepasseAdm", () => {
-    it("get aluguel, adm and repasse", () => {
-      const { valorAluguel, taxaAdministracao, valorRepasse } =
-        getValorAluguelRepasseAdm([
-          "Subtotal:  20.146,54  4.029,3116.117,23",
-          "TOTAL QUITAÇÃO:R$ 15.937,23",
-        ]);
+  describe("processEstadiaReport", () => {
+    it("return LEBLON, mesCompetencia='' valorIr=0", () => {
+      const entry1 = processEstadiaReport(exemplo1);
 
-      expect(valorAluguel).toBe(20146.54);
-      expect(taxaAdministracao).toBe(4029.31);
-      expect(valorRepasse).toBe(15937.23);
+      expect(entry1.imovel).toEqual(LEBLON);
+      expect(entry1.mesCompetencia).toEqual("");
+      expect(entry1.valorIr).toEqual(0);
+    });
+
+    it("return valor aluguel", () => {
+      const entry1 = processEstadiaReport(
+        buildExemplo({ aluguel: "R$ 1.234,56" })
+      );
+
+      expect(entry1.valorAluguel).toEqual(1234.56);
+    });
+
+    it("return estadia as taxa administracao", () => {
+      const entry1 = processEstadiaReport(
+        buildExemplo({ estadia: "R$ 1.234,56" })
+      );
+
+      expect(entry1.taxaAdministracao).toEqual(1234.56);
+    });
+
+    it("return saldo as valor repasse", () => {
+      const entry1 = processEstadiaReport(
+        buildExemplo({ saldo: "R$ 1.234,56" })
+      );
+
+      expect(entry1.valorRepasse).toEqual(1234.56);
+    });
+
+    it("return noites as numeroDiarias when valid", () => {
+      const entry1 = processEstadiaReport(
+        buildExemplo({
+          dti: "21 dez 2025",
+          dtf: "22 dez 2025",
+          noites: "5 Noite(s)",
+        })
+      );
+
+      expect(entry1.numeroDiarias).toEqual(5);
+    });
+
+    it("return date diff as numeroDiarias when noites is not valid", () => {
+      const entry1 = processEstadiaReport(
+        buildExemplo({
+          dti: "21 dez 2025",
+          dtf: "22 dez 2025",
+          noites: "X Noite(s)",
+        })
+      );
+
+      expect(entry1.numeroDiarias).toEqual(1);
+    });
+
+    it("return diaria liquida", () => {
+      const entry1 = processEstadiaReport(
+        buildExemplo({
+          saldo: "R$ 1.234,56",
+          noites: "5 Noite(s)",
+        })
+      );
+
+      expect(entry1.diariaLiquida).toEqual(246.91);
     });
   });
 });

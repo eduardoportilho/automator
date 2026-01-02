@@ -35,5 +35,6 @@
     "pdf-parse": "^1.1.1",
     "pdfreader": "^3.0.7",
     "xlsx": "^0.18.5"
-  }
+  },
+  "packageManager": "yarn@3.6.1"
 }

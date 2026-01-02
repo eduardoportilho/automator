@@ -30,6 +30,20 @@ export const MONTHS_PT_BR = [
   "novembro",
   "dezembro",
 ];
+export const MONTHS_PT_BR_MMM = {
+  jan: "jan",
+  fev: "feb",
+  mar: "mar",
+  abr: "apr",
+  mai: "may",
+  jun: "jun",
+  jul: "jul",
+  ago: "aug",
+  set: "sep",
+  out: "oct",
+  nov: "nov",
+  dez: "dec",
+};
 export const MONTHS_MMM_PT_BR = MONTHS_PT_BR.map((month) => month.slice(0, 3));
 
 // Outubro/2024
@@ -124,4 +138,10 @@ export const diffInDays = ({
     parse(laterDate, dateFormat, new UTCDate()),
     parse(earlierDate, dateFormat, new UTCDate())
   );
+};
+
+export const convertMmmBrToEn = (monthMmmBr: string) => {
+  return Object.entries(MONTHS_PT_BR_MMM).reduce((acc, [br, en]) => {
+    return acc.replace(br, en);
+  }, monthMmmBr.toLowerCase());
 };
