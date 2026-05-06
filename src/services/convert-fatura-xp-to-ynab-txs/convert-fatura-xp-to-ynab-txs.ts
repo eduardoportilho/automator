@@ -26,10 +26,13 @@ const convertFaturaXpRowToYnabTx = ({
   const cols = row.split(";");
   if (cols.length < 4) {
     throw new Error(
-      `Not enough columns (expected min 4). Row content: "${row}"`
+      `Not enough columns (expected min 4). Row content: "${row}"`,
     );
   }
-  const [dateDMY, description, , amountBR] = cols;
+
+  // Data;Estabelecimento;Portador;Valor;Parcela
+  // 24/08/2024;CAMBIO SAFRA GIG;EDUARDO P PORTILHO;R$ 9.023,18;1 de 2
+  const [dateDMY, description, , amountBR, parcela] = cols;
   const dateYnab = convertDateFormat({
     date: dateDMY,
     inputFormat: DMY_FORMAT,
@@ -38,11 +41,13 @@ const convertFaturaXpRowToYnabTx = ({
   const amount = parseAmountBR(amountBR);
 
   return {
-    account_id: accountId,
+    account_id: accountId || "empty_account_id",
     date: dateYnab,
     payee_name: description,
     amount: convertAmountToYnab({ amount, invert: true }),
     flag_color: "purple",
+    memo:
+      parcela.length > 0 && parcela !== "-" ? `Parcela: ${parcela}` : undefined,
   };
 };
 
@@ -50,7 +55,7 @@ const convertFaturaXpRowToYnabTx = ({
  * Convert fatura xp csv content into ynab transactions
  * @param content Example:
  *  Data;Estabelecimento;Portador;Valor;Parcela
- *  24/08/2024;CAMBIO SAFRA GIG;EDUARDO P PORTILHO;R$ 9.023,18;-
+ *  24/08/2024;CAMBIO SAFRA GIG;EDUARDO P PORTILHO;R$ 9.023,18;1 de 2
  * @param accountId Example: 2d879295-30b5-4450-aabb-17fa1b64b202
  * @returns Example: {accountId, 2024-09-16, PIX TRANSF IMOBILI06/09, -1421630}
  */
