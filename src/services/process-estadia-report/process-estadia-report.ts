@@ -32,7 +32,7 @@ export const isEstadiaReport = (content: string) => {
 
 const getTextoLinhaSeguinte = (rows: string[], regexLinhaAnterior: RegExp) => {
   const indiceLinhaAnterior = rows.findIndex((row) =>
-    regexLinhaAnterior.test(row)
+    regexLinhaAnterior.test(row),
   );
 
   if (indiceLinhaAnterior < 0 || indiceLinhaAnterior + 1 >= rows.length) {
@@ -71,10 +71,20 @@ const getNumeroDiarias = (rows: string[]) => {
   const datasRowRegex = new RegExp(
     `(?<dtIn>${dateRegex.source}) - (?<dtOut>${dateRegex.source}) - (?<noites>.+) [Night|Noite]`,
     // `(?<dtIn>${dateRegex.source}) - (?<dtOut>${dateRegex.source}) - (?<noites>\\d{1,2}) [Night|Noite]`,
-    "i"
+    "i",
   );
   const datasRow = rows.find((row) => datasRowRegex.test(row));
+  if (!datasRow) {
+    throw new Error(
+      `Could not find row with dates and number of nights. Expected format: "05 nov 2025 - 12 nov 2025 - 7 Nights".`,
+    );
+  }
   const datasGroups = datasRow.match(datasRowRegex)?.groups;
+  if (!datasGroups) {
+    throw new Error(
+      `Could not find row with dates and number of nights. Expected format: "05 nov 2025 - 12 nov 2025 - 7 Nights".`,
+    );
+  }
   const dataEntrada = convertDateFormat({
     date: convertMmmBrToEn(datasGroups.dtIn),
     inputFormat: "dd MMM yyyy",
@@ -99,7 +109,7 @@ const getNumeroDiarias = (rows: string[]) => {
     }
   } catch (e) {
     console.warn(
-      `Warning: could not parse numeroDiarias from extracted value [${datasGroups.noites}]. Using calculated value ${numeroDiariasCalculado}.`
+      `Warning: could not parse numeroDiarias from extracted value [${datasGroups.noites}]. Using calculated value ${numeroDiariasCalculado}.`,
     );
   }
   return { numeroDiarias, dataSaida };

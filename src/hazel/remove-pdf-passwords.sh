@@ -34,6 +34,10 @@ echo "qpdf --decrypt --password=$PDF_PASSWORD3 --replace-input $1" >> $HAZEL_LOG
 qpdf --decrypt --password=$PDF_PASSWORD3 --replace-input $1
 
 # Echo command for debbuging
+echo "qpdf --decrypt --password=$PDF_PASSWORD3_1 --replace-input $1" >> $HAZEL_LOG_FILE
+qpdf --decrypt --password=$PDF_PASSWORD3_1 --replace-input $1
+
+# Echo command for debbuging
 echo "qpdf --decrypt --password=$PDF_PASSWORD4 --replace-input $1" >> $HAZEL_LOG_FILE
 qpdf --decrypt --password=$PDF_PASSWORD4 --replace-input $1
 
