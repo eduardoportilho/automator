@@ -29,7 +29,7 @@ const ynabResponseToSheet = (budget: YnabBudget) => {
     }),
     [""],
     ["Account", "", todayString()],
-    ...budget.accounts.map((account) => [
+    ...(budget.accounts ?? []).map((account) => [
       account.name,
       "",
       convertYnabToAmount(account.balance),
@@ -39,7 +39,7 @@ const ynabResponseToSheet = (budget: YnabBudget) => {
 
 export const uploadYnabBudgetToNewSheet = async (budget: YnabBudget) => {
   const budgetEntry = ynabResponseToSheet(budget);
-  const sheetTitle = `ynab.${todayString()}`;
+  const sheetTitle = `ynab.${todayString("yyMMdd")}`;
 
   await writeToNewSheet({
     spreadsheetId: PATRM_V2_SPREADSHEET_ID,
