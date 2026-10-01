@@ -49,5 +49,9 @@ qpdf --decrypt --password=$PDF_PASSWORD5 --replace-input $1
 echo "qpdf --decrypt --password=$PDF_PASSWORD6 --replace-input $1" >> $HAZEL_LOG_FILE
 qpdf --decrypt --password=$PDF_PASSWORD6 --replace-input $1
 
+# Echo command for debbuging
+echo "qpdf --decrypt --password=$PDF_PASSWORD7 --replace-input $1" >> $HAZEL_LOG_FILE
+qpdf --decrypt --password=$PDF_PASSWORD7 --replace-input $1
+
 # Ignore error from qpdf
 exit 0;
