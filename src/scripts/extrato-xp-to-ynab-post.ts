@@ -14,7 +14,9 @@ import { EXTRATO_XP_PROCESSORS } from "../services/process-extrato-xp/process-ex
   try {
     const { budgetId, accountId, accessToken, path } = getYnabCliArgs();
 
-    const excelContent = readContentFromXls(path);
+    const excelContent = readContentFromXls(path, {
+      range: "A1:G500",
+    });
 
     const importedTxs = convertExtratoXpXlsxToYnabTxs({
       excelContent,
